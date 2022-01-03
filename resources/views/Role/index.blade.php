@@ -12,7 +12,8 @@
                     <div class="flex flex-row justify-end">
                         <form action="{{ route('policy-ui.role.create') }}" method="GET">
                             @csrf
-                            <x-policy-ui-button-stroked color="blue" caption="Create new Role"></x-policy-ui-button-stroked>
+                            <x-policy-ui-button-stroked color="blue" caption="Create new Role">
+                            </x-policy-ui-button-stroked>
                         </form>
                     </div>
 
@@ -69,7 +70,8 @@
                                                         {{ __('Edit') }}
                                                     </x-dropdown-link>
                                                     <x-dropdown-link
-                                                                     :href="route('policy-ui.role.delete', ['role' => $item->id])" data-remote data-modal>
+                                                                     :href="route('policy-ui.role.delete', ['role' => $item->id])"
+                                                                     data-remote data-modal>
                                                         {{ __('Delete') }}
                                                     </x-dropdown-link>
                                                 </x-slot>
@@ -78,6 +80,9 @@
                                     </td>
                                 </tr>
                             @endforeach
+                        </x-slot>
+                        <x-slot name="footer">
+                            {{ $items->links() }}
                         </x-slot>
                     </x-policy-ui-table>
 

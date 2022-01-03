@@ -19,5 +19,3 @@ mix.js('resources/js/policy.js', 'public/js').postCss('resources/css/policy.css'
 
 mix.copy('public/css/policy.css', '../../../resources/css/vendor/laravel-authorization-ui-server.css');
 mix.copy('public/js/policy.js', '../../../resources/js/vendor/laravel-authorization-ui-server.js');
-
-mix.browserSync('http://localhost:8080');

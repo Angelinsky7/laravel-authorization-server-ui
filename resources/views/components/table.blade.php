@@ -12,6 +12,11 @@
                         {{ $rows }}
                     </tbody>
                 </table>
+                @isset($footer)
+                    <div class="m-2">
+                        {{ $footer }}
+                    </div>
+                @endisset
             </div>
         </div>
     </div>
