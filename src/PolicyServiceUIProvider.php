@@ -2,16 +2,16 @@
 
 namespace Darkink\AuthorizationServerUI;
 
-use Darkink\AuthorizationServer\View\Components\ButtonCancel;
-use Darkink\AuthorizationServer\View\Components\ButtonDot;
-use Darkink\AuthorizationServer\View\Components\IconBoolTick;
-use Darkink\AuthorizationServer\View\Components\ButtonRaised;
-use Darkink\AuthorizationServer\View\Components\ButtonStroked;
-use Darkink\AuthorizationServer\View\Components\ButtonSubmit;
-use Darkink\AuthorizationServer\View\Components\Dropdown;
-use Darkink\AuthorizationServer\View\Components\DropdownLink;
-use Darkink\AuthorizationServer\View\Components\FormFieldError;
-use Darkink\AuthorizationServer\View\Components\Table;
+use Darkink\AuthorizationServerUI\View\Components\ButtonCancel;
+use Darkink\AuthorizationServerUI\View\Components\ButtonDot;
+use Darkink\AuthorizationServerUI\View\Components\IconBoolTick;
+use Darkink\AuthorizationServerUI\View\Components\ButtonRaised;
+use Darkink\AuthorizationServerUI\View\Components\ButtonStroked;
+use Darkink\AuthorizationServerUI\View\Components\ButtonSubmit;
+use Darkink\AuthorizationServerUI\View\Components\Dropdown;
+use Darkink\AuthorizationServerUI\View\Components\DropdownLink;
+use Darkink\AuthorizationServerUI\View\Components\FormFieldError;
+use Darkink\AuthorizationServerUI\View\Components\Table;
 use Illuminate\Support\ServiceProvider;
 
 class PolicyServiceUIProvider extends ServiceProvider

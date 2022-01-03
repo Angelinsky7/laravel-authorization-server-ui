@@ -10,15 +10,15 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex flex-row justify-end">
-                        <form action="{{ route('policy.role.create') }}" method="GET">
+                        <form action="{{ route('policy-ui.role.create') }}" method="GET">
                             @csrf
-                            <x-policy-button-stroked color="blue" caption="Create new Role"></x-policy-button-stroked>
+                            <x-policy-ui-button-stroked color="blue" caption="Create new Role"></x-policy-ui-button-stroked>
                         </form>
                     </div>
 
                     <div class="my-2"></div>
 
-                    <x-policy-table>
+                    <x-policy-ui-table>
                         <x-slot name="header">
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -59,27 +59,27 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         @if (!$item->system)
-                                            <x-policy-dropdown>¨
+                                            <x-policy-ui-dropdown>¨
                                                 <x-slot name="trigger">
-                                                    <x-policy-button-dot></x-policy-button-dot>
+                                                    <x-policy-ui-button-dot></x-policy-ui-button-dot>
                                                 </x-slot>
                                                 <x-slot name="content">
                                                     <x-dropdown-link
-                                                                     :href="route('policy.role.edit', ['role' => $item->id])">
+                                                                     :href="route('policy-ui.role.edit', ['role' => $item->id])">
                                                         {{ __('Edit') }}
                                                     </x-dropdown-link>
                                                     <x-dropdown-link
-                                                                     :href="route('policy.role.delete', ['role' => $item->id])" data-remote data-modal>
+                                                                     :href="route('policy-ui.role.delete', ['role' => $item->id])" data-remote data-modal>
                                                         {{ __('Delete') }}
                                                     </x-dropdown-link>
                                                 </x-slot>
-                                            </x-policy-dropdown>
+                                            </x-policy-ui-dropdown>
                                         @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </x-slot>
-                    </x-policy-table>
+                    </x-policy-ui-table>
 
                 </div>
             </div>

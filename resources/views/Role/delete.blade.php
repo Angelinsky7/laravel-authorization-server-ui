@@ -16,7 +16,7 @@ $modal = request()->get('modal');
 
                     <div class="mt-10 sm:mt-0">
                         <div class="mt-5 md:mt-0 md:col-span-2">
-                            <form method="POST" action="{{ route('policy.role.destroy', ['role' => $item->id]) }}">
+                            <form method="POST" action="{{ route('policy-ui.role.destroy', ['role' => $item->id]) }}">
                                 @method('DELETE')
                                 @csrf
 
@@ -46,9 +46,9 @@ $modal = request()->get('modal');
                                 </div>
 
                                 <div class="px-4 py-3 text-right sm:px-6">
-                                    <x-policy-button-cancel route="{{ route('policy.role.index') }}">Cancel
-                                    </x-policy-button-cancel>
-                                    <x-policy-button-submit color="alert">Delete</x-policy-button-submit>
+                                    <x-policy-ui-button-cancel route="{{ route('policy-ui.role.index') }}">Cancel
+                                    </x-policy-ui-button-cancel>
+                                    <x-policy-ui-button-submit color="alert">Delete</x-policy-ui-button-submit>
                                 </div>
                         </div>
                         </form>

@@ -12,7 +12,7 @@
 
                     <div class="mt-10 sm:mt-0">
                         <div class="mt-5 md:mt-0 md:col-span-2">
-                            <form method="POST" action="{{route('policy.role.update', ['role' => $item->id])}}">
+                            <form method="POST" action="{{route('policy-ui.role.update', ['role' => $item->id])}}">
                                 @method('PUT')
                                 @csrf
                                 <div class="overflow-hidden">
@@ -26,7 +26,7 @@
                                                 <input type="text" name="name" id="name"
                                                        value="{{ old('name') ?? $item->name }}"
                                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }}">
-                                                <x-policy-form-field-error field="name"></x-policy-form-field-error>
+                                                <x-policy-ui-form-field-error field="name"></x-policy-ui-form-field-error>
                                             </div>
 
                                             <div class="col-span-6 sm:col-span-6">
@@ -37,7 +37,7 @@
                                                 <input type="text" name="label" id="label"
                                                        value="{{ old('label') ?? $item->label }}"
                                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('label') ? 'border-red-500' : 'border-gray-300' }}">
-                                                <x-policy-form-field-error field="label"></x-policy-form-field-error>
+                                                <x-policy-ui-form-field-error field="label"></x-policy-ui-form-field-error>
                                             </div>
 
                                             <div class="col-span-6 sm:col-span-6">
@@ -54,8 +54,8 @@
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 text-right sm:px-6">
-                                        <x-policy-button-cancel route="{{ route('policy.role.index') }}">Cancel</x-policy-button-cancel>
-                                        <x-policy-button-submit>Update</x-policy-button-submit>
+                                        <x-policy-ui-button-cancel route="{{ route('policy-ui.role.index') }}">Cancel</x-policy-ui-button-cancel>
+                                        <x-policy-ui-button-submit>Update</x-policy-ui-button-submit>
                                     </div>
                                 </div>
                             </form>

@@ -20,14 +20,14 @@ class RoleController
     {
         $items = $this->repo->gets();
 
-        return view('policy::Role.index', [
+        return view('policy-ui::Role.index', [
             'items' => $items
         ]);
     }
 
     public function create()
     {
-        return view('policy::Role.create');
+        return view('policy-ui::Role.create');
     }
 
     public function store(StoreRoleRequest $request)
@@ -39,12 +39,12 @@ class RoleController
             $validated['label'],
             $validated['description']
         );
-        return redirect()->route('policy.role.index');
+        return redirect()->route('policy-ui.role.index');
     }
 
     public function edit(Role $role)
     {
-        return view('policy::Role.update', [
+        return view('policy-ui::Role.update', [
             'item' => $role
         ]);
     }
@@ -58,12 +58,12 @@ class RoleController
             $validated['label'],
             $validated['description']
         );
-        return redirect()->route('policy.role.index');
+        return redirect()->route('policy-ui.role.index');
     }
 
     public function delete(Role $role)
     {
-        return view('policy::Role.delete', [
+        return view('policy-ui::Role.delete', [
             'item' => $role
         ]);
     }
@@ -71,6 +71,6 @@ class RoleController
     public function destroy(Role $role)
     {
         $this->repo->delete($role);
-        return redirect()->route('policy.role.index');
+        return redirect()->route('policy-ui.role.index');
     }
 }
