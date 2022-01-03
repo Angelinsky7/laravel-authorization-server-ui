@@ -1,0 +1,58 @@
+{
+    "name": "darkink/laravel-authorization-server-ui",
+    "description": "Darkink Authorization Server UI provides an simple gui manage authorization to a laravel auth server",
+    "keywords": ["laravel", "jwt", "policy", "role", "permission", "ui"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/angelinsky7/laravel-authorization-server-ui/issues",
+        "source": "https://github.com/angelinsky7/laravel-authorization-server-ui"
+    },
+    "authors": [
+        {
+            "name": "Angelinsky7",
+            "email": "steven.demarco@while-not-false.ch"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/auth": "^8.77",
+        "illuminate/console": "^8.77",
+        "illuminate/container": "^8.77",
+        "illuminate/contracts": "^8.77",
+        "illuminate/database": "^8.77",
+        "illuminate/http": "^8.77",
+        "illuminate/support": "^8.77",
+        "darkink/laravel-authorization-server": "1.x-dev"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^5.10",
+        "phpunit/phpunit": "^9.5.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Darkink\\AuthorizationServerUI\\": "src/",
+            "Darkink\\AuthorizationServerUI\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Darkink\\AuthorizationServerUI\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Darkink\\AuthorizationServerUI\\PolicyServiceUIProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
