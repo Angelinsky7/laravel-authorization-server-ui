@@ -11,7 +11,9 @@ use Darkink\AuthorizationServerUI\View\Components\ButtonSubmit;
 use Darkink\AuthorizationServerUI\View\Components\Dropdown;
 use Darkink\AuthorizationServerUI\View\Components\DropdownLink;
 use Darkink\AuthorizationServerUI\View\Components\FormFieldError;
+use Darkink\AuthorizationServerUI\View\Components\SuccessMessage;
 use Darkink\AuthorizationServerUI\View\Components\Table;
+use Darkink\AuthorizationServerUI\View\Components\TableSortHeader;
 use Illuminate\Support\ServiceProvider;
 
 class PolicyServiceUIProvider extends ServiceProvider
@@ -27,18 +29,7 @@ class PolicyServiceUIProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'policy-ui');
 
-        $this->loadViewComponentsAs('policy-ui', [
-            IconBoolTick::class,
-            ButtonRaised::class,
-            ButtonStroked::class,
-            ButtonDot::class,
-            ButtonCancel::class,
-            ButtonSubmit::class,
-            Table::class,
-            FormFieldError::class,
-            Dropdown::class,
-            DropdownLink::class
-        ]);
+        $this->loadViewComponentsAs('policy-ui', require(__DIR__ . '/View/Components/components.php'));
 
         if ($this->app->runningInConsole()) {
 
