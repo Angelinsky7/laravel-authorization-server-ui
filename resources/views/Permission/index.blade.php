@@ -58,10 +58,13 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->description }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <!-- TODO(demarco): make a component ?? -->
+                                            <!-- { -->
                                             <span
                                                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-blue-800">
                                                 {{ $item->decision_strategy }}
                                             </span>
+                                             <!-- } -->
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                             <span
