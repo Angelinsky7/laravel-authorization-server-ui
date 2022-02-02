@@ -31,5 +31,6 @@ return array_merge(
     $buttons,
     $table,
     $dropdown,
-    $miscs
+    $miscs,
+    require(__DIR__ . '/Permission/components.php')
 );

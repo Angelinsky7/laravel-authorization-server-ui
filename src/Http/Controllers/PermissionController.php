@@ -20,7 +20,7 @@ class PermissionController {
 
     public function index()
     {
-        $items = $this->repo->gets()->queryAll();
+        $items = $this->repo->gets();
         $items = $this->addSearchToQueryModel($items);
         $items = $this->addOrderByToQueryModel($items);
         $items = $items->paginate(25)->withQueryString();
