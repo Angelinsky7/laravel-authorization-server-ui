@@ -3,5 +3,7 @@
 namespace Darkink\AuthorizationServerUI\View\Components\Permission;
 
 return [
-    PermissionChipType::class
+    ChipType::class,
+    ChipDecisionStrategy::class,
+    SelectDecisionStrategy::class
 ];

@@ -18,11 +18,11 @@
                                     <div class="px-4 py-5 bg-white sm:p-6 flex flex-col">
 
                                         <div class="m-2 px-4 py-5 border-2 border-black">
-                                            <x-policy-ui-button-submit route="{{ route('policy-ui.permission.create-scope') }}">Create a new Scope Permission</x-policy-ui-button-submit>
+                                            <a href="{{ route('policy-ui.permission.create', ['type' => 'scope']) }}">Create a new Scope Permission</a>
                                         </div>
 
                                         <div class="m-2 px-4 py-5 border-2 border-black">
-                                            <x-policy-ui-button-submit route="{{ route('policy-ui.permission.create-resource') }}">Create a new Resource Permission</x-policy-ui-button-submit>
+                                            <x-policy-ui-button-submit route="{{ route('policy-ui.permission.create', ['type' => 'resource']) }}">Create a new Resource Permission</x-policy-ui-button-submit>
                                         </div>
 
                                 </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Permissions') }}
+            {{ __('Scopes') }}
         </h2>
     </x-slot>
 
@@ -12,10 +12,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex flex-row items-center justify-end">
-                        <x-policy-ui-table-search action="{{ route('policy-ui.permission.index') }}" />
-                        <form action="{{ route('policy-ui.permission.create') }}" method="GET">
+                        <x-policy-ui-table-search action="{{ route('policy-ui.scope.index') }}" />
+                        <form action="{{ route('policy-ui.scope.create') }}" method="GET">
                             @csrf
-                            <x-policy-ui-button-stroked color="blue" caption="Create new Permission">
+                            <x-policy-ui-button-stroked color="blue" caption="Create new Scope">
                             </x-policy-ui-button-stroked>
                         </form>
                     </div>
@@ -31,18 +31,8 @@
                                 </x-policy-ui-table-sort-header>
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <x-policy-ui-table-sort-header class="justify-start" column="description">
-                                    {{ _('Description') }}
-                                </x-policy-ui-table-sort-header>
-                            </th>
-                            <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Decision Strategy
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Type
+                                Icone URI
                             </th>
                             <th scope="col" class="relative px-6 py-3 w-1">
                                 <span class="sr-only">Actions</span>
@@ -54,14 +44,14 @@
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{{ $item->name }}</div>
-                                            <div class="text-sm text-gray-500">{{ $item->label }}</div>
+                                            <div class="text-sm text-gray-500">
+                                                {{ darkink_lasui_abbreviate($item->display_name, 50) }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->description }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            <x-policy-ui-permission:chip-decision-strategy :item="$item->decision_strategy" />
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            <x-policy-ui-permission:chip-type :item="$item" />
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @if (isset($item->icon_uri))
+                                                <img src="{{ $item->icon_uri }}" width="32" height="32"
+                                                     alt="icon-uri" />
+                                            @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <x-policy-ui-dropdown>¨
@@ -70,11 +60,11 @@
                                                 </x-slot>
                                                 <x-slot name="content">
                                                     <x-dropdown-link
-                                                                     :href="route('policy-ui.permission.edit', ['permission' => $item->id])">
+                                                                     :href="route('policy-ui.scope.edit', ['scope' => $item->id])">
                                                         {{ __('Edit') }}
                                                     </x-dropdown-link>
                                                     <x-dropdown-link
-                                                                     :href="route('policy-ui.permission.delete', ['permission' => $item->id])"
+                                                                     :href="route('policy-ui.scope.delete', ['scope' => $item->id])"
                                                                      data-remote data-modal>
                                                         {{ __('Delete') }}
                                                     </x-dropdown-link>
@@ -86,7 +76,7 @@
                             @else
                                 <tr>
                                     <td colspan="10">
-                                        <div class="flex items-center justify-center mb-2 mt-3 text-gray-500">No Role
+                                        <div class="flex items-center justify-center mb-2 mt-3 text-gray-500">No scope
                                             found...</div>
                                     <td>
                                 </tr>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create a new Role') }}
+            {{ __('Create a new Resource') }}
         </h2>
     </x-slot>
 
@@ -20,38 +20,49 @@
                                             <div class="col-span-6 sm:col-span-6">
                                                 <label for="name"
                                                        class="block text-sm font-medium text-gray-700">
-                                                    Name
+                                                    {{ _('Name') }}
                                                 </label>
                                                 <input type="text" name="name" id="name" value="{{ old('name') }}"
                                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }}">
-                                                <x-policy-ui-form-field-error field="name"></x-policy-ui-form-field-error>
+                                                <x-policy-ui-form-field-error field="name" />
                                             </div>
 
                                             <div class="col-span-6 sm:col-span-6">
                                                 <label for="label"
                                                        class="block text-sm font-medium text-gray-700">
-                                                    Label
+                                                    {{ _('Display Name') }}
                                                 </label>
-                                                <input type="text" name="label" id="label" value="{{ old('label') }}"
-                                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('label') ? 'border-red-500' : 'border-gray-300' }}">
-                                                <x-policy-ui-form-field-error field="label"></x-policy-ui-form-field-error>
+                                                <input type="text" name="display_name" id="display_name"
+                                                       value="{{ old('display_name') }}"
+                                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('display_name') ? 'border-red-500' : 'border-gray-300' }}">
+                                                <x-policy-ui-form-field-error field="display_name" />
                                             </div>
 
                                             <div class="col-span-6 sm:col-span-6">
-                                                <label for="description"
+                                                <label for="label"
                                                        class="block text-sm font-medium text-gray-700">
-                                                    Description
+                                                    {{ _('Type') }}
                                                 </label>
-                                                <div class="mt-1">
-                                                    <textarea id="description" name="description" rows="3"
-                                                              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                                                              placeholder="a simple description">{{ old('description') }}</textarea>
-                                                </div>
+                                                <input type="text" name="type" id="type" value="{{ old('type') }}"
+                                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('type') ? 'border-red-500' : 'border-gray-300' }}">
+                                                <x-policy-ui-form-field-error field="type" />
+                                            </div>
+
+                                            <div class="col-span-6 sm:col-span-6">
+                                                <label for="label"
+                                                       class="block text-sm font-medium text-gray-700">
+                                                    {{ _('Icon URI') }}
+                                                </label>
+                                                <input type="text" name="icon_uri" id="icon_uri"
+                                                       value="{{ old('icon_uri') }}"
+                                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('icon_uri') ? 'border-red-500' : 'border-gray-300' }}">
+                                                <x-policy-ui-form-field-error field="icon_uri" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 text-right sm:px-6">
-                                        <x-policy-ui-button-cancel route="{{ route('policy-ui.role.index') }}">Cancel</x-policy-ui-button-cancel>
+                                        <x-policy-ui-button-cancel route="{{ route('policy-ui.resource.index') }}">
+                                            Cancel</x-policy-ui-button-cancel>
                                         <x-policy-ui-button-submit>Create</x-policy-ui-button-submit>
                                     </div>
                                 </div>

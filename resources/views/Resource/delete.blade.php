@@ -5,7 +5,7 @@ $modal = request()->get('modal');
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Delete permission') }} {{ $item->name }}
+            {{ __('Delete Resource') }} {{ $item->name }}
         </h2>
     </x-slot>
 
@@ -16,7 +16,7 @@ $modal = request()->get('modal');
 
                     <div class="mt-10 sm:mt-0">
                         <div class="mt-5 md:mt-0 md:col-span-2">
-                            <form method="POST" action="{{ route('policy-ui.permission.destroy', ['permission' => $item->id]) }}">
+                            <form method="POST" action="{{ route('policy-ui.resource.destroy', ['resource' => $item->id]) }}">
                                 @method('DELETE')
                                 @csrf
 
@@ -34,11 +34,11 @@ $modal = request()->get('modal');
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <h3 class="text-lg leading-6 font-medium text-gray-900"
                                             id="modal-title">
-                                            Delete permission
+                                            Delete resource
                                         </h3>
                                         <div class="mt-2">
                                             <p class="text-sm text-gray-500">
-                                                Are you sure you want to delete this permission '{{ $item->name }}' ? This
+                                                Are you sure you want to delete this resource '{{ $item->name }}' ? This
                                                 action cannot be undone.
                                             </p>
                                         </div>
@@ -46,7 +46,7 @@ $modal = request()->get('modal');
                                 </div>
 
                                 <div class="px-4 py-3 text-right sm:px-6">
-                                    <x-policy-ui-button-cancel route="{{ route('policy-ui.permission.index') }}">Cancel
+                                    <x-policy-ui-button-cancel route="{{ route('policy-ui.resource.index') }}">Cancel
                                     </x-policy-ui-button-cancel>
                                     <x-policy-ui-button-submit color="alert">Delete</x-policy-ui-button-submit>
                                 </div>

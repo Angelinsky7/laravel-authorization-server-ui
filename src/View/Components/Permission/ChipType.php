@@ -7,7 +7,7 @@ use Darkink\AuthorizationServer\Models\ResourcePermission;
 use Darkink\AuthorizationServer\Models\ScopePermission;
 use Illuminate\View\Component;
 
-class PermissionChipType extends Component
+class ChipType extends Component
 {
 
     public Permission $item;
@@ -50,6 +50,6 @@ class PermissionChipType extends Component
 
     public function render()
     {
-        return view('policy-ui::components.permission.permission-chip-type');
+        return view('policy-ui::components.permission.chip-type');
     }
 }

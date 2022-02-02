@@ -26,13 +26,21 @@ class PolicyServiceUIProvider extends ServiceProvider
             ], 'policy-ui-views');
 
             $this->publishes([
-                __DIR__.'/../public/css/app.css' => base_path('resources/css/vendor/laravel-authorization-server.css'),
+                __DIR__ . '/../public/css/app.css' => base_path('resources/css/vendor/laravel-authorization-server.css'),
             ], 'policy-ui-public-css');
 
             $this->publishes([
-                __DIR__.'/../public/js/app.js' => base_path('resources/js/vendor/laravel-authorization-server.js'),
+                __DIR__ . '/../public/js/app.js' => base_path('resources/js/vendor/laravel-authorization-server.js'),
             ], 'policy-ui-public-js');
+        }
 
+        $this->register_helpers();
+    }
+
+    public function register_helpers()
+    {
+        if (file_exists($file = __DIR__ . '/bladeHelper.php')) {
+            require_once $file;
         }
     }
 
@@ -40,5 +48,4 @@ class PolicyServiceUIProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/policy-ui.php', 'policy-ui');
     }
-
 }
