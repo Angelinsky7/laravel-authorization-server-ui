@@ -69,6 +69,19 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-span-6 sm:col-span-6">
+                                                <label for="description"
+                                                       class="block text-sm font-medium text-gray-700">
+                                                    Scopes
+                                                </label>
+                                                <div class="mt-1">
+
+                                                    <input id="scopes[0]" name="scopes[]" type="hidden" value="1" />
+
+                                                    <x-policy-ui-form-field-error field="scopes" />
+
+                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>

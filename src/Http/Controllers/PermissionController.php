@@ -71,18 +71,17 @@ class PermissionController
 
     public function storeScope(StoreScopePermissionRequest $request)
     {
-        $request->validate($request->rules());
-        $validated = $request->validated();
+        $validated = $request->validate($request->rules());
 
-        var_dump($validated, get_class($request));
-        exit;
+        // var_dump($validated, get_class($request));
+        // exit;
 
         switch (get_class($request)) {
             case StoreScopePermissionRequest::class:
                 $this->repo->createScope(
                     $validated['name'],
                     $validated['description'],
-                    $validated['decision_stategy'],
+                    $validated['decision_strategy'],
                     $validated['resource'],
                     $validated['scopes']
                 );
