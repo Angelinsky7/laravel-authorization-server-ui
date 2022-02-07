@@ -3187,14 +3187,275 @@ function withinMaxClamp(min, value, max) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/index.js");
+/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/index.js");
+/* harmony import */ var _shared_alpineJs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shared/alpineJs */ "./resources/js/shared/alpineJs/index.js");
+/* harmony import */ var _shared_popperJs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./shared/popperJs */ "./resources/js/shared/popperJs/index.js");
 
-window.Popper = _popperjs_core__WEBPACK_IMPORTED_MODULE_0__;
+
+
 window.policy = {
   tableSelect: __webpack_require__(/*! ./shared/table-select */ "./resources/js/shared/table-select.js"),
-  modal: __webpack_require__(/*! ./shared/modal */ "./resources/js/shared/modal.js") // navigable: require('./shared/navigable'),
-
+  modal: __webpack_require__(/*! ./shared/modal */ "./resources/js/shared/modal.js"),
+  // navigable: require('./shared/navigable'),
+  alpineJs: _shared_alpineJs__WEBPACK_IMPORTED_MODULE_0__,
+  popperJs: _popperjs_core__WEBPACK_IMPORTED_MODULE_2__,
+  popperJsModifiers: _shared_popperJs__WEBPACK_IMPORTED_MODULE_1__
 };
+
+/***/ }),
+
+/***/ "./resources/js/shared/alpineJs/index.js":
+/*!***********************************************!*\
+  !*** ./resources/js/shared/alpineJs/index.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "select": () => (/* reexport safe */ _select__WEBPACK_IMPORTED_MODULE_0__.select)
+/* harmony export */ });
+/* harmony import */ var _select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./select */ "./resources/js/shared/alpineJs/select.js");
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/alpineJs/select.js":
+/*!************************************************!*\
+  !*** ./resources/js/shared/alpineJs/select.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "select": () => (/* binding */ select)
+/* harmony export */ });
+function select(config) {
+  var popperInstance = null;
+  var initialized = false;
+  var defaultConfig = {
+    options: [],
+    autoActiveFirstOption: false,
+    emptyOptionsMessage: null,
+    filterValue: function filterValue(value) {
+      return value.toString().toLowerCase();
+    },
+    filterOptions: function filterOptions(options, filterValue) {
+      var _this = this;
+
+      return options.filter(function (p) {
+        return _this.getOptionCaption(p).toLowerCase().includes(filterValue);
+      });
+    },
+    getOptionCaption: function getOptionCaption(option) {
+      var _option$caption;
+
+      return (_option$caption = option.caption) !== null && _option$caption !== void 0 ? _option$caption : option;
+    },
+    getOptionValue: function getOptionValue(option) {
+      var _option$value;
+
+      return (_option$value = option.value) !== null && _option$value !== void 0 ? _option$value : option;
+    },
+    isOptionDisabled: function isOptionDisabled(option) {
+      var _option$disabled;
+
+      return (_option$disabled = option.disabled) !== null && _option$disabled !== void 0 ? _option$disabled : false;
+    },
+    isOptionActive: function isOptionActive(focusedOptionIndex, index) {
+      return focusedOptionIndex === index;
+    },
+    findOptionByValue: function findOptionByValue(options, value) {
+      var _this2 = this;
+
+      return options.find(function (p) {
+        return _this2.getOptionValue(p) == value;
+      });
+    }
+  };
+  return {
+    config: this.config = Object.assign({}, defaultConfig, config),
+    panelVisible: false,
+    search: '',
+    options: [],
+    focusedOptionIndex: -1,
+    initialValueControl: null,
+    initialOption: null,
+    init: function init() {
+      var _this3 = this;
+
+      this.options = this.config.options;
+
+      if (this.config.autoActiveFirstOption) {
+        this.focusedOptionIndex = 0;
+      }
+
+      this.initialValueControl = this.$refs.input.value;
+
+      if (this.initialValueControl && this.options.length != 0) {
+        this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
+        this.$refs.control.value = this.config.getOptionCaption(this.initialOption);
+        this.search = this.$refs.control.value;
+
+        if (this.search) {
+          this.filterOptions(this.search);
+        }
+      }
+
+      popperInstance = window.policy.popperJs.createPopper(this.$refs.control, this.$refs.popup, {
+        placement: 'bottom-start',
+        modifiers: [window.policy.popperJsModifiers.sameWidth]
+      });
+      this.$watch('search', function (value) {
+        _this3.$refs.input.value = null;
+
+        _this3.filterOptions(value);
+      });
+      initialized = true;
+    },
+    filterOptions: function filterOptions(value) {
+      if (initialized && !this.panelVisible) {
+        this.togglePanel();
+      }
+
+      var filterValue = this.config.filterValue(value);
+      this.options = this.config.filterOptions(this.config.options, filterValue);
+
+      if (this.options.length == 0) {
+        if (this.config.emptyOptionsMessage != null) {
+          this.options.push({
+            'value': '',
+            'caption': this.config.emptyOptionsMessage,
+            'disabled': true
+          });
+        } else {
+          this.closePanel();
+        }
+      }
+    },
+    closePanel: function closePanel() {
+      this.panelVisible = false;
+    },
+    togglePanel: function togglePanel() {
+      if (!this.panelVisible) {
+        this.search = this.$refs.control.value;
+        this.focusedOptionIndex = this.config.autoActiveFirstOption ? 0 : -1;
+
+        if (this.options.length == 0) {
+          return;
+        }
+      }
+
+      this.panelVisible = !this.panelVisible;
+    },
+    focusNextOption: function focusNextOption() {
+      if (!this.panelVisible && this.options.length != 0) {
+        this.togglePanel();
+        return;
+      }
+
+      ++this.focusedOptionIndex; //Should be find next available options
+
+      if (this.focusedOptionIndex >= this.options.length) {
+        this.focusedOptionIndex = 0;
+      }
+
+      this.$refs.popup.children[this.focusedOptionIndex].scrollIntoView({
+        block: "center"
+      });
+    },
+    focusPreviousOption: function focusPreviousOption() {
+      if (!this.panelVisible) {
+        return;
+      }
+
+      --this.focusedOptionIndex; //Should be find next available options
+
+      if (this.focusedOptionIndex < 0) {
+        this.focusedOptionIndex = this.options.length - 1;
+      }
+
+      this.$refs.popup.children[this.focusedOptionIndex].scrollIntoView({
+        block: "center"
+      });
+    },
+    selectOption: function selectOption(option) {
+      var selectedOption = option !== null && option !== void 0 ? option : this.options[this.focusedOptionIndex];
+
+      if (selectedOption == null || this.config.isOptionDisabled(selectedOption)) {
+        return;
+      }
+
+      this.$refs.input.value = this.config.getOptionValue(selectedOption);
+      this.$refs.control.value = this.config.getOptionCaption(selectedOption);
+      this.closePanel();
+    }
+  }; // return {
+  //     data: config.data,
+  //     emptyOptionsMessage: config.emptyOptionsMessage ?? 'No results match your search.',
+  //     focusedOptionIndex: null,
+  //     name: config.name,
+  //     open: false,
+  //     options: {},
+  //     placeholder: config.placeholder ?? 'Select an option',
+  //     search: '',
+  //     value: config.value,
+  //     closeListbox: function () {
+  //         this.open = false;
+  //         this.focusedOptionIndex = null;
+  //         this.search = '';
+  //     },
+  //     focusNextOption: function () {
+  //         if (this.focusedOptionIndex === null) { return this.focusedOptionIndex = Object.keys(this.options).length - 1; }
+  //         if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) { return; }
+  //         ++this.focusedOptionIndex;
+  //         this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+  //             block: "center",
+  //         });
+  //     },
+  //     focusPreviousOption: function () {
+  //         if (this.focusedOptionIndex === null) { return this.focusedOptionIndex = 0; }
+  //         if (this.focusedOptionIndex <= 0) { return; }
+  //         --this.focusedOptionIndex;
+  //         this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+  //             block: "center",
+  //         });
+  //     },
+  //     init: function () {
+  //         this.options = this.data;
+  //         if (!(this.value in this.options)) { this.value = null; }
+  //         this.$watch('search', ((value) => {
+  //             if (!this.open || !value) return this.options = this.data
+  //             this.options = Object.keys(this.data)
+  //                 .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
+  //                 .reduce((options, key) => {
+  //                     options[key] = this.data[key]
+  //                     return options
+  //                 }, {});
+  //         }))
+  //     },
+  //     selectOption: function () {
+  //         if (!this.open) { return this.toggleListboxVisibility(); }
+  //         this.value = Object.keys(this.options)[this.focusedOptionIndex];
+  //         this.closeListbox();
+  //     },
+  //     toggleListboxVisibility: function () {
+  //         if (this.open) { return this.closeListbox(); }
+  //         this.focusedOptionIndex = Object.keys(this.options).indexOf(this.value);
+  //         if (this.focusedOptionIndex < 0) this.focusedOptionIndex = 0;
+  //         this.open = true;
+  //         this.$nextTick(() => {
+  //             this.$refs.search.focus();
+  //             this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+  //                 block: "center"
+  //             });
+  //         })
+  //     },
+  // }
+}
+
+
 
 /***/ }),
 
@@ -3290,6 +3551,51 @@ var closeModalImpl = function closeModalImpl(modalId) {
     }
   });
 })();
+
+/***/ }),
+
+/***/ "./resources/js/shared/popperJs/index.js":
+/*!***********************************************!*\
+  !*** ./resources/js/shared/popperJs/index.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "sameWidth": () => (/* reexport safe */ _same_width__WEBPACK_IMPORTED_MODULE_0__.sameWidth)
+/* harmony export */ });
+/* harmony import */ var _same_width__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./same-width */ "./resources/js/shared/popperJs/same-width.js");
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/popperJs/same-width.js":
+/*!****************************************************!*\
+  !*** ./resources/js/shared/popperJs/same-width.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "sameWidth": () => (/* binding */ sameWidth)
+/* harmony export */ });
+var sameWidth = {
+  name: "sameWidth",
+  enabled: true,
+  phase: "beforeWrite",
+  requires: ["computeStyles"],
+  fn: function fn(_ref) {
+    var state = _ref.state;
+    state.styles.popper.width = "".concat(state.rects.reference.width, "px");
+  },
+  effect: function effect(_ref2) {
+    var state = _ref2.state;
+    state.elements.popper.style.width = "".concat(state.elements.reference.offsetWidth, "px");
+  }
+};
+
 
 /***/ }),
 

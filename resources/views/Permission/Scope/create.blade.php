@@ -1,20 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create a new Role') }}
+            {{ __('Create a new Scope Permission') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <div class="mt-10 sm:mt-0">
                         <div class="mt-5 md:mt-0 md:col-span-2">
                             <form method="POST">
                                 @csrf
-                                <div class="overflow-hidden">
+                                <div>
                                     <div class="px-4 py-5 bg-white sm:p-6">
                                         <div class="grid grid-cols-6 gap-6">
 
@@ -48,7 +48,6 @@
                                                     Decision Strategy
                                                 </label>
                                                 <div class="mt-1">
-                                                    AA{{ old('decision_strategy') }}AA
                                                     <x-policy-ui-permission:select-decision-strategy id="decision_strategy"
                                                                                                      autocomplete="decision_strategy-name"
                                                                                                      selectCaption="{{ _('--Select a decision strategy--') }}"
@@ -63,15 +62,8 @@
                                                     Resource
                                                 </label>
                                                 <div class="mt-1">
-
-                                                    {{-- TODO(demarco): Make this a component --}}
-                                                    <select id="resource" name="resource"
-                                                            autocomplete="resource-name"
-                                                            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                        <option disabled>--Select a resource --</option>
-                                                        <option>1</option>
-                                                    </select>
-
+                                                    <x-policy-ui-resource:select id="resource" name="resource"
+                                                                                 :value="old('resource')" />
                                                     <x-policy-ui-form-field-error field="resource" />
 
                                                 </div>

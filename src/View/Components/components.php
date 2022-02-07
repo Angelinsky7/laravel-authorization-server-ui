@@ -32,5 +32,6 @@ return array_merge(
     $table,
     $dropdown,
     $miscs,
-    require(__DIR__ . '/Permission/components.php')
+    require(__DIR__ . '/Permission/components.php'),
+    require(__DIR__ . '/Resource/components.php')
 );

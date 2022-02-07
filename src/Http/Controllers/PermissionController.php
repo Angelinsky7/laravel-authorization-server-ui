@@ -52,6 +52,7 @@ class PermissionController
     public function createScope()
     {
         $decisionStrategies = array_column(DecisionStrategy::cases(), 'name');
+
         return view('policy-ui::Permission.Scope.create', [
             'decisionStrategies' => $decisionStrategies
         ]);
@@ -104,7 +105,7 @@ class PermissionController
             case ScopePermission::class:
                 return view('policy-ui::Permission.Scope.update', [
                     'item' => $permission->permission,
-                    'decisionStrategies' => $decisionStrategies
+                    'decisionStrategies' => $decisionStrategies,
                 ]);
                 break;
             case ResourcePermission::class:

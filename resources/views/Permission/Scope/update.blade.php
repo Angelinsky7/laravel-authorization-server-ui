@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <div class="mt-10 sm:mt-0">
@@ -16,7 +16,7 @@
                                   action="{{ route('policy-ui.permission.update', ['permission' => $item->id]) }}">
                                 @method('PUT')
                                 @csrf
-                                <div class="overflow-hidden">
+                                <div>
                                     <div class="px-4 py-5 bg-white sm:p-6">
                                         <div class="grid grid-cols-6 gap-6">
                                             <div class="col-span-6 sm:col-span-6">
@@ -49,22 +49,27 @@
                                                     Decision Strategy
                                                 </label>
                                                 <div class="mt-1">
+                                                    <x-policy-ui-permission:select-decision-strategy id="decision_strategy"
+                                                                                                     autocomplete="decision_strategy-name"
+                                                                                                     selectCaption="{{ _('--Select a decision strategy--') }}"
+                                                                                                     :item="old('decision_strategy') ?? $item->parent->decision_strategy" />
+                                                    <x-policy-ui-form-field-error field="decision_strategy" />
+                                                </div>
+                                            </div>
 
-                                                    {{-- TODO(demarco): Make this a component --}}
-                                                    <select id="decision_strategy" name="decision_strategy"
-                                                            autocomplete="decision_strategy-name"
-                                                            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                        <option disabled>--Select a decision strategy--</option>
-                                                        @foreach ($decisionStrategies as $p)
-                                                            <option value="{{ $p }}"
-                                                                    {{ old('decision_strategy', $item->parent->decision_strategy) == $p ? 'selected' : '' }}>
-                                                                {{ $p }}</option>
-                                                        @endforeach
-                                                    </select>
+                                            <div class="col-span-6 sm:col-span-6">
+                                                <label for="description"
+                                                       class="block text-sm font-medium text-gray-700">
+                                                    Resource
+                                                </label>
+                                                <div class="mt-1">
+                                                    {{ $item->resource->id }}
+                                                    <x-policy-ui-resource:select id="resource" name="resource"
+                                                                                 autocomplete="resource-name"
+                                                                                 :value="old('resource') ?? $item->resource" />
 
-                                                    {{-- <textarea id="description" name="description" rows="3"
-                                                              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                                                              placeholder="a simple description">{{ old('description') ?? $item->parent->decision_strategy }}</textarea> --}}
+                                                    <x-policy-ui-form-field-error field="resource" />
+
                                                 </div>
                                             </div>
 
