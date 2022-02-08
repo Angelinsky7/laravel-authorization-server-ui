@@ -2,20 +2,20 @@
 
 namespace Darkink\AuthorizationServerUI\View\Components;
 
+use Darkink\AuthorizationServerUI\View\Components\Shared\ButtonColor;
 use Illuminate\View\Component;
 
 abstract class Button extends Component
 {
 
-    public string $color;
+    public ButtonColor $color;
     public string $caption;
     public string $type;
 
-    public function __construct(string $color, string $caption, string $type = 'submit')
+    public function __construct(ButtonColor | string $color, string $caption, string $type = 'submit')
     {
-        $this->color = $color;
+        $this->color = is_string($color) ? ButtonColor::tryFrom($color) : $color;
         $this->caption = $caption;
         $this->type = $type;
     }
-
 }

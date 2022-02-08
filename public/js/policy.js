@@ -3213,9 +3213,187 @@ window.policy = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "select": () => (/* reexport safe */ _select__WEBPACK_IMPORTED_MODULE_0__.select)
+/* harmony export */   "select": () => (/* reexport safe */ _select__WEBPACK_IMPORTED_MODULE_0__.select),
+/* harmony export */   "manySelector": () => (/* reexport safe */ _many_selector__WEBPACK_IMPORTED_MODULE_1__.manySelector),
+/* harmony export */   "listBox": () => (/* reexport safe */ _list_box__WEBPACK_IMPORTED_MODULE_2__.listBox)
 /* harmony export */ });
 /* harmony import */ var _select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./select */ "./resources/js/shared/alpineJs/select.js");
+/* harmony import */ var _many_selector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./many-selector */ "./resources/js/shared/alpineJs/many-selector.js");
+/* harmony import */ var _list_box__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./list-box */ "./resources/js/shared/alpineJs/list-box.js");
+
+
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/alpineJs/list-box.js":
+/*!**************************************************!*\
+  !*** ./resources/js/shared/alpineJs/list-box.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "listBox": () => (/* binding */ listBox)
+/* harmony export */ });
+function listBox(config) {
+  var initialized = false;
+  var defaultConfig = {
+    dataSource: [] // autoActiveFirstOption: false,
+    // emptyOptionsMessage: null,
+    // filterValue(value) { return value.toString().toLowerCase(); },
+    // filterOptions(options, filterValue) { return options.filter(p => this.getOptionCaption(p).toLowerCase().includes(filterValue)); },
+    // getOptionCaption(option) { return option.caption ?? option; },
+    // getOptionValue(option) { return option.value ?? option; },
+    // isOptionDisabled(option) { return option.disabled ?? false; },
+    // isOptionActive(focusedOptionIndex, index) { return focusedOptionIndex === index; },
+    // findOptionByValue(options, value) { return options.find(p => this.getOptionValue(p) == value); }
+
+  };
+  return {
+    config: this.config = Object.assign({}, defaultConfig, config),
+    // panelVisible: false,
+    // search: '',
+    dataSource: [],
+    // focusedOptionIndex: -1,
+    // initialValueControl: null,
+    // initialOption: null,
+    init: function init() {
+      this.dataSource = this.config.dataSource; // if (this.config.autoActiveFirstOption) { this.focusedOptionIndex = 0; }
+      // this.initialValueControl = this.$refs.input.value;
+      // if (this.initialValueControl && this.options.length != 0) {
+      //     this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
+      //     this.$refs.control.value = this.config.getOptionCaption(this.initialOption);
+      //     this.search = this.$refs.control.value;
+      //     if (this.search) { this.filterOptions(this.search); }
+      // }
+      // popperInstance = window.policy.popperJs.createPopper(this.$refs.control, this.$refs.popup, {
+      //     placement: 'bottom-start',
+      //     modifiers: [window.policy.popperJsModifiers.sameWidth]
+      // });
+      // this.$watch('search', (value) => {
+      //     this.$refs.input.value = null;
+      //     this.filterOptions(value);
+      // });
+
+      initialized = true;
+    }
+  };
+}
+
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/alpineJs/many-selector.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/shared/alpineJs/many-selector.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "manySelector": () => (/* binding */ manySelector)
+/* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function manySelector(config) {
+  var initialized = false;
+  var defaultConfig = {
+    options: [],
+    values: [] // autoActiveFirstOption: false,
+    // emptyOptionsMessage: null,
+    // filterValue(value) { return value.toString().toLowerCase(); },
+    // filterOptions(options, filterValue) { return options.filter(p => this.getOptionCaption(p).toLowerCase().includes(filterValue)); },
+    // getOptionCaption(option) { return option.caption ?? option; },
+    // getOptionValue(option) { return option.value ?? option; },
+    // isOptionDisabled(option) { return option.disabled ?? false; },
+    // isOptionActive(focusedOptionIndex, index) { return focusedOptionIndex === index; },
+    // findOptionByValue(options, value) { return options.find(p => this.getOptionValue(p) == value); }
+
+  };
+  return {
+    config: this.config = Object.assign({}, defaultConfig, config),
+    // panelVisible: false,
+    // search: '',
+    options: [],
+    values: [],
+    available_scopes_selected: [],
+    selected_scopes_selected: [],
+    // focusedOptionIndex: -1,
+    // initialValueControl: null,
+    // initialOption: null,
+    addSelectedIsDisabled: function addSelectedIsDisabled() {
+      return !this.available_scopes_selected || this.available_scopes_selected.length == 0;
+    },
+    init: function init() {
+      var _this$config$options, _this$config$values;
+
+      this.options = (_this$config$options = this.config.options) !== null && _this$config$options !== void 0 ? _this$config$options : [];
+      this.values = (_this$config$values = this.config.values) !== null && _this$config$values !== void 0 ? _this$config$values : []; // if (this.config.autoActiveFirstOption) { this.focusedOptionIndex = 0; }
+      // this.initialValueControl = this.$refs.input.value;
+      // if (this.initialValueControl && this.options.length != 0) {
+      //     this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
+      //     this.$refs.control.value = this.config.getOptionCaption(this.initialOption);
+      //     this.search = this.$refs.control.value;
+      //     if (this.search) { this.filterOptions(this.search); }
+      // }
+      // popperInstance = window.policy.popperJs.createPopper(this.$refs.control, this.$refs.popup, {
+      //     placement: 'bottom-start',
+      //     modifiers: [window.policy.popperJsModifiers.sameWidth]
+      // });
+      // this.$watch('search', (value) => {
+      //     this.$refs.input.value = null;
+      //     this.filterOptions(value);
+      // });
+
+      initialized = true;
+    },
+    addSelected: function addSelected() {
+      var _this = this,
+          _this$values;
+
+      if (!this.available_scopes_selected || this.available_scopes_selected.length == 0) {
+        return;
+      }
+
+      var itemsToMove = this.options.filter(function (p) {
+        return _this.available_scopes_selected.includes(p.value.toString());
+      });
+
+      (_this$values = this.values).push.apply(_this$values, _toConsumableArray(itemsToMove));
+
+      var _loop = function _loop(i) {
+        var itemToRemove = _this.options.find(function (p) {
+          return p.value == _this.available_scopes_selected[i];
+        });
+
+        var indexToRemove = _this.options.indexOf(itemToRemove);
+
+        _this.options.splice(indexToRemove, 1);
+      };
+
+      for (var i = this.available_scopes_selected.length - 1; i >= 0; --i) {
+        _loop(i);
+      }
+
+      this.available_scopes_selected = [];
+    }
+  };
+}
+
 
 
 /***/ }),

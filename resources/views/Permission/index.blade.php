@@ -15,8 +15,7 @@
                         <x-policy-ui-table-search action="{{ route('policy-ui.permission.index') }}" />
                         <form action="{{ route('policy-ui.permission.create') }}" method="GET">
                             @csrf
-                            <x-policy-ui-button-stroked color="blue" caption="Create new Permission">
-                            </x-policy-ui-button-stroked>
+                            <x-policy-ui-button-stroked color="blue" caption="Create new Permission" />
                         </form>
                     </div>
 

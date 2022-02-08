@@ -2,10 +2,9 @@
 
 namespace Darkink\AuthorizationServerUI\View\Components\Shared;
 
-use Darkink\AuthorizationServer\Models\Resource;
 use Illuminate\View\Component;
 
-class Select extends Component
+class ListBox extends Component
 {
     public string $id;
     public string $name;
@@ -14,10 +13,10 @@ class Select extends Component
 
     public string | null $panelMaxHeight;
 
-    public mixed $options;
-    public mixed $value;
+    public array | null $dataSource;
+    public array | null $selected;
 
-    public function __construct(string $id, string $name, mixed $value, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null ,array $options = [])
+    public function __construct(string $id, string $name, array | null $selected = null, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, array | null $dataSource = [])
     {
         $this->id = $id;
         $this->name = $name;
@@ -26,12 +25,12 @@ class Select extends Component
 
         $this->panelMaxHeight = $panelMaxHeight;
 
-        $this->options = $options;
-        $this->value = $value;
+        $this->dataSource = $dataSource;
+        $this->selected = $selected;
     }
 
     public function render()
     {
-        return view('policy-ui::components.shared.select');
+        return view('policy-ui::components.shared.list-box');
     }
 }

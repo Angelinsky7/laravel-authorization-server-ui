@@ -62,7 +62,7 @@
                                                     Resource
                                                 </label>
                                                 <div class="mt-1">
-                                                    <x-policy-ui-resource:select id="resource" name="resource"
+                                                    <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]"
                                                                                  :value="old('resource')" />
                                                     <x-policy-ui-form-field-error field="resource" />
 
@@ -76,8 +76,9 @@
                                                 </label>
                                                 <div class="mt-1">
 
-                                                    <input id="scopes[0]" name="scopes[]" type="hidden" value="1" />
+                                                    {{-- <input id="scopes[0]" name="scopes[]" type="hidden" value="1" /> --}}
 
+                                                    <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes')" />
                                                     <x-policy-ui-form-field-error field="scopes" />
 
                                                 </div>

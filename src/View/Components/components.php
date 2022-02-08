@@ -6,6 +6,7 @@ $buttons = [
     ButtonRaised::class,
     ButtonStroked::class,
     ButtonDot::class,
+    ButtonIcon::class,
     ButtonCancel::class,
     ButtonSubmit::class,
 ];
@@ -32,6 +33,8 @@ return array_merge(
     $table,
     $dropdown,
     $miscs,
+    require(__DIR__ . '/Shared/components.php'),
     require(__DIR__ . '/Permission/components.php'),
-    require(__DIR__ . '/Resource/components.php')
+    require(__DIR__ . '/Resource/components.php'),
+    require(__DIR__ . '/Scope/components.php'),
 );

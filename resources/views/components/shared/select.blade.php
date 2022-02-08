@@ -1,11 +1,12 @@
-<div x-data="window.policy.alpineJs.select({
-    options: {{ json_encode($values) }}
+<div {{ $attributes }} x-data="window.policy.alpineJs.select({
+    options: {{ json_encode($options) }}
 })"
      x-on:click.outside="closePanel()"
      x-on:keydown.escape="closePanel()">
     <div>
         <div class="relative">
-            <input x-ref="input" id="{{ $id }}" name="{{ $name }}" type="hidden" value="{{ $value }}" />
+            <input x-ref="input" id="{{ $id }}" name="{{ $name }}" type="hidden"
+                   value="{{ $value }}" />
             <input x-ref="control"
                    type="text" aria-label="{{ $name }}"
                    x-model.debounce="search"
@@ -26,7 +27,10 @@
         </div>
         <div x-ref="popup"
              x-show="panelVisible"
-             class="autocomplete-panel overflow-auto rounded-md flex flex-col border border-black shadow-black drop-shadow-autocomplete"
+             @class([
+                 'autocomplete-panel overflow-auto rounded-md flex flex-col border border-black shadow-black drop-shadow-autocomplete bg-white z-50',
+                 $panelMaxHeight => $panelMaxHeight != null,
+             ])
              x-transition:leave="transition ease-in duration-75"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
@@ -35,7 +39,7 @@
              x-on:keydown.arrow-down.prevent="focusNextOption()"
              x-cloak>
             <template x-for="(option, index) in options" :key="index">
-                <div class="autocomplete-option h-[29px] leading-[29px] whitespace-nowrap overflow-hidden text-ellipsis p-0 px-[10px] text-left no-underlines relative outline-none flex flex-row max-w-full box-border items-center select-none"
+                <div class="autocomplete-option min-h-[29px] h-[29px] leading-[29px] whitespace-nowrap overflow-hidden text-ellipsis p-0 px-[10px] text-left no-underlines relative outline-none flex flex-row max-w-full box-border items-center select-none"
                      tabindex="0" role="option"
                      x-on:click="selectOption(option)"
                      x-bind:class="{'option-active': config.isOptionActive(focusedOptionIndex, index)}"

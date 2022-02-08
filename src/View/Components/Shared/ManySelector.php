@@ -2,10 +2,9 @@
 
 namespace Darkink\AuthorizationServerUI\View\Components\Shared;
 
-use Darkink\AuthorizationServer\Models\Resource;
 use Illuminate\View\Component;
 
-class Select extends Component
+class ManySelector extends Component
 {
     public string $id;
     public string $name;
@@ -14,10 +13,10 @@ class Select extends Component
 
     public string | null $panelMaxHeight;
 
-    public mixed $options;
-    public mixed $value;
+    public array $options;
+    public array | null $values;
 
-    public function __construct(string $id, string $name, mixed $value, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null ,array $options = [])
+    public function __construct(string $id, string $name, array | null $values, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, array $options = [])
     {
         $this->id = $id;
         $this->name = $name;
@@ -27,11 +26,11 @@ class Select extends Component
         $this->panelMaxHeight = $panelMaxHeight;
 
         $this->options = $options;
-        $this->value = $value;
+        $this->values = $values;
     }
 
     public function render()
     {
-        return view('policy-ui::components.shared.select');
+        return view('policy-ui::components.shared.many-selector');
     }
 }

@@ -9,10 +9,10 @@ use Illuminate\View\Component;
 
 class Select extends SharedSelect
 {
-    public function __construct(ResourceRepository $resourceRepository, string $id, string $name, Resource | string | int | null $value, string $placeholder = '', bool $required = false, array $values = [])
+    public function __construct(ResourceRepository $resourceRepository, string $id, string $name, Resource | string | int | null $value, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, array $options = [])
     {
-        $values = $resourceRepository->gets()->all()->map(fn($p) => ['value' => $p->id, 'caption' => $p->display_name]);
+        $options = $resourceRepository->gets()->all()->map(fn($p) => ['value' => $p->id, 'caption' => $p->display_name]);
 
-        parent::__construct($id, $name, $value, $placeholder, $required, $values->toArray());
+        parent::__construct($id, $name, $value, $placeholder, $required, $panelMaxHeight, $options->toArray());
     }
 }
