@@ -61,8 +61,7 @@
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 text-right sm:px-6">
-                                        <x-policy-ui-button-cancel route="{{ route('policy-ui.resource.index') }}">
-                                            Cancel</x-policy-ui-button-cancel>
+                                        <x-policy-ui-button-cancel route="{{ route('policy-ui.resource.index') }}">Cancel</x-policy-ui-button-cancel>
                                         <x-policy-ui-button-submit>Create</x-policy-ui-button-submit>
                                     </div>
                                 </div>

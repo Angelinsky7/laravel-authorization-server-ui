@@ -1,11 +1,11 @@
 @layer components {
-  .autocomplete-panel {
+  .policy-ui-autocomplete-panel {
     @apply bg-white text-black;
   }
-  .autocomplete-option:not([disabled]) {
+  .policy-ui-autocomplete-option:not([disabled]) {
     @apply text-black hover:text-white hover:bg-gray-600;
   }
-  .option-active:not([disabled]) {
+  .policy-ui-option-active:not([disabled]) {
     @apply text-white bg-gray-600;
   }
 }

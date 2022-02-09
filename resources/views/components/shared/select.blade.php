@@ -14,7 +14,7 @@
                    x-on:keydown.enter.stop.prevent="selectOption()"
                    x-on:keydown.arrow-up.prevent="focusPreviousOption()"
                    x-on:keydown.arrow-down.prevent="focusNextOption()"
-                   class="autocomplete-input mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md border-gray-300"
+                   class="policy-ui-autocomplete-input mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md border-gray-300"
                    data-placeholder="{{ $placeholder }}" aria-invalid="false" aria-required="{{ $required }}"
                    autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
                    aria-haspopup="true" />
@@ -28,7 +28,7 @@
         <div x-ref="popup"
              x-show="panelVisible"
              @class([
-                 'autocomplete-panel overflow-auto rounded-md flex flex-col border border-black shadow-black drop-shadow-autocomplete bg-white z-50',
+                 'policy-ui-autocomplete-panel overflow-auto rounded-md flex flex-col border border-black shadow-black drop-shadow-autocomplete bg-white z-50',
                  $panelMaxHeight => $panelMaxHeight != null,
              ])
              x-transition:leave="transition ease-in duration-75"
@@ -39,10 +39,10 @@
              x-on:keydown.arrow-down.prevent="focusNextOption()"
              x-cloak>
             <template x-for="(option, index) in options" :key="index">
-                <div class="autocomplete-option min-h-[29px] h-[29px] leading-[29px] whitespace-nowrap overflow-hidden text-ellipsis p-0 px-[10px] text-left no-underlines relative outline-none flex flex-row max-w-full box-border items-center select-none"
+                <div class="policy-ui-autocomplete-option min-h-[29px] h-[29px] leading-[29px] whitespace-nowrap overflow-hidden text-ellipsis p-0 px-[10px] text-left no-underlines relative outline-none flex flex-row max-w-full box-border items-center select-none"
                      tabindex="0" role="option"
                      x-on:click="selectOption(option)"
-                     x-bind:class="{'option-active': config.isOptionActive(focusedOptionIndex, index)}"
+                     x-bind:class="{'policy-ui-option-active': config.isOptionActive(focusedOptionIndex, index)}"
                      x-bind:data="config.getOptionValue(option)"
                      x-bind:disabled="config.isOptionDisabled(option)"
                      x-bind:aria-disabled="config.isOptionDisabled(option)">

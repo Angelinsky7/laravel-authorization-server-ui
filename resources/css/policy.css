@@ -1,6 +1,9 @@
+@import './variables.css';
+
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import './components/button.css';
 @import './components/autocomplete.css';
 
 [x-cloak] {

@@ -1,0 +1,205 @@
+@layer components {
+  .policy-ui-button-base {
+    @apply inline-flex justify-center py-2 px-4 text-sm font-semibold rounded-md;
+  }
+
+  .policy-ui-button-basic {
+    @apply border-2 border-transparent bg-transparent;
+
+    &.policy-ui-color-basic {
+      @apply hover:bg-policy-ui-basic-100 hover:bg-policy-ui-basic-200 focus:bg-policy-ui-basic-300;
+    }
+    &.policy-ui-color-primary {
+      @apply text-policy-ui-primary-500 hover:bg-policy-ui-primary-200 focus:bg-policy-ui-primary-300;
+    }
+    &.policy-ui-color-secondary {
+      @apply text-policy-ui-secondary-500 hover:bg-policy-ui-secondary-200 focus:bg-policy-ui-secondary-300;
+    }
+    &.policy-ui-color-alert {
+      @apply text-policy-ui-alert-500 hover:bg-policy-ui-alert-200 focus:bg-policy-ui-alert-300;
+    }
+    &.policy-ui-color-warning {
+      @apply text-policy-ui-warning-500 hover:bg-policy-ui-warning-200 focus:bg-policy-ui-warning-300;
+    }
+
+    &.policy-ui-disabled {
+      @apply bg-transparent text-gray-500 hover:bg-transparent focus:bg-transparent shadow-none !important;
+    }
+  }
+
+  .policy-ui-button-raised {
+    @apply border-2 border-transparent bg-transparent shadow-sm;
+
+    &.policy-ui-color-basic {
+      @apply border-policy-ui-basic-500 bg-policy-ui-basic-500 text-white hover:bg-policy-ui-basic-600 focus:bg-policy-ui-basic-400 shadow-black;
+    }
+    &.policy-ui-color-primary {
+      @apply border-policy-ui-primary-500 bg-policy-ui-primary-500 text-white hover:bg-policy-ui-primary-600 focus:bg-policy-ui-primary-400 shadow-black;
+    }
+    &.policy-ui-color-secondary {
+      @apply border-policy-ui-secondary-500 bg-policy-ui-secondary-500 text-white hover:bg-policy-ui-secondary-600 focus:bg-policy-ui-secondary-400 shadow-black;
+    }
+    &.policy-ui-color-alert {
+      @apply border-policy-ui-alert-500 bg-policy-ui-alert-500 text-white hover:bg-policy-ui-alert-600 focus:bg-policy-ui-alert-400 shadow-black;
+    }
+    &.policy-ui-color-warning {
+      @apply border-policy-ui-warning-500 bg-policy-ui-warning-500 text-black hover:bg-policy-ui-warning-600 focus:bg-policy-ui-warning-400 shadow-black;
+    }
+
+    &.policy-ui-disabled {
+      @apply border-policy-ui-basic-500 bg-policy-ui-basic-500 text-gray-300 hover:bg-policy-ui-basic-500 focus:bg-policy-ui-basic-500 shadow-none !important;
+    }
+  }
+
+  .policy-ui-button-stroked {
+    @apply border-2 bg-transparent;
+
+    &.policy-ui-color-basic {
+      @apply border-policy-ui-basic-300 text-black hover:bg-policy-ui-basic-500 focus:bg-policy-ui-basic-400 shadow-black;
+    }
+    &.policy-ui-color-primary {
+      @apply border-policy-ui-basic-300 text-policy-ui-primary-500 hover:bg-policy-ui-primary-200 focus:bg-policy-ui-primary-300;
+    }
+    &.policy-ui-color-secondary {
+      @apply border-policy-ui-basic-300 text-policy-ui-secondary-500 hover:bg-policy-ui-secondary-200 focus:bg-policy-ui-secondary-300;
+    }
+    &.policy-ui-color-alert {
+      @apply border-policy-ui-basic-300 text-policy-ui-alert-500 hover:bg-policy-ui-alert-200 focus:bg-policy-ui-alert-300;
+    }
+    &.policy-ui-color-warning {
+      @apply border-policy-ui-basic-300 text-policy-ui-warning-500 hover:bg-policy-ui-warning-200 focus:bg-policy-ui-warning-300 focus:text-black;
+    }
+
+    &.policy-ui-disabled {
+      @apply bg-transparent border-policy-ui-basic-100 text-gray-500 hover:bg-transparent focus:bg-transparent shadow-none !important;
+    }
+  }
+
+  .policy-ui-button-flat {
+    @apply border-2 border-transparent bg-transparent;
+
+    &.policy-ui-color-basic {
+      @apply border-policy-ui-basic-500 bg-policy-ui-basic-500 bg-policy-ui-basic-500 text-white hover:bg-policy-ui-basic-600 hover:border-policy-ui-basic-600 focus:bg-policy-ui-basic-400;
+    }
+    &.policy-ui-color-primary {
+      @apply bg-policy-ui-basic-500 border-policy-ui-primary-500 bg-policy-ui-primary-500 text-white hover:bg-policy-ui-primary-600 hover:border-policy-ui-primary-600 focus:bg-policy-ui-primary-400 focus:border-policy-ui-primary-400;
+    }
+    &.policy-ui-color-secondary {
+      @apply bg-policy-ui-basic-500 border-policy-ui-secondary-500 bg-policy-ui-secondary-500 text-white hover:bg-policy-ui-secondary-600 hover:border-policy-ui-secondary-600 focus:bg-policy-ui-secondary-400 focus:border-policy-ui-secondary-400;
+    }
+    &.policy-ui-color-alert {
+      @apply bg-policy-ui-basic-500 border-policy-ui-alert-500 bg-policy-ui-alert-500 text-white hover:bg-policy-ui-alert-600 hover:border-policy-ui-alert-600 focus:bg-policy-ui-alert-400 focus:border-policy-ui-alert-400;
+    }
+    &.policy-ui-color-warning {
+      @apply bg-policy-ui-basic-500 border-policy-ui-warning-500 bg-policy-ui-warning-500 text-black hover:bg-policy-ui-warning-600 hover:border-policy-ui-warning-600 focus:bg-policy-ui-warning-400 focus:border-policy-ui-warning-400;
+    }
+
+    &.policy-ui-disabled {
+      @apply border-policy-ui-basic-500 bg-policy-ui-basic-500 bg-policy-ui-basic-500 text-gray-300 hover:bg-policy-ui-basic-500 focus:bg-policy-ui-basic-500 shadow-none !important;
+    }
+  }
+
+  .policy-ui-button-icon {
+    @apply py-1 px-1 rounded-full border-transparent bg-transparent;
+
+    &.policy-ui-color-basic {
+      @apply focus:bg-policy-ui-basic-300;
+
+      & > svg {
+        @apply text-black;
+      }
+    }
+    &.policy-ui-color-primary {
+      @apply focus:bg-policy-ui-primary-300;
+
+      & > svg {
+        @apply text-policy-ui-primary-500;
+      }
+    }
+    &.policy-ui-color-secondary {
+      @apply focus:bg-policy-ui-secondary-300;
+
+      & > svg {
+        @apply text-policy-ui-secondary-500;
+      }
+    }
+    &.policy-ui-color-alert {
+      @apply focus:bg-policy-ui-alert-300;
+
+      & > svg {
+        @apply text-policy-ui-alert-500;
+      }
+    }
+    &.policy-ui-color-warning {
+      @apply focus:bg-policy-ui-warning-300;
+
+      & > svg {
+        @apply text-policy-ui-warning-500;
+      }
+
+      &:focus > svg {
+        @apply text-black;
+      }
+    }
+
+    &.policy-ui-disabled {
+      @apply bg-transparent  hover:bg-transparent focus:bg-transparent shadow-none !important;
+
+      & > svg {
+        @apply text-gray-300 !important;
+      }
+    }
+  }
+
+  .policy-ui-button-mini-fab {
+    @apply py-1 px-1 rounded-full border-transparent;
+
+    &.policy-ui-color-basic {
+      @apply bg-policy-ui-basic-500 text-white hover:bg-policy-ui-basic-600 focus:bg-policy-ui-basic-400;
+
+      & > svg {
+        @apply text-white;
+      }
+    }
+    &.policy-ui-color-primary {
+      @apply bg-policy-ui-primary-500 text-white hover:bg-policy-ui-primary-600 focus:bg-policy-ui-primary-400;
+
+      & > svg {
+        @apply text-black;
+      }
+    }
+    &.policy-ui-color-secondary {
+      @apply bg-policy-ui-secondary-500 text-white hover:bg-policy-ui-secondary-600 focus:bg-policy-ui-secondary-400;
+
+      & > svg {
+        @apply text-black;
+      }
+    }
+    &.policy-ui-color-alert {
+      @apply bg-policy-ui-alert-500 text-white hover:bg-policy-ui-alert-600 focus:bg-policy-ui-alert-400;
+
+      & > svg {
+        @apply text-black;
+      }
+    }
+    &.policy-ui-color-warning {
+      @apply bg-policy-ui-warning-500 text-white hover:bg-policy-ui-warning-600 focus:bg-policy-ui-warning-400;
+
+      & > svg {
+        @apply text-black;
+      }
+
+      &:focus > svg {
+        @apply text-black;
+      }
+    }
+
+    &.policy-ui-disabled {
+      @apply bg-policy-ui-basic-400 hover:bg-policy-ui-basic-400 focus:bg-policy-ui-basic-400 shadow-none !important;
+
+      & > svg {
+        @apply text-policy-ui-basic-300 !important;
+      }
+    }
+  }
+}

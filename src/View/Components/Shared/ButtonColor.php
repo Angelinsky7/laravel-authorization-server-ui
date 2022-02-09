@@ -3,8 +3,9 @@
 namespace Darkink\AuthorizationServerUI\View\Components\Shared;
 
 enum ButtonColor : string {
-    case GREEN = 'green';
-    case BLUE = 'blue';
-    case RED = 'red';
-    case YELLOW = 'yellow';
+    case Basic = 'basic';
+    case Primary = 'primary';
+    case Secondary = 'secondary';
+    case Alert = 'alert';
+    case Warning = 'warning';
 }

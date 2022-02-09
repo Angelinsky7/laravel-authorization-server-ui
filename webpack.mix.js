@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/policy.js', 'public/js').postCss('resources/css/policy.css', 'public/css', [
     require('postcss-import'),
+    require('tailwindcss/nesting'),
     require('tailwindcss'),
     require('autoprefixer'),
 ]);

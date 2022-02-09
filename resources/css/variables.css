@@ -1,0 +1,51 @@
+:root {
+  --policy-ui-basic-100: theme('colors.gray.100');
+  --policy-ui-basic-200: theme('colors.gray.200');
+  --policy-ui-basic-300: theme('colors.gray.300');
+  --policy-ui-basic-400: theme('colors.gray.400');
+  --policy-ui-basic-500: theme('colors.gray.500');
+  --policy-ui-basic-600: theme('colors.gray.600');
+  --policy-ui-basic-700: theme('colors.gray.700');
+  --policy-ui-basic-800: theme('colors.gray.800');
+  --policy-ui-basic-900: theme('colors.gray.900');
+
+  --policy-ui-primary-100: theme('colors.blue.100');
+  --policy-ui-primary-200: theme('colors.blue.200');
+  --policy-ui-primary-300: theme('colors.blue.300');
+  --policy-ui-primary-400: theme('colors.blue.400');
+  --policy-ui-primary-500: theme('colors.blue.500');
+  --policy-ui-primary-600: theme('colors.blue.600');
+  --policy-ui-primary-700: theme('colors.blue.700');
+  --policy-ui-primary-800: theme('colors.blue.800');
+  --policy-ui-primary-900: theme('colors.blue.900');
+
+  --policy-ui-secondary-100: theme('colors.purple.100');
+  --policy-ui-secondary-200: theme('colors.purple.200');
+  --policy-ui-secondary-300: theme('colors.purple.300');
+  --policy-ui-secondary-400: theme('colors.purple.400');
+  --policy-ui-secondary-500: theme('colors.purple.500');
+  --policy-ui-secondary-600: theme('colors.purple.600');
+  --policy-ui-secondary-700: theme('colors.purple.700');
+  --policy-ui-secondary-800: theme('colors.purple.800');
+  --policy-ui-secondary-900: theme('colors.purple.900');
+
+  --policy-ui-alert-100: theme('colors.red.100');
+  --policy-ui-alert-200: theme('colors.red.200');
+  --policy-ui-alert-300: theme('colors.red.300');
+  --policy-ui-alert-400: theme('colors.red.400');
+  --policy-ui-alert-500: theme('colors.red.500');
+  --policy-ui-alert-600: theme('colors.red.600');
+  --policy-ui-alert-700: theme('colors.red.700');
+  --policy-ui-alert-800: theme('colors.red.800');
+  --policy-ui-alert-900: theme('colors.red.900');
+
+  --policy-ui-warning-100: theme('colors.yellow.100');
+  --policy-ui-warning-200: theme('colors.yellow.200');
+  --policy-ui-warning-300: theme('colors.yellow.300');
+  --policy-ui-warning-400: theme('colors.yellow.400');
+  --policy-ui-warning-500: theme('colors.yellow.500');
+  --policy-ui-warning-600: theme('colors.yellow.600');
+  --policy-ui-warning-700: theme('colors.yellow.700');
+  --policy-ui-warning-800: theme('colors.yellow.800');
+  --policy-ui-warning-900: theme('colors.yellow.900');
+}

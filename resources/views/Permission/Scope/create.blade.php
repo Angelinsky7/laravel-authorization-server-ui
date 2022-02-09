@@ -62,16 +62,14 @@
                                                     Resource
                                                 </label>
                                                 <div class="mt-1">
-                                                    <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]"
-                                                                                 :value="old('resource')" />
+                                                    <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]" :value="old('resource')" />
                                                     <x-policy-ui-form-field-error field="resource" />
 
                                                 </div>
                                             </div>
 
                                             <div class="col-span-6 sm:col-span-6">
-                                                <label for="description"
-                                                       class="block text-sm font-medium text-gray-700">
+                                                <label for="description" class="block text-sm font-medium text-gray-700">
                                                     Scopes
                                                 </label>
                                                 <div class="mt-1">
@@ -87,9 +85,8 @@
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 text-right sm:px-6">
-                                        <x-policy-ui-button-cancel route="{{ route('policy-ui.role.index') }}">Cancel
-                                        </x-policy-ui-button-cancel>
-                                        <x-policy-ui-button-submit>Create</x-policy-ui-button-submit>
+                                        <x-policy-ui-shared:link genre="stroked" href="{{ route('policy-ui.permission.index') }}">Cancel</x-policy-ui-shared:link>
+                                        <x-policy-ui-shared:button genre="flat" color="primary" type="submit">Create</x-policy-ui-shared:button>
                                     </div>
                                 </div>
                             </form>

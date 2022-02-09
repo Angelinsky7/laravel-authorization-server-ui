@@ -1,6 +1,6 @@
 {
     "/public/js/policy.js": "/public/js/policy.js",
-    "/public/css/policy.css": "/public/css/policy.css",
     "/resources/css/vendor/laravel-authorization-ui-server.css": "/resources/css/vendor/laravel-authorization-ui-server.css",
-    "/resources/js/vendor/laravel-authorization-ui-server.js": "/resources/js/vendor/laravel-authorization-ui-server.js"
+    "/resources/js/vendor/laravel-authorization-ui-server.js": "/resources/js/vendor/laravel-authorization-ui-server.js",
+    "/public/css/policy.css": "/public/css/policy.css"
 }
