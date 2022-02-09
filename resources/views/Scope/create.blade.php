@@ -51,9 +51,8 @@
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 text-right sm:px-6">
-                                        <x-policy-ui-button-cancel route="{{ route('policy-ui.scope.index') }}">Cancel
-                                        </x-policy-ui-button-cancel>
-                                        <x-policy-ui-button-submit>Create</x-policy-ui-button-submit>
+                                        <x-policy-ui-shared:link href="{{ route('policy-ui.scope.index') }}">Cancel</x-policy-ui-shared:link>
+                                        <x-policy-ui-shared:button genre="raised" color="primary" type="submit">Create</x-policy-ui-shared:button>
                                     </div>
                                 </div>
                             </form>

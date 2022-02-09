@@ -13,11 +13,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex flex-row items-center justify-end">
                         <x-policy-ui-table-search action="{{ route('policy-ui.role.index') }}" />
-                        <form action="{{ route('policy-ui.role.create') }}" method="GET">
-                            @csrf
-                            <x-policy-ui-button-stroked color="blue" caption="Create new Role">
-                            </x-policy-ui-button-stroked>
-                        </form>
+                        <x-policy-ui-shared:link genre="raised" color="primary" href="{{ route('policy-ui.role.create') }}" class="ml-2">Create new Role</x-policy-ui-shared:link>
                     </div>
 
                     <div class="my-2"></div>
