@@ -38,23 +38,23 @@ $modal = request()->get('modal');
                                         </h3>
                                         <div class="mt-2">
                                             <p class="text-sm text-gray-500">
-                                                Are you sure you want to delete this Scope '{{ $item->name }}' ? This
-                                                action cannot be undone.
+                                                Are you sure you want to delete this Scope '{{ $item->name }}' ? <br />
+                                                This action cannot be undone.
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="px-4 py-3 text-right sm:px-6">
-                                    <x-policy-ui-button-cancel route="{{ route('policy-ui.scope.index') }}">Cancel
-                                    </x-policy-ui-button-cancel>
-                                    <x-policy-ui-button-submit color="alert">Delete</x-policy-ui-button-submit>
+                                    <x-policy-ui-shared:link href="{{ route('policy-ui.scope.index') }}">Cancel</x-policy-ui-shared:link>
+                                    <x-policy-ui-shared:button genre="raised" color="alert" type="submit">Delete</x-policy-ui-shared:button>
                                 </div>
-                        </div>
-                        </form>
-                    </div>
-                </div>
 
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

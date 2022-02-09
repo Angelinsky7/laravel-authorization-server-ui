@@ -63,6 +63,9 @@
                                             <x-policy-ui-dropdown>¨
                                                 <x-slot name="trigger">
                                                     <x-policy-ui-button-dot></x-policy-ui-button-dot>
+                                                    <x-policy-ui-shared:button>
+                                                        <x-policy-ui-shared:icon>dots-vertical</x-policy-ui-shared:icon>
+                                                    </x-policy-ui-shared:button>
                                                 </x-slot>
                                                 <x-slot name="content">
                                                     <x-dropdown-link
