@@ -22,15 +22,15 @@
                         <x-slot name="header">
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <x-policy-ui-table-sort-header class="justify-start" column="name">
+                                <x-policy-ui-shared:table-sort-header class="justify-start" column="name">
                                     {{ _('Name') }}
-                                </x-policy-ui-table-sort-header>
+                                </x-policy-ui-shared:table-sort-header>
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <x-policy-ui-table-sort-header class="justify-start" column="description">
+                                <x-policy-ui-shared:table-sort-header class="justify-start" column="description">
                                     {{ _('Description') }}
-                                </x-policy-ui-table-sort-header>
+                                </x-policy-ui-shared:table-sort-header>
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -64,24 +64,24 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             @if (!$item->system)
-                                                <x-policy-ui-dropdown>¨
+                                                <x-policy-ui-shared:dropdown>¨
                                                     <x-slot name="trigger">
                                                         <x-policy-ui-shared:button genre="icon">
                                                             <x-policy-ui-shared:icon size="small">dots-vertical</x-policy-ui-shared:icon>
                                                         </x-policy-ui-shared:button>
                                                     </x-slot>
                                                     <x-slot name="content">
-                                                        <x-dropdown-link
+                                                        <x-policy-ui-shared:dropdown-link
                                                                          :href="route('policy-ui.role.edit', ['role' => $item->id])">
                                                             {{ __('Edit') }}
-                                                        </x-dropdown-link>
-                                                        <x-dropdown-link
+                                                        </x-policy-ui-shared:dropdown-link>
+                                                        <x-policy-ui-shared:dropdown-link
                                                                          :href="route('policy-ui.role.delete', ['role' => $item->id])"
                                                                          data-remote data-modal>
                                                             {{ __('Delete') }}
-                                                        </x-dropdown-link>
+                                                        </x-policy-ui-shared:dropdown-link>
                                                     </x-slot>
-                                                </x-policy-ui-dropdown>
+                                                </x-policy-ui-shared:dropdown>
                                             @endif
                                         </td>
                                     </tr>

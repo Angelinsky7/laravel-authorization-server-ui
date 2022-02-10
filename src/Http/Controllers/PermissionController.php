@@ -8,6 +8,7 @@ use Darkink\AuthorizationServer\Models\DecisionStrategy;
 use Darkink\AuthorizationServer\Models\Permission;
 use Darkink\AuthorizationServer\Models\ScopePermission;
 use Darkink\AuthorizationServer\Repositories\PermissionRepository;
+use Darkink\AuthorizationServer\Repositories\ScopePermissionRepository;
 use Darkink\AuthorizationServerUI\Traits\HasSearch;
 use Darkink\AuthorizationServerUI\Traits\HasSorting;
 use Exception;
@@ -18,16 +19,20 @@ class PermissionController
 
     use HasSorting, HasSearch;
 
-    protected PermissionRepository $repo;
+    protected PermissionRepository $permissionRepository;
+    protected ScopePermissionRepository $scopePermissionRepository;
 
-    public function __construct(PermissionRepository $repo)
-    {
-        $this->repo = $repo;
+    public function __construct(
+        PermissionRepository $permissionRepository,
+        ScopePermissionRepository $scopePermissionRepository
+    ) {
+        $this->permissionRepository = $permissionRepository;
+        $this->scopePermissionRepository = $scopePermissionRepository;
     }
 
     public function index()
     {
-        $items = $this->repo->gets();
+        $items = $this->permissionRepository->gets();
         $items = $this->addSearchToQueryModel($items);
         $items = $this->addOrderByToQueryModel($items);
         $items = $items->paginate(25)->withQueryString();
@@ -78,7 +83,7 @@ class PermissionController
 
         switch (get_class($request)) {
             case StoreScopePermissionRequest::class:
-                $this->repo->createScope(
+                $this->scopePermissionRepository->create(
                     $validated['name'],
                     $validated['description'],
                     $validated['decision_strategy'],
@@ -124,7 +129,7 @@ class PermissionController
 
         switch (get_class($permission->permission)) {
             case ScopePermission::class:
-                $this->repo->updateScope(
+                $this->scopePermissionRepository->update(
                     $permission->permission,
                     $validated['name'],
                     $validated['description'],
@@ -152,7 +157,7 @@ class PermissionController
     public function destroy($id)
     {
         $permission = Permission::findOrFail($id);
-        $this->repo->delete($permission);
+        $this->permissionRepository->delete($permission);
 
         request()->session()->flash('success_message', 'Permission deleted.');
         return redirect()->route('policy-ui.permission.index');
