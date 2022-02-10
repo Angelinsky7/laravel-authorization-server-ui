@@ -13,10 +13,10 @@ class ManySelector extends Component
 
     public string | null $panelMaxHeight;
 
-    public array $options;
-    public array | null $values;
+    public mixed $options;
+    public mixed $values;
 
-    public function __construct(string $id, string $name, array | null $values, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, array $options = [])
+    public function __construct(string $id, string $name, mixed $values, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, mixed $options = [])
     {
         $this->id = $id;
         $this->name = $name;
@@ -26,7 +26,22 @@ class ManySelector extends Component
         $this->panelMaxHeight = $panelMaxHeight;
 
         $this->options = $options;
-        $this->values = $values;
+        $this->values = $this->findCorrectValuesFromOptions($values, $options);
+    }
+
+    protected function findCorrectValuesFromOptions(mixed $values, mixed $options)
+    {
+        if ($values == null || count($values) == 0) {
+            return $values;
+        }
+        if ($options == null || count($options) == 0) {
+            return $values;
+        }
+        if (is_object($values[0])) {
+            return $values;
+        }
+        $result = array_filter($options, fn ($p) => in_array($p['value'], $values));
+        return array_values($result);
     }
 
     public function render()

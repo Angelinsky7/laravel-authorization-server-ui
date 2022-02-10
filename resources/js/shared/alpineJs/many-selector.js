@@ -9,12 +9,33 @@ function manySelector(config) {
         // emptyOptionsMessage: null,
         // filterValue(value) { return value.toString().toLowerCase(); },
         // filterOptions(options, filterValue) { return options.filter(p => this.getOptionCaption(p).toLowerCase().includes(filterValue)); },
-        // getOptionCaption(option) { return option.caption ?? option; },
-        // getOptionValue(option) { return option.value ?? option; },
+        getOptionCaption(option) { return option.caption ?? option; },
+        getOptionValue(option) { return option.value ?? option; },
         // isOptionDisabled(option) { return option.disabled ?? false; },
         // isOptionActive(focusedOptionIndex, index) { return focusedOptionIndex === index; },
         // findOptionByValue(options, value) { return options.find(p => this.getOptionValue(p) == value); }
     };
+
+    var getItemFrom = function (src, idsToRemove, config) {
+        return src.filter(p => idsToRemove.includes(config.getOptionValue(p).toString()));
+    };
+
+    var removeItemFrom = function (src, idsToRemove, config) {
+        for (let i = idsToRemove.length - 1; i >= 0; --i) {
+            let itemToRemove = src.find(p => config.getOptionValue(p) == idsToRemove[i]);
+            let indexToRemove = src.indexOf(itemToRemove);
+            src.splice(indexToRemove, 1);
+        }
+    };
+
+    var filterArrayWithArray = function (src, dest, config) {
+        let allIds = dest.map(p => config.getOptionValue(p));
+        return src.filter(p => !allIds.includes(config.getOptionValue(p)));
+    };
+
+    // var moveArrayToArray = fucntion(src, dest, config){
+
+    // }
 
     return {
         config: this.config = Object.assign({}, defaultConfig, config),
@@ -29,11 +50,19 @@ function manySelector(config) {
         // initialValueControl: null,
         // initialOption: null,
 
-        addSelectedIsDisabled() { return !this.available_scopes_selected || this.available_scopes_selected.length == 0; },
+        canAddSelected() { return !this.available_scopes_selected || this.available_scopes_selected.length == 0; },
+        canAddAll() { return !this.options || this.options.length == 0; },
+        canRemoveSelected() { return !this.selected_scopes_selected || this.selected_scopes_selected.length == 0; },
+        canRemoveAll() { return !this.values || this.values.length == 0; },
+
+        getIdOrNameFieldValue(prefix, index){
+            return `${prefix}[${index}]`;
+        },
 
         init() {
-            this.options = this.config.options ?? [];
             this.values = this.config.values ?? [];
+            this.options = filterArrayWithArray(this.config.options ?? [], this.values, this.config);
+
             // if (this.config.autoActiveFirstOption) { this.focusedOptionIndex = 0; }
 
             // this.initialValueControl = this.$refs.input.value;
@@ -57,14 +86,31 @@ function manySelector(config) {
         },
         addSelected() {
             if (!this.available_scopes_selected || this.available_scopes_selected.length == 0) { return; }
-            let itemsToMove = this.options.filter(p => this.available_scopes_selected.includes(p.value.toString()));
+            let itemsToMove = getItemFrom(this.options, this.available_scopes_selected, this.config);
             this.values.push(...itemsToMove);
-            for (let i = this.available_scopes_selected.length - 1; i >= 0; --i) {
-                let itemToRemove = this.options.find(p => p.value == this.available_scopes_selected[i]);
-                let indexToRemove = this.options.indexOf(itemToRemove);
-                this.options.splice(indexToRemove, 1);
-            }
+            removeItemFrom(this.options, this.available_scopes_selected, this.config);
             this.available_scopes_selected = [];
+        },
+        addAll() {
+            if (!this.options || this.options.length == 0) { return; }
+            let allIds = this.options.map(p => this.config.getOptionValue(p).toString());
+            let itemsToMove = getItemFrom(this.options, allIds, this.config);
+            this.values.push(...itemsToMove);
+            removeItemFrom(this.options, allIds, this.config);
+        },
+        removeSelected() {
+            if (!this.selected_scopes_selected || this.selected_scopes_selected.length == 0) { return; }
+            let itemsToMove = getItemFrom(this.values, this.selected_scopes_selected, this.config);
+            this.options.push(...itemsToMove);
+            removeItemFrom(this.values, this.selected_scopes_selected, this.config);
+            this.selected_scopes_selected = [];
+        },
+        removeAll() {
+            if (!this.values || this.values.length == 0) { return; }
+            let allIds = this.values.map(p => this.config.getOptionValue(p).toString());
+            let itemsToMove = getItemFrom(this.values, allIds, this.config);
+            this.options.push(...itemsToMove);
+            removeItemFrom(this.values, allIds, this.config);
         }
     };
 

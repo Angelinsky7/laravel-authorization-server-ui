@@ -3313,17 +3313,57 @@ function manySelector(config) {
   var initialized = false;
   var defaultConfig = {
     options: [],
-    values: [] // autoActiveFirstOption: false,
+    values: [],
+    // autoActiveFirstOption: false,
     // emptyOptionsMessage: null,
     // filterValue(value) { return value.toString().toLowerCase(); },
     // filterOptions(options, filterValue) { return options.filter(p => this.getOptionCaption(p).toLowerCase().includes(filterValue)); },
-    // getOptionCaption(option) { return option.caption ?? option; },
-    // getOptionValue(option) { return option.value ?? option; },
-    // isOptionDisabled(option) { return option.disabled ?? false; },
+    getOptionCaption: function getOptionCaption(option) {
+      var _option$caption;
+
+      return (_option$caption = option.caption) !== null && _option$caption !== void 0 ? _option$caption : option;
+    },
+    getOptionValue: function getOptionValue(option) {
+      var _option$value;
+
+      return (_option$value = option.value) !== null && _option$value !== void 0 ? _option$value : option;
+    } // isOptionDisabled(option) { return option.disabled ?? false; },
     // isOptionActive(focusedOptionIndex, index) { return focusedOptionIndex === index; },
     // findOptionByValue(options, value) { return options.find(p => this.getOptionValue(p) == value); }
 
   };
+
+  var getItemFrom = function getItemFrom(src, idsToRemove, config) {
+    return src.filter(function (p) {
+      return idsToRemove.includes(config.getOptionValue(p).toString());
+    });
+  };
+
+  var removeItemFrom = function removeItemFrom(src, idsToRemove, config) {
+    var _loop = function _loop(i) {
+      var itemToRemove = src.find(function (p) {
+        return config.getOptionValue(p) == idsToRemove[i];
+      });
+      var indexToRemove = src.indexOf(itemToRemove);
+      src.splice(indexToRemove, 1);
+    };
+
+    for (var i = idsToRemove.length - 1; i >= 0; --i) {
+      _loop(i);
+    }
+  };
+
+  var filterArrayWithArray = function filterArrayWithArray(src, dest, config) {
+    var allIds = dest.map(function (p) {
+      return config.getOptionValue(p);
+    });
+    return src.filter(function (p) {
+      return !allIds.includes(config.getOptionValue(p));
+    });
+  }; // var moveArrayToArray = fucntion(src, dest, config){
+  // }
+
+
   return {
     config: this.config = Object.assign({}, defaultConfig, config),
     // panelVisible: false,
@@ -3335,14 +3375,26 @@ function manySelector(config) {
     // focusedOptionIndex: -1,
     // initialValueControl: null,
     // initialOption: null,
-    addSelectedIsDisabled: function addSelectedIsDisabled() {
+    canAddSelected: function canAddSelected() {
       return !this.available_scopes_selected || this.available_scopes_selected.length == 0;
     },
+    canAddAll: function canAddAll() {
+      return !this.options || this.options.length == 0;
+    },
+    canRemoveSelected: function canRemoveSelected() {
+      return !this.selected_scopes_selected || this.selected_scopes_selected.length == 0;
+    },
+    canRemoveAll: function canRemoveAll() {
+      return !this.values || this.values.length == 0;
+    },
+    getIdOrNameFieldValue: function getIdOrNameFieldValue(prefix, index) {
+      return "".concat(prefix, "[").concat(index, "]");
+    },
     init: function init() {
-      var _this$config$options, _this$config$values;
+      var _this$config$values, _this$config$options;
 
-      this.options = (_this$config$options = this.config.options) !== null && _this$config$options !== void 0 ? _this$config$options : [];
-      this.values = (_this$config$values = this.config.values) !== null && _this$config$values !== void 0 ? _this$config$values : []; // if (this.config.autoActiveFirstOption) { this.focusedOptionIndex = 0; }
+      this.values = (_this$config$values = this.config.values) !== null && _this$config$values !== void 0 ? _this$config$values : [];
+      this.options = filterArrayWithArray((_this$config$options = this.config.options) !== null && _this$config$options !== void 0 ? _this$config$options : [], this.values, this.config); // if (this.config.autoActiveFirstOption) { this.focusedOptionIndex = 0; }
       // this.initialValueControl = this.$refs.input.value;
       // if (this.initialValueControl && this.options.length != 0) {
       //     this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
@@ -3362,34 +3414,66 @@ function manySelector(config) {
       initialized = true;
     },
     addSelected: function addSelected() {
-      var _this = this,
-          _this$values;
+      var _this$values;
 
       if (!this.available_scopes_selected || this.available_scopes_selected.length == 0) {
         return;
       }
 
-      var itemsToMove = this.options.filter(function (p) {
-        return _this.available_scopes_selected.includes(p.value.toString());
-      });
+      var itemsToMove = getItemFrom(this.options, this.available_scopes_selected, this.config);
 
       (_this$values = this.values).push.apply(_this$values, _toConsumableArray(itemsToMove));
 
-      var _loop = function _loop(i) {
-        var itemToRemove = _this.options.find(function (p) {
-          return p.value == _this.available_scopes_selected[i];
-        });
+      removeItemFrom(this.options, this.available_scopes_selected, this.config);
+      this.available_scopes_selected = [];
+    },
+    addAll: function addAll() {
+      var _this = this,
+          _this$values2;
 
-        var indexToRemove = _this.options.indexOf(itemToRemove);
-
-        _this.options.splice(indexToRemove, 1);
-      };
-
-      for (var i = this.available_scopes_selected.length - 1; i >= 0; --i) {
-        _loop(i);
+      if (!this.options || this.options.length == 0) {
+        return;
       }
 
-      this.available_scopes_selected = [];
+      var allIds = this.options.map(function (p) {
+        return _this.config.getOptionValue(p).toString();
+      });
+      var itemsToMove = getItemFrom(this.options, allIds, this.config);
+
+      (_this$values2 = this.values).push.apply(_this$values2, _toConsumableArray(itemsToMove));
+
+      removeItemFrom(this.options, allIds, this.config);
+    },
+    removeSelected: function removeSelected() {
+      var _this$options;
+
+      if (!this.selected_scopes_selected || this.selected_scopes_selected.length == 0) {
+        return;
+      }
+
+      var itemsToMove = getItemFrom(this.values, this.selected_scopes_selected, this.config);
+
+      (_this$options = this.options).push.apply(_this$options, _toConsumableArray(itemsToMove));
+
+      removeItemFrom(this.values, this.selected_scopes_selected, this.config);
+      this.selected_scopes_selected = [];
+    },
+    removeAll: function removeAll() {
+      var _this2 = this,
+          _this$options2;
+
+      if (!this.values || this.values.length == 0) {
+        return;
+      }
+
+      var allIds = this.values.map(function (p) {
+        return _this2.config.getOptionValue(p).toString();
+      });
+      var itemsToMove = getItemFrom(this.values, allIds, this.config);
+
+      (_this$options2 = this.options).push.apply(_this$options2, _toConsumableArray(itemsToMove));
+
+      removeItemFrom(this.values, allIds, this.config);
     }
   };
 }

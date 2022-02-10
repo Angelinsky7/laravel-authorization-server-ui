@@ -6,6 +6,7 @@
                 'policy-ui-button-stroked' => $genre == \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonType::Stroked,
                 'policy-ui-button-flat' => $genre == \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonType::Flat,
                 'policy-ui-button-icon' => $genre == \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonType::Icon,
+                'policy-ui-button-icon-hover' => $genre == \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonType::IconHover,
                 'policy-ui-button-mini-fab' => $genre == \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonType::MiniFab,
                 'policy-ui-color-basic' => $color == \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonColor::Basic,
                 'policy-ui-color-primary' => $color == \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonColor::Primary,

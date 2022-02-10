@@ -73,12 +73,8 @@
                                                     Scopes
                                                 </label>
                                                 <div class="mt-1">
-
-                                                    {{-- <input id="scopes[0]" name="scopes[]" type="hidden" value="1" /> --}}
-
                                                     <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes')" />
                                                     <x-policy-ui-form-field-error field="scopes" />
-
                                                 </div>
                                             </div>
 

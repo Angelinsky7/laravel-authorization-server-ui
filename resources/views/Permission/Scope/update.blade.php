@@ -63,13 +63,20 @@
                                                     Resource
                                                 </label>
                                                 <div class="mt-1">
-                                                    {{ $item->resource->id }}
-                                                    <x-policy-ui-resource:select id="resource" name="resource"
-                                                                                 autocomplete="resource-name"
-                                                                                 :value="old('resource') ?? $item->resource" />
-
+                                                    {{ $item->resource }}
+                                                    <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]" :value="old('resource') ?? $item->resource" />
                                                     <x-policy-ui-form-field-error field="resource" />
 
+                                                </div>
+                                            </div>
+
+                                            <div class="col-span-6 sm:col-span-6">
+                                                <label for="description" class="block text-sm font-medium text-gray-700">
+                                                    Scopes
+                                                </label>
+                                                <div class="mt-1">
+                                                    <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes" />
+                                                    <x-policy-ui-form-field-error field="scopes" />
                                                 </div>
                                             </div>
 

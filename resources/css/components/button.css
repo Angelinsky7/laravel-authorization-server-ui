@@ -22,7 +22,8 @@
       @apply text-policy-ui-warning-500 hover:bg-policy-ui-warning-200 focus:bg-policy-ui-warning-300;
     }
 
-    &.policy-ui-disabled {
+    &.policy-ui-disabled,
+    &[disabled] {
       @apply bg-transparent text-gray-500 hover:bg-transparent focus:bg-transparent shadow-none !important;
     }
   }
@@ -46,7 +47,8 @@
       @apply border-policy-ui-warning-500 bg-policy-ui-warning-500 text-black hover:bg-policy-ui-warning-600 hover:border-policy-ui-warning-600 focus:bg-policy-ui-warning-400 focus:border-policy-ui-warning-400;
     }
 
-    &.policy-ui-disabled {
+    &.policy-ui-disabled,
+    &[disabled] {
       @apply border-policy-ui-basic-500 bg-policy-ui-basic-500 text-gray-300 hover:bg-policy-ui-basic-500 focus:bg-policy-ui-basic-500 shadow-none !important;
     }
   }
@@ -70,7 +72,8 @@
       @apply border-policy-ui-basic-300 text-policy-ui-warning-500 hover:bg-policy-ui-warning-200 focus:bg-policy-ui-warning-300 focus:text-black;
     }
 
-    &.policy-ui-disabled {
+    &.policy-ui-disabled,
+    &[disabled] {
       @apply bg-transparent border-policy-ui-basic-100 text-gray-500 hover:bg-transparent focus:bg-transparent shadow-none !important;
     }
   }
@@ -94,7 +97,8 @@
       @apply bg-policy-ui-basic-500 border-policy-ui-warning-500 bg-policy-ui-warning-500 text-black hover:bg-policy-ui-warning-600 hover:border-policy-ui-warning-600 focus:bg-policy-ui-warning-400 focus:border-policy-ui-warning-400;
     }
 
-    &.policy-ui-disabled {
+    &.policy-ui-disabled,
+    &[disabled] {
       @apply border-policy-ui-basic-500 bg-policy-ui-basic-500 bg-policy-ui-basic-500 text-gray-300 hover:bg-policy-ui-basic-500 focus:bg-policy-ui-basic-500 shadow-none !important;
     }
   }
@@ -142,8 +146,62 @@
       }
     }
 
-    &.policy-ui-disabled {
+    &.policy-ui-disabled,
+    &[disabled] {
       @apply bg-transparent  hover:bg-transparent focus:bg-transparent shadow-none !important;
+
+      & > svg {
+        @apply text-gray-300 !important;
+      }
+    }
+  }
+
+  .policy-ui-button-icon-hover {
+    @apply py-1 px-1 rounded-full border-transparent bg-transparent;
+
+    &.policy-ui-color-basic {
+      @apply hover:bg-policy-ui-basic-200 focus:bg-policy-ui-basic-300;
+
+      & > svg {
+        @apply text-black;
+      }
+    }
+    &.policy-ui-color-primary {
+      @apply hover:bg-policy-ui-primary-200 focus:bg-policy-ui-primary-300;
+
+      & > svg {
+        @apply text-policy-ui-primary-500;
+      }
+    }
+    &.policy-ui-color-secondary {
+      @apply hover:bg-policy-ui-secondary-200 focus:bg-policy-ui-secondary-300;
+
+      & > svg {
+        @apply text-policy-ui-secondary-500;
+      }
+    }
+    &.policy-ui-color-alert {
+      @apply hover:bg-policy-ui-alert-200 focus:bg-policy-ui-alert-300;
+
+      & > svg {
+        @apply text-policy-ui-alert-500;
+      }
+    }
+    &.policy-ui-color-warning {
+      @apply hover:bg-policy-ui-warning-200 focus:bg-policy-ui-warning-300;
+
+      & > svg {
+        @apply text-policy-ui-warning-500;
+      }
+
+      &:focus > svg {
+        @apply text-black;
+      }
+    }
+
+    &.policy-ui-disabled,
+    &[disabled] {
+      @apply bg-transparent hover:bg-transparent focus:bg-transparent shadow-none !important;
 
       & > svg {
         @apply text-gray-300 !important;
@@ -194,7 +252,8 @@
       }
     }
 
-    &.policy-ui-disabled {
+    &.policy-ui-disabled,
+    &[disabled] {
       @apply bg-policy-ui-basic-400 hover:bg-policy-ui-basic-400 focus:bg-policy-ui-basic-400 shadow-none !important;
 
       & > svg {
