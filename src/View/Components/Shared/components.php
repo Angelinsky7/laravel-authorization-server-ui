@@ -11,6 +11,7 @@ return [
     EditableList::class,
     InputGroup::class,
     InputBase::class,
+    InputTextarea::class,
     InnerFormLayout::class,
     OuterFormLayout::class,
     ActionsFormLayout::class,

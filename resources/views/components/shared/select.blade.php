@@ -1,3 +1,4 @@
+<!-- x-policy-ui-shared:select -->
 <div {{ $attributes }} x-data="window.policy.alpineJs.select({
     options: {{ json_encode($options) }}
 })"

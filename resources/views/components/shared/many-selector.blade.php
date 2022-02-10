@@ -1,3 +1,4 @@
+<!-- x-policy-ui-shared:many-selector -->
 <div {{ $attributes }} x-data="window.policy.alpineJs.manySelector({
     options: {{ json_encode($options) }},
     values: {{ json_encode($values) }}
@@ -10,10 +11,10 @@
     </div>
 
     <div class="flex flex-row w-full">
-        <div class="flex-1">
+        <div class="flex-1 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm p-[1px]">
             <select x-ref="available_scopes"
                     x-model="available_scopes_selected"
-                    name="available_scopes" multiple="multiple" class="w-full h-full">
+                    name="available_scopes" multiple="multiple" class="w-full h-full border-none focus:border-none border-transparent focus:shadow-none focus:ring-transparent">
                 <template x-for="(option, index) in options" :key="index">
                     <option x-bind:value="config.getOptionValue(option)">
                         <span class="inline-block flex-grow overflow-hidden text-ellipsis whitespace-nowrap leading-[29px] text-left"
@@ -51,10 +52,10 @@
 
         </div>
 
-        <div class="flex-1">
+        <div class="flex-1 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm p-[1px]">
             <select x-ref="selected_scopes"
                     x-model="selected_scopes_selected"
-                    name="selected_scopes" multiple="multiple" class="w-full h-full">
+                    name="selected_scopes" multiple="multiple" class="w-full h-full border-none focus:border-none border-transparent focus:shadow-none focus:ring-transparent">
                 <template x-for="(option, index) in values" :key="index">
                     <option x-bind:value="config.getOptionValue(option)">
                         <span class="inline-block flex-grow overflow-hidden text-ellipsis whitespace-nowrap leading-[29px] text-left"
