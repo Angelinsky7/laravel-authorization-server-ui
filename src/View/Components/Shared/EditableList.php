@@ -4,7 +4,7 @@ namespace Darkink\AuthorizationServerUI\View\Components\Shared;
 
 use Illuminate\View\Component;
 
-class ListBox extends Component
+class EditableList extends Component
 {
     public string $id;
     public string $name;
@@ -31,6 +31,6 @@ class ListBox extends Component
 
     public function render()
     {
-        return view('policy-ui::components.shared.list-box');
+        return view('policy-ui::components.shared.editable-list');
     }
 }

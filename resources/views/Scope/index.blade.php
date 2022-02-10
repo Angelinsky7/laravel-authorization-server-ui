@@ -52,7 +52,9 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <x-policy-ui-dropdown>¨
                                                 <x-slot name="trigger">
-                                                    <x-policy-ui-button-dot></x-policy-ui-button-dot>
+                                                    <x-policy-ui-shared:button genre="icon">
+                                                        <x-policy-ui-shared:icon size="small">dots-vertical</x-policy-ui-shared:icon>
+                                                    </x-policy-ui-shared:button>
                                                 </x-slot>
                                                 <x-slot name="content">
                                                     <x-dropdown-link

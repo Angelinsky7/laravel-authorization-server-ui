@@ -66,7 +66,9 @@
                                             @if (!$item->system)
                                                 <x-policy-ui-dropdown>¨
                                                     <x-slot name="trigger">
-                                                        <x-policy-ui-button-dot></x-policy-ui-button-dot>
+                                                        <x-policy-ui-shared:button genre="icon">
+                                                            <x-policy-ui-shared:icon size="small">dots-vertical</x-policy-ui-shared:icon>
+                                                        </x-policy-ui-shared:button>
                                                     </x-slot>
                                                     <x-slot name="content">
                                                         <x-dropdown-link

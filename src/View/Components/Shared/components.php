@@ -8,5 +8,5 @@ return [
     Icon::class,
     Select::class,
     ManySelector::class,
-    ListBox::class
+    EditableList::class
 ];
