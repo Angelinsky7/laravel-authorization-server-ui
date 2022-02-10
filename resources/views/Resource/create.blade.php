@@ -58,6 +58,17 @@
                                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('icon_uri') ? 'border-red-500' : 'border-gray-300' }}">
                                                 <x-policy-ui-form-field-error field="icon_uri" />
                                             </div>
+
+                                            <div class="col-span-6 sm:col-span-6">
+                                                <label for="description" class="block text-sm font-medium text-gray-700">
+                                                    Scopes
+                                                </label>
+                                                <div class="mt-1">
+                                                    <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes')" />
+                                                    <x-policy-ui-form-field-error field="scopes" />
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 text-right sm:px-6">

@@ -5,6 +5,16 @@
         </h2>
     </x-slot>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -15,6 +25,8 @@
                             <form method="POST" action="{{ route('policy-ui.resource.update', ['resource' => $item->id]) }}">
                                 @method('PUT')
                                 @csrf
+                                <input id="id" name="id" value="{{ $item->id }}" type="hidden" />
+
                                 <div class="overflow-hidden">
                                     <div class="px-4 py-5 bg-white sm:p-6">
                                         <div class="grid grid-cols-6 gap-6">
@@ -62,6 +74,17 @@
                                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('icon_uri') ? 'border-red-500' : 'border-gray-300' }}">
                                                 <x-policy-ui-form-field-error field="icon_uri" />
                                             </div>
+
+                                            <div class="col-span-6 sm:col-span-6">
+                                                <label for="description" class="block text-sm font-medium text-gray-700">
+                                                    Scopes
+                                                </label>
+                                                <div class="mt-1">
+                                                    <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes" />
+                                                    <x-policy-ui-form-field-error field="scopes" />
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 text-right sm:px-6">

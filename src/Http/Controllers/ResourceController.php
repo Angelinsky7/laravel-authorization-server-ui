@@ -64,6 +64,7 @@ class ResourceController
     public function update(UpdateResourceRequest $request, Resource $resource)
     {
         $validated = $request->validated();
+
         $this->repo->update(
             $resource,
             $validated['name'],

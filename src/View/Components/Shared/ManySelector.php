@@ -16,7 +16,10 @@ class ManySelector extends Component
     public mixed $options;
     public mixed $values;
 
-    public function __construct(string $id, string $name, mixed $values, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, mixed $options = [])
+    public string $keyValue;
+    public string $keyOption;
+
+    public function __construct(string $id, string $name, mixed $values, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, mixed $options = [], string $keyValue = 'id', string $keyOption = 'value')
     {
         $this->id = $id;
         $this->name = $name;
@@ -24,23 +27,38 @@ class ManySelector extends Component
         $this->required = $required;
 
         $this->panelMaxHeight = $panelMaxHeight;
+        $this->keyValue = $keyValue;
 
         $this->options = $options;
-        $this->values = $this->findCorrectValuesFromOptions($values, $options);
+        $this->keyOption = $keyOption;
+
+        $valuesIds = $this->mapValuesToIds($values, $keyValue);
+        $this->values = $this->useOptionObjectFromIds($valuesIds, $options, $keyOption);
     }
 
-    protected function findCorrectValuesFromOptions(mixed $values, mixed $options)
+    protected function mapValuesToIds($values, $key)
     {
         if ($values == null || count($values) == 0) {
             return $values;
         }
+        if (is_int($values[0])) {
+            return $values;
+        }
+        return array_map(fn ($p) => $p[$key], $values);
+    }
+
+    protected function useOptionObjectFromIds(mixed $valueIds, mixed $options, string $keyOption)
+    {
+
+        if ($valueIds == null || count($valueIds) == 0) {
+            return [];
+        }
+
         if ($options == null || count($options) == 0) {
-            return $values;
+            return [];
         }
-        if (is_object($values[0])) {
-            return $values;
-        }
-        $result = array_filter($options, fn ($p) => in_array($p['value'], $values));
+
+        $result = array_filter($options, fn ($p) => in_array($p[$keyOption], $valueIds));
         return array_values($result);
     }
 
