@@ -1015,6 +1015,10 @@
   height: 1.25rem;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
 .max-h-\[200px\] {
   max-height: 200px;
 }
@@ -1071,6 +1075,10 @@
 
 .w-5 {
   width: 1.25rem;
+}
+
+.w-16 {
+  width: 4rem;
 }
 
 .min-w-full {

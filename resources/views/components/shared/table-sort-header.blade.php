@@ -1,6 +1,6 @@
 <div {{ $attributes->merge(['class' => 'flex items-center']) }}>
-    <a href="{{$sortLink}}" class="cursor-pointer select-none" role="button" aria-label="Sort by {{ $column }}">
-        {{ $slot }}
+    <a href="{{ $sortLink }}" class="cursor-pointer select-none" role="button" aria-label="Sort by {{ $column }}">
+        {{ $header_caption ?? $slot }}
     </a>
     @if ($column == $sortBy)
         @if ($sortDirection == 'sortByDesc')

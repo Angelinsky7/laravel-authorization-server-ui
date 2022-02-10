@@ -1,6 +1,6 @@
 <?php
 
-namespace Darkink\AuthorizationServerUI\View\Components;
+namespace Darkink\AuthorizationServerUI\View\Components\Shared;
 
 use Darkink\AuthorizationServerUI\Traits\HasSorting;
 use Illuminate\View\Component;
@@ -14,19 +14,22 @@ class TableSortHeader extends Component
 
     public string $column;
     public string $sortLink;
+    public string | null $header_caption;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($column)
+    public function __construct(string $column, string | null $header = null)
     {
         $this->column = $column;
         $this->sortBy = $this->getSortBy();
         $this->sortDirection = $this->getSortDirection();
 
         $this->sortLink = $this->createSortLink();
+
+        $this->header_caption = $header;
     }
 
     /**
@@ -36,7 +39,7 @@ class TableSortHeader extends Component
      */
     public function render()
     {
-        return view('policy-ui::components.table-sort-header');
+        return view('policy-ui::components.shared.table-sort-header');
     }
 
     protected function createSortLink()

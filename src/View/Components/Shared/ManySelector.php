@@ -41,7 +41,7 @@ class ManySelector extends Component
         if ($values == null || count($values) == 0) {
             return $values;
         }
-        if (is_int($values[0])) {
+        if (is_int($values[0]) || is_string($values[0])) {
             return $values;
         }
         return array_map(fn ($p) => $p[$key], $values);

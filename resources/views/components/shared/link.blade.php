@@ -1,3 +1,4 @@
+<!-- x-policy-ui-shared:link -->
 <a
    {{ $attributes->class([
            'policy-ui-link-base policy-ui-button-base',

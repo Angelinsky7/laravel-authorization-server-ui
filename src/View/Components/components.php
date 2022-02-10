@@ -13,13 +13,7 @@ $buttons = [
 
 $table = [
     Table::class,
-    TableSortHeader::class,
     TableSearch::class
-];
-
-$dropdown = [
-    Dropdown::class,
-    DropdownLink::class,
 ];
 
 $miscs = [
@@ -31,7 +25,6 @@ $miscs = [
 return array_merge(
     $buttons,
     $table,
-    $dropdown,
     $miscs,
     require(__DIR__ . '/Shared/components.php'),
     require(__DIR__ . '/Permission/components.php'),

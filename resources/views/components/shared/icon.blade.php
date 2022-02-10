@@ -1,3 +1,5 @@
+<!-- x-policy-ui-shared:icon -->
+
 @php
     $include_path_icon = 'policy-ui::components.shared.icons.' . $slot;
 @endphp

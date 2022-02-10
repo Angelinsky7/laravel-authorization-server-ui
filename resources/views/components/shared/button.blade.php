@@ -1,3 +1,4 @@
+<!-- x-policy-ui-shared:button -->
 <button
         {{ $attributes->class([
                 'policy-ui-button-base',
