@@ -12,13 +12,13 @@
                    type="text" aria-label="{{ $name }}"
                    x-model.debounce="search"
                    x-on:click="togglePanel()"
-                   x-on:keydown.enter.stop.prevent="selectOption()"
+                   x-on:keydown.enter.stop.prevent="selectOption(currentSelectedOption)"
                    x-on:keydown.arrow-up.prevent="focusPreviousOption()"
                    x-on:keydown.arrow-down.prevent="focusNextOption()"
-                   class="policy-ui-autocomplete-input mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md border-gray-300"
+                   class="policy-ui-autocomplete-input mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 disabled:bg-gray-300 disabled:select-none disabled:cursor-not-allowed"
                    data-placeholder="{{ $placeholder }}" aria-invalid="false" aria-required="{{ $required }}"
                    autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
-                   aria-haspopup="true" />
+                   aria-haspopup="true" {{$attributes->has('disabled') ? 'disabled' : ''}} />
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none mr-1">
                 <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +35,7 @@
              x-transition:leave="transition ease-in duration-75"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
-             x-on:keydown.enter.stop.prevent="selectOption()"
+             x-on:keydown.enter.stop.prevent="selectOption(currentSelectedOption)"
              x-on:keydown.arrow-up.prevent="focusPreviousOption()"
              x-on:keydown.arrow-down.prevent="focusNextOption()"
              x-cloak>

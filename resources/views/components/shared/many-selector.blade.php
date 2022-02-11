@@ -2,11 +2,12 @@
 <div {{ $attributes }} x-data="window.policy.alpineJs.manySelector({
     options: {{ json_encode($options) }},
     values: {{ json_encode($values) }}
-})">
+})"
+     x-on:x-policy-ui-scope:many-selector-{{ $id }}:set-options.window="setOptions($event)">
 
     <div class="values">
         <template x-for="(option, index) in values" :key="index">
-            <input x-bind:id="getIdOrNameFieldValue('{{$id}}', index)" x-bind:name="getIdOrNameFieldValue('{{$id}}', index)" type="hidden" x-bind:value="config.getOptionValue(option)" />
+            <input x-bind:id="getIdOrNameFieldValue('{{ $id }}', index)" x-bind:name="getIdOrNameFieldValue('{{ $id }}', index)" type="hidden" x-bind:value="config.getOptionValue(option)" />
         </template>
     </div>
 

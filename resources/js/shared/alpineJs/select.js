@@ -13,7 +13,8 @@ function select(config) {
         getOptionValue(option) { return option.value ?? option; },
         isOptionDisabled(option) { return option.disabled ?? false; },
         isOptionActive(focusedOptionIndex, index) { return focusedOptionIndex === index; },
-        findOptionByValue(options, value) { return options.find(p => this.getOptionValue(p) == value); }
+        findOptionByValue(options, value) { return options.find(p => this.getOptionValue(p) == value); },
+        onItemChange: null
     };
 
     return {
@@ -31,7 +32,8 @@ function select(config) {
             this.initialValueControl = this.$refs.input.value;
             if (this.initialValueControl && this.options.length != 0) {
                 this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
-                this.$refs.control.value = this.config.getOptionCaption(this.initialOption);
+                this.$refs.control.value = this.initialOption != null ? this.config.getOptionCaption(this.initialOption) : null;
+                if (this.initialOption != null) { this.$nextTick(() => this.$dispatch('item-change', { option: this.initialOption })); }
                 this.search = this.$refs.control.value;
                 if (this.search) { this.filterOptions(this.search); }
             }
@@ -42,10 +44,18 @@ function select(config) {
             });
 
             this.$watch('search', (value) => {
-                this.$refs.input.value = null;
+                if (!value || this.options.filter(p => this.config.getOptionCaption(p) == value) == 0) {
+                    this.$refs.input.value = null;
+                    this.$dispatch('item-change', { option: null });
+                }
                 this.filterOptions(value);
             });
+
             initialized = true;
+        },
+        get currentSelectedOption() {
+            if (this.focusedOptionIndex == -1) { return null; }
+            return this.options[this.focusedOptionIndex];
         },
         filterOptions(value) {
             if (initialized && !this.panelVisible) { this.togglePanel(); }
@@ -93,13 +103,15 @@ function select(config) {
             });
         },
         selectOption(option) {
-            var selectedOption = option ?? this.options[this.focusedOptionIndex];
+            let selectedOption = option ?? this.options[this.focusedOptionIndex];
             if (selectedOption == null || this.config.isOptionDisabled(selectedOption)) { return; }
 
             this.$refs.input.value = this.config.getOptionValue(selectedOption);
             this.$refs.control.value = this.config.getOptionCaption(selectedOption);
 
             this.closePanel();
+
+            this.$dispatch('item-change', { option: option });
         }
     };
 

@@ -10,7 +10,11 @@
 
             <input type="hidden" id="id" name="id" value="{{ $item->id }}" />
 
-            <div class="overflow-hidden">
+            <div class="overflow-hidden" x-data="{
+                resourceChanged(evt) {
+                    this.$dispatch('x-policy-ui-scope:many-selector-scopes:set-options', {scopes: evt.detail.option != null ? evt.detail.option.scopes : []});
+                }
+            }">
                 <x-policy-ui-shared:inner-form-layout>
                     <x-policy-ui-shared:input-group header="{{ _('Name') }}">
                         <x-policy-ui-shared:input-base id="name" name="name" type="text" value="{{ old('name') ?? $item->parent->name }}" />
@@ -30,12 +34,12 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Resource') }}">
-                        <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]" :value="old('resource') ?? $item->resource" />
+                        <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]" :value="old('resource') ?? $item->resource" x-on:item-change="resourceChanged($event)" aria-disabled="true" disabled />
                         <x-policy-ui-form-field-error field="resource" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Scopes') }}">
-                        <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes" />
+                        <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes" empty="true" />
                         <x-policy-ui-form-field-error field="scopes" />
                     </x-policy-ui-shared:input-group>
 

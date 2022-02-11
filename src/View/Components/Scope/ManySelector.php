@@ -7,11 +7,16 @@ use Darkink\AuthorizationServerUI\View\Components\Shared\ManySelector as SharedM
 
 class ManySelector extends SharedManySelector
 {
-    public function __construct(ScopeRepository $scopeRepository, string $id, string $name, mixed $values, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, mixed $options = [], string $key = 'id')
+    public function __construct(ScopeRepository $scopeRepository, string $id, string $name, mixed $values, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null, mixed $options = [], string $key = 'id', bool $empty = false)
     {
-        $options = $scopeRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'caption' => $p->display_name]);
+        if ($empty) {
+            $options = [];
+        } else {
+            $options = $scopeRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'caption' => $p->display_name]);
+            $options = $options->toArray();
+        }
         $values = is_null($values) || is_array($values) ? $values : $values->toArray();
 
-        parent::__construct($id, $name, $values, $placeholder, $required, $panelMaxHeight, $options->toArray(), $key);
+        parent::__construct($id, $name, $values, $placeholder, $required, $panelMaxHeight, $options, $key);
     }
 }

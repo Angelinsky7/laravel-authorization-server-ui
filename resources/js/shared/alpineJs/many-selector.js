@@ -55,7 +55,7 @@ function manySelector(config) {
         canRemoveSelected() { return !this.selected_scopes_selected || this.selected_scopes_selected.length == 0; },
         canRemoveAll() { return !this.values || this.values.length == 0; },
 
-        getIdOrNameFieldValue(prefix, index){
+        getIdOrNameFieldValue(prefix, index) {
             return `${prefix}[${index}]`;
         },
 
@@ -111,6 +111,14 @@ function manySelector(config) {
             let itemsToMove = getItemFrom(this.values, allIds, this.config);
             this.options.push(...itemsToMove);
             removeItemFrom(this.values, allIds, this.config);
+        },
+
+        setOptions(evt) {
+            if (evt.detail.scopes != null) {
+                let newOptions = evt.detail.scopes.map(p => ({ value: p.id, caption: p.display_name }));
+                console.log('setOptions', this.values, this.config.values);
+                this.options = filterArrayWithArray(newOptions, this.values, this.config);
+            }
         }
     };
 

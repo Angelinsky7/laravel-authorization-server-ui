@@ -11,12 +11,13 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/policy.js', 'public/js').postCss('resources/css/policy.css', 'public/css', [
-    require('postcss-import'),
-    require('tailwindcss/nesting'),
-    require('tailwindcss'),
-    require('autoprefixer'),
-]);
+mix.js('resources/js/policy.js', 'public/js').sourceMaps()
+    .postCss('resources/css/policy.css', 'public/css', [
+        require('postcss-import'),
+        require('tailwindcss/nesting'),
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);
 
 mix.copy('public/css/policy.css', '../../../resources/css/vendor/laravel-authorization-ui-server.css');
 mix.copy('public/js/policy.js', '../../../resources/js/vendor/laravel-authorization-ui-server.js');

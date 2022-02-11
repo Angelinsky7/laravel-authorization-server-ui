@@ -17,8 +17,15 @@ class Select extends Component
     public mixed $options;
     public mixed $value;
 
-    public function __construct(string $id, string $name, mixed $value, string $placeholder = '', bool $required = false, string | null $panelMaxHeight = null ,array $options = [])
-    {
+    public function __construct(
+        string $id,
+        string $name,
+        mixed $value,
+        string $placeholder = '',
+        bool $required = false,
+        string | null $panelMaxHeight = null,
+        array $options = []
+    ) {
         $this->id = $id;
         $this->name = $name;
         $this->placeholder = $placeholder;

@@ -14,6 +14,7 @@ class ManySelector extends Component
     public string | null $panelMaxHeight;
 
     public mixed $options;
+    public mixed $valueIds = [];
     public mixed $values;
 
     public string $keyValue;
@@ -32,8 +33,9 @@ class ManySelector extends Component
         $this->options = $options;
         $this->keyOption = $keyOption;
 
-        $valuesIds = $this->mapValuesToIds($values, $keyValue);
-        $this->values = $this->useOptionObjectFromIds($valuesIds, $options, $keyOption);
+        $this->valuesIds = $this->mapValuesToIds($values, $keyValue);
+        //TODO(demarco): Please simply only use valueIds directly.... hanlde 3 list only all possible values (object), available ids and selected ids....
+        $this->values = $this->useOptionObjectFromIds($this->valuesIds, $options, $keyOption);
     }
 
     protected function mapValuesToIds($values, $key)
