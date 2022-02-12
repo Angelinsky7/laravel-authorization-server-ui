@@ -1,7 +1,7 @@
 <!-- x-policy-ui-shared:many-selector -->
 <div {{ $attributes }} x-data="window.policy.alpineJs.manySelector({
     options: {{ json_encode($options) }},
-    values: {{ json_encode($values) }}
+    valueIds: {{ json_encode($valueIds) }}
 })"
      x-on:x-policy-ui-scope:many-selector-{{ $id }}:set-options.window="setOptions($event)">
 
@@ -19,7 +19,7 @@
                 <template x-for="(option, index) in options" :key="index">
                     <option x-bind:value="config.getOptionValue(option)">
                         <span class="inline-block flex-grow overflow-hidden text-ellipsis whitespace-nowrap leading-[29px] text-left"
-                              x-text="config.getOptionCaption(option)"></span>
+                              x-text="option.caption"></span>
                     </option>
                 </template>
             </select>
@@ -60,7 +60,7 @@
                 <template x-for="(option, index) in values" :key="index">
                     <option x-bind:value="config.getOptionValue(option)">
                         <span class="inline-block flex-grow overflow-hidden text-ellipsis whitespace-nowrap leading-[29px] text-left"
-                              x-text="config.getOptionCaption(option)"></span>
+                              x-text="option.caption"></span>
                     </option>
                 </template>
             </select>
