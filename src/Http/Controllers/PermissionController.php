@@ -3,12 +3,16 @@
 namespace Darkink\AuthorizationServerUI\Http\Controllers;
 
 use Darkink\AuthorizationServer\Http\Requests\Permission\StorePermissionRequest;
+use Darkink\AuthorizationServer\Http\Requests\Permission\StoreResourcePermissionRequest;
 use Darkink\AuthorizationServer\Http\Requests\Permission\StoreScopePermissionRequest;
+use Darkink\AuthorizationServer\Http\Requests\Permission\UpdateResourcePermissionRequest;
 use Darkink\AuthorizationServer\Http\Requests\Permission\UpdateScopePermissionRequest;
 use Darkink\AuthorizationServer\Models\DecisionStrategy;
 use Darkink\AuthorizationServer\Models\Permission;
+use Darkink\AuthorizationServer\Models\ResourcePermission;
 use Darkink\AuthorizationServer\Models\ScopePermission;
 use Darkink\AuthorizationServer\Repositories\PermissionRepository;
+use Darkink\AuthorizationServer\Repositories\ResourcePermissionRepository;
 use Darkink\AuthorizationServer\Repositories\ScopePermissionRepository;
 use Darkink\AuthorizationServerUI\Traits\HasSearch;
 use Darkink\AuthorizationServerUI\Traits\HasSorting;
@@ -22,13 +26,16 @@ class PermissionController
 
     protected PermissionRepository $permissionRepository;
     protected ScopePermissionRepository $scopePermissionRepository;
+    protected ResourcePermissionRepository $resourcePermissionRepository;
 
     public function __construct(
         PermissionRepository $permissionRepository,
-        ScopePermissionRepository $scopePermissionRepository
+        ScopePermissionRepository $scopePermissionRepository,
+        ResourcePermissionRepository $resourcePermissionRepository
     ) {
         $this->permissionRepository = $permissionRepository;
         $this->scopePermissionRepository = $scopePermissionRepository;
+        $this->resourcePermissionRepository = $resourcePermissionRepository;
     }
 
     public function index()
@@ -55,14 +62,15 @@ class PermissionController
         return view('policy-ui::Permission.create');
     }
 
-    public function createScope()
-    {
-        $decisionStrategies = array_column(DecisionStrategy::cases(), 'name');
+    // public function createScope()
+    // {
+    //     return view('policy-ui::Permission.Scope.create');
+    // }
 
-        return view('policy-ui::Permission.Scope.create', [
-            'decisionStrategies' => $decisionStrategies
-        ]);
-    }
+    // public function createResource()
+    // {
+    //     return view('policy-ui::Permission.Resource.create');
+    // }
 
     public function store(Request $request)
     {
@@ -70,6 +78,7 @@ class PermissionController
             case "scope":
                 return $this->storeScope(StoreScopePermissionRequest::createFrom($request));
             case "resource":
+                return $this->storeResource(StoreResourcePermissionRequest::createFrom($request));
                 return;
         }
         throw new Exception('Invaid type given');
@@ -79,21 +88,6 @@ class PermissionController
     {
         $validated = $request->validate($request->rules());
 
-        // switch (get_class($request)) {
-        //     case StoreScopePermissionRequest::class:
-        //         $this->scopePermissionRepository->create(
-        //             $validated['name'],
-        //             $validated['description'],
-        //             $validated['decision_strategy'],
-        //             $validated['resource'],
-        //             $validated['scopes']
-        //         );
-        //         break;
-        //     case ResourcePermission::class:
-
-        //         break;
-        // }
-
         $this->scopePermissionRepository->create(
             $validated['name'],
             $validated['description'],
@@ -102,15 +96,28 @@ class PermissionController
             $validated['scopes']
         );
 
-        $request->session()->flash('success_message', 'Permission created.');
+        $request->session()->flash('success_message', 'Scope Permission created.');
+        return redirect()->route('policy-ui.permission.index');
+    }
+
+    public function storeResource(StoreResourcePermissionRequest $request)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->resourcePermissionRepository->create(
+            $validated['name'],
+            $validated['description'],
+            $validated['decision_strategy'],
+            $validated['resource_type'],
+            $validated['resource'],
+        );
+
+        $request->session()->flash('success_message', 'Resource permission created.');
         return redirect()->route('policy-ui.permission.index');
     }
 
     public function edit(Permission $permission)
     {
-
-        // $decisionStrategies = array_column(DecisionStrategy::cases(), 'name');
-
         switch (get_class($permission->permission)) {
             case ScopePermission::class:
                 return view('policy-ui::Permission.Scope.update', [
@@ -134,6 +141,7 @@ class PermissionController
             case "scope":
                 return $this->updateScope(UpdateScopePermissionRequest::createFrom($request), $permission->permission);
             case "resource":
+                return $this->updateResource(UpdateResourcePermissionRequest::createFrom($request), $permission->permission);
                 return;
         }
         throw new Exception('Invaid type given');
@@ -142,15 +150,6 @@ class PermissionController
     public function updateScope(UpdateScopePermissionRequest $request, ScopePermission $permission)
     {
         $validated = $request->validate($request->rules());
-
-        // switch (get_class($permission->permission)) {
-        //     case ScopePermission::class:
-
-        //         break;
-        //     case ResourcePermission::class:
-
-        //         break;
-        // }
 
         $this->scopePermissionRepository->update(
             $permission,
@@ -161,9 +160,27 @@ class PermissionController
             $validated['scopes']
         );
 
-        $request->session()->flash('success_message', 'Permission updated.');
+        $request->session()->flash('success_message', 'Scope Permission updated.');
         return redirect()->route('policy-ui.permission.index');
     }
+
+    public function updateResource(UpdateResourcePermissionRequest $request, ResourcePermission $permission)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->resourcePermissionRepository->update(
+            $permission,
+            $validated['name'],
+            $validated['description'],
+            $validated['decision_strategy'],
+            $validated['resource_type'],
+            $validated['resource'],
+        );
+
+        $request->session()->flash('success_message', 'Resource Permission updated.');
+        return redirect()->route('policy-ui.permission.index');
+    }
+
 
     public function delete(Permission $permission)
     {

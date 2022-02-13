@@ -1,6 +1,6 @@
 <?php
 
-namespace Darkink\AuthorizationServerUI\View\Components\Shared;
+namespace Darkink\AuthorizationServerUI\View\Components\Uri;
 
 use Illuminate\View\Component;
 

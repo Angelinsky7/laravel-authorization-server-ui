@@ -12,14 +12,13 @@ class ChipType extends Component
 
     public Permission $item;
     public string $caption;
-    public string $color;
+    public string $class_name;
 
     public function __construct(Permission $item)
     {
         $this->item = $item;
-        $class = get_class($item->permission);
-        $this->caption = $this->getCaption($class);
-        $this->color = $this->getColor($class);
+        $this->class_name = get_class($item->permission);
+        $this->caption = $this->getCaption($this->class_name);
     }
 
     protected function getCaption($fullClassName)
@@ -33,19 +32,6 @@ class ChipType extends Component
                 break;
         }
         return _('Permission');
-    }
-
-    protected function getColor($fullClassName)
-    {
-        switch ($fullClassName) {
-            case ScopePermission::class:
-                return 'blue';
-                break;
-            case ResourcePermission::class:
-                return 'red';
-                break;
-        }
-        return 'green';
     }
 
     public function render()
