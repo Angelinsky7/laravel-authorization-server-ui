@@ -14,10 +14,10 @@ class ManySelector extends Component
     public string | null $panelMaxHeight;
 
     public mixed $options = [];
-    public mixed $valueIds = [];
+    public mixed $values = [];
 
     public string $keyEntityAccessor;
-    public string $value;
+    public string $key;
     public string $caption;
 
     public function __construct(
@@ -27,7 +27,7 @@ class ManySelector extends Component
         bool $required = false,
         string | null $panelMaxHeight = null,
         mixed $options = [],
-        mixed $valueIds = [],
+        mixed $values = [],
         string $keyEntityAccessor = 'id',
         string $key = 'value',
         string $caption = 'caption'
@@ -41,7 +41,7 @@ class ManySelector extends Component
         $this->keyEntityAccessor = $keyEntityAccessor;
 
         $this->options = $options;
-        $this->valueIds = $valueIds;
+        $this->values = $values;
 
         $this->key = $key;
         $this->caption = $caption;

@@ -3,6 +3,8 @@
         <x-policy-ui-shared:default-header header="{{ __('Create a new Resource') }}" />
     </x-slot>
 
+    {{-- <x-policy-ui-shared:validation-error-helper /> --}}
+
     <x-policy-ui-shared:outer-form-layout>
         <form method="POST">
             @csrf

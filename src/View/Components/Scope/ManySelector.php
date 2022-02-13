@@ -15,11 +15,10 @@ class ManySelector extends SharedManySelector
         bool $required = false,
         string | null $panelMaxHeight = null,
         mixed $options = [],
-        mixed $valueIds = [],
+        mixed $values = [],
         string $keyEntityAccessor = 'id',
         string $key = 'value',
-        string $caption = 'caption',
-        bool $empty = false
+        string $caption = 'caption'
     ) {
         // if ($empty) {
         //     $options = [];
@@ -29,6 +28,8 @@ class ManySelector extends SharedManySelector
         // }
         // $values = is_null($values) || is_array($values) ? $values : $values->toArray();
 
+        $options = $scopeRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'caption' => $p->display_name]);
+
         parent::__construct(
             $id,
             $name,
@@ -36,7 +37,7 @@ class ManySelector extends SharedManySelector
             $required,
             $panelMaxHeight,
             $options,
-            $valueIds,
+            $values,
             $keyEntityAccessor,
             $key,
             $caption

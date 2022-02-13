@@ -2,7 +2,11 @@
 
 namespace Darkink\AuthorizationServerUI;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use ReflectionClass;
+use ReflectionMethod;
 
 class PolicyServiceUIProvider extends ServiceProvider
 {
@@ -18,6 +22,7 @@ class PolicyServiceUIProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'policy-ui');
 
         $this->loadViewComponentsAs('policy-ui', require(__DIR__ . '/View/Components/components.php'));
+        $this->loadDirectives('policy_ui', require(__DIR__ . '/View/Directives/directives.php'));
 
         if ($this->app->runningInConsole()) {
 
@@ -35,6 +40,16 @@ class PolicyServiceUIProvider extends ServiceProvider
         }
 
         $this->register_helpers();
+    }
+
+    protected function loadDirectives(string $prefix, array $directives)
+    {
+        foreach ($directives as $directive) {
+            $directive_key = Str::snake($prefix) . '_' . Str::snake(class_basename($directive));
+            $class = new ReflectionClass($directive);
+            $staticmethods = $class->getMethod('execute');
+            Blade::directive($directive_key, $staticmethods->getClosure());
+        }
     }
 
     public function register_helpers()

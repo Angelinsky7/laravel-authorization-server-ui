@@ -1,23 +1,34 @@
 <!-- x-policy-ui-shared:many-selector -->
-<div {{ $attributes }} x-data="window.policy.alpineJs.manySelector({
-    options: {{ json_encode($options) }},
-    valueIds: {{ json_encode($valueIds) }}
-})"
-     x-on:x-policy-ui-scope:many-selector-{{ $id }}:set-options.window="setOptions($event)">
+@php
+$unique_component_num = \Darkink\AuthorizationServerUI\View\Directives\ComponentId::execute('x-policy-ui-shared:many-selector');
+$unique_component_options = 'x_policy_ui_shared_many_selector_' . $id . '_options_' . $unique_component_num;
+$unique_component_values = 'x_policy_ui_shared_many_selector_' . $id . '_values_' . $unique_component_num;
+@endphp
+
+<script>
+    var {{ $unique_component_options }} = {!! json_encode($options ?? []) !!};
+    var {{ $unique_component_values }} = {!! json_encode($values ?? []) !!};
+</script>
+<div {{ $attributes }}
+     x-data="window.policy.alpineJs.manySelector({
+        options: {{ $unique_component_options }},
+        values: {{ $unique_component_values }}
+    })"
+     x-on:x-policy-ui-shared:many-selector-{{ $id }}:set-options.window="setOptions($event)">
 
     <div class="values">
-        <template x-for="(option, index) in values" :key="index">
-            <input x-bind:id="getIdOrNameFieldValue('{{ $id }}', index)" x-bind:name="getIdOrNameFieldValue('{{ $id }}', index)" type="hidden" x-bind:value="config.getOptionValue(option)" />
+        <template x-for="(option, index) in selected_options" :key="index">
+            <input x-bind:id="getIdOrNameFieldValue('{{ $id }}', index)" x-bind:name="getIdOrNameFieldValue('{{ $id }}', index)" type="hidden" x-bind:value="option.value" />
         </template>
     </div>
 
     <div class="flex flex-row w-full">
         <div class="flex-1 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm p-[1px]">
-            <select x-ref="available_scopes"
-                    x-model="available_scopes_selected"
-                    name="available_scopes" multiple="multiple" class="w-full h-full border-none focus:border-none border-transparent focus:shadow-none focus:ring-transparent">
-                <template x-for="(option, index) in options" :key="index">
-                    <option x-bind:value="config.getOptionValue(option)">
+            <select x-ref="available_options"
+                    x-model="available_options_selected"
+                    name="available_options" multiple="multiple" class="w-full h-full border-none focus:border-none border-transparent focus:shadow-none focus:ring-transparent">
+                <template x-for="(option, index) in available_options" :key="index">
+                    <option x-bind:value="option.value">
                         <span class="inline-block flex-grow overflow-hidden text-ellipsis whitespace-nowrap leading-[29px] text-left"
                               x-text="option.caption"></span>
                     </option>
@@ -54,11 +65,11 @@
         </div>
 
         <div class="flex-1 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm p-[1px]">
-            <select x-ref="selected_scopes"
-                    x-model="selected_scopes_selected"
-                    name="selected_scopes" multiple="multiple" class="w-full h-full border-none focus:border-none border-transparent focus:shadow-none focus:ring-transparent">
-                <template x-for="(option, index) in values" :key="index">
-                    <option x-bind:value="config.getOptionValue(option)">
+            <select x-ref="selected_options"
+                    x-model="selected_options_selected"
+                    name="selected_options" multiple="multiple" class="w-full h-full border-none focus:border-none border-transparent focus:shadow-none focus:ring-transparent">
+                <template x-for="(option, index) in selected_options" :key="index">
+                    <option x-bind:value="option.value">
                         <span class="inline-block flex-grow overflow-hidden text-ellipsis whitespace-nowrap leading-[29px] text-left"
                               x-text="option.caption"></span>
                     </option>

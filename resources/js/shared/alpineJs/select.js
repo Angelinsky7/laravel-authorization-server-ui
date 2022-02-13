@@ -8,12 +8,12 @@ function select(config) {
         autoActiveFirstOption: false,
         emptyOptionsMessage: null,
         filterValue(value) { return value.toString().toLowerCase(); },
-        filterOptions(options, filterValue) { return options.filter(p => this.getOptionCaption(p).toLowerCase().includes(filterValue)); },
-        getOptionCaption(option) { return option.caption ?? option; },
-        getOptionValue(option) { return option.value ?? option; },
+        filterOptions(options, filterValue) { return options.filter(p => p.caption.toLowerCase().includes(filterValue)); },
+        // getOptionCaption(option) { return option.caption ?? option; },
+        // getOptionValue(option) { return option.value ?? option; },
         isOptionDisabled(option) { return option.disabled ?? false; },
         isOptionActive(focusedOptionIndex, index) { return focusedOptionIndex === index; },
-        findOptionByValue(options, value) { return options.find(p => this.getOptionValue(p) == value); },
+        findOptionByValue(options, value) { return options.find(p => p.value == value); },
         onItemChange: null
     };
 
@@ -32,7 +32,7 @@ function select(config) {
             this.initialValueControl = this.$refs.input.value;
             if (this.initialValueControl && this.options.length != 0) {
                 this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
-                this.$refs.control.value = this.initialOption != null ? this.config.getOptionCaption(this.initialOption) : null;
+                this.$refs.control.value = this.initialOption != null ? this.initialOption.caption : null;
                 if (this.initialOption != null) { this.$nextTick(() => this.$dispatch('item-change', { option: this.initialOption })); }
                 this.search = this.$refs.control.value;
                 if (this.search) { this.filterOptions(this.search); }
@@ -44,7 +44,7 @@ function select(config) {
             });
 
             this.$watch('search', (value) => {
-                if (!value || this.options.filter(p => this.config.getOptionCaption(p) == value) == 0) {
+                if (!value || this.options.filter(p => p.caption == value) == 0) {
                     this.$refs.input.value = null;
                     this.$dispatch('item-change', { option: null });
                 }
@@ -106,8 +106,8 @@ function select(config) {
             let selectedOption = option ?? this.options[this.focusedOptionIndex];
             if (selectedOption == null || this.config.isOptionDisabled(selectedOption)) { return; }
 
-            this.$refs.input.value = this.config.getOptionValue(selectedOption);
-            this.$refs.control.value = this.config.getOptionCaption(selectedOption);
+            this.$refs.input.value = selectedOption.value;
+            this.$refs.control.value = selectedOption.caption;
 
             this.closePanel();
 
@@ -115,74 +115,6 @@ function select(config) {
         }
     };
 
-    // return {
-    //     data: config.data,
-    //     emptyOptionsMessage: config.emptyOptionsMessage ?? 'No results match your search.',
-    //     focusedOptionIndex: null,
-    //     name: config.name,
-    //     open: false,
-    //     options: {},
-    //     placeholder: config.placeholder ?? 'Select an option',
-    //     search: '',
-    //     value: config.value,
-
-    //     closeListbox: function () {
-    //         this.open = false;
-    //         this.focusedOptionIndex = null;
-    //         this.search = '';
-    //     },
-
-    //     focusNextOption: function () {
-    //         if (this.focusedOptionIndex === null) { return this.focusedOptionIndex = Object.keys(this.options).length - 1; }
-    //         if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) { return; }
-    //         ++this.focusedOptionIndex;
-    //         this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-    //             block: "center",
-    //         });
-    //     },
-
-    //     focusPreviousOption: function () {
-    //         if (this.focusedOptionIndex === null) { return this.focusedOptionIndex = 0; }
-    //         if (this.focusedOptionIndex <= 0) { return; }
-    //         --this.focusedOptionIndex;
-    //         this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-    //             block: "center",
-    //         });
-    //     },
-
-    //     init: function () {
-    //         this.options = this.data;
-    //         if (!(this.value in this.options)) { this.value = null; }
-    //         this.$watch('search', ((value) => {
-    //             if (!this.open || !value) return this.options = this.data
-    //             this.options = Object.keys(this.data)
-    //                 .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
-    //                 .reduce((options, key) => {
-    //                     options[key] = this.data[key]
-    //                     return options
-    //                 }, {});
-    //         }))
-    //     },
-
-    //     selectOption: function () {
-    //         if (!this.open) { return this.toggleListboxVisibility(); }
-    //         this.value = Object.keys(this.options)[this.focusedOptionIndex];
-    //         this.closeListbox();
-    //     },
-
-    //     toggleListboxVisibility: function () {
-    //         if (this.open) { return this.closeListbox(); }
-    //         this.focusedOptionIndex = Object.keys(this.options).indexOf(this.value);
-    //         if (this.focusedOptionIndex < 0) this.focusedOptionIndex = 0;
-    //         this.open = true;
-    //         this.$nextTick(() => {
-    //             this.$refs.search.focus();
-    //             this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-    //                 block: "center"
-    //             });
-    //         })
-    //     },
-    // }
 }
 
 export { select };

@@ -30,5 +30,6 @@ return [
     DefaultTableRowContent::class,
     DefaultTableRowActions::class,
     Dropdown::class,
-    DropdownLink::class
+    DropdownLink::class,
+    ValidationErrorHelper::class,
 ];

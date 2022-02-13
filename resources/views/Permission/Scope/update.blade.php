@@ -10,11 +10,12 @@
 
             <input type="hidden" id="id" name="id" value="{{ $item->id }}" />
 
-            <div class="overflow-hidden" x-data="{
-                resourceChanged(evt) {
-                    this.$dispatch('x-policy-ui-scope:many-selector-scopes:set-options', {scopes: evt.detail.option != null ? evt.detail.option.scopes : []});
-                }
-            }">
+            <div class="overflow-hidden"
+                 x-data="{
+                    resourceChanged(evt){
+                        this.$dispatch('x-policy-ui-shared:many-selector-scopes:set-options', {options: evt.detail.option != null ? evt.detail.option.scopes.map(p => ({ value: p.id, caption: p.display_name })) : []});
+                    }
+                 }">
                 <x-policy-ui-shared:inner-form-layout>
                     <x-policy-ui-shared:input-group header="{{ _('Name') }}">
                         <x-policy-ui-shared:input-base id="name" name="name" type="text" value="{{ old('name') ?? $item->parent->name }}" />
@@ -39,7 +40,7 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Scopes') }}">
-                        <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes" empty="true" />
+                        <x-policy-ui-shared:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes->map(fn($p) => $p->id)" />
                         <x-policy-ui-form-field-error field="scopes" />
                     </x-policy-ui-shared:input-group>
 
