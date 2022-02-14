@@ -22,12 +22,10 @@
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="type" header="{{ _('Type') }}" />
                 </x-policy-ui-shared:default-table-header-column>
                 <x-policy-ui-shared:default-table-header-column>
-                    <x-policy-ui-shared:table-sort-header class="justify-start" column="icon_uri" header="{{ _('Icon URI') }}" />
+                    <x-policy-ui-shared:table-sort-header class="justify-center" column="icon_uri" header="{{ _('Icon URI') }}" />
                 </x-policy-ui-shared:default-table-header-column>
                 <x-policy-ui-shared:default-table-header-column>
-                    <th scope="col" class="relative px-6 py-3 w-1">
-                        <span class="sr-only">Actions</span>
-                    </th>
+                    <span class="sr-only">Actions</span>
                 </x-policy-ui-shared:default-table-header-column>
             </x-slot>
             <x-slot name="rows">
@@ -40,11 +38,13 @@
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-content content="{{ darkink_lasui_abbreviate($item->type, 50) }}">
                             </x-policy-ui-shared:default-table-row-content>
-                            <x-policy-ui-shared:default-table-row-content>
-                                @if (isset($item->icon_uri))
-                                    <img src="{{ $item->icon_uri }}" width="32" height="32"
-                                         alt="icon-uri" />
-                                @endif
+                            <x-policy-ui-shared:default-table-row-content class="w-[140px]">
+                                <div class="flex flex-col items-center">
+                                    @if (isset($item->icon_uri))
+                                        <img src="{{ $item->icon_uri }}" width="32" height="32"
+                                             alt="icon-uri" />
+                                    @endif
+                                </div>
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-actions>
                                 <x-policy-ui-shared:dropdown>¨

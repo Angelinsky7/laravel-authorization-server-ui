@@ -1,102 +1,76 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Permissions') }}
-        </h2>
+        <x-policy-ui-shared:default-header header="{{ __('Permissions') }}" />
     </x-slot>
 
     <x-policy-ui-success-message />
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="flex flex-row items-center justify-end">
-                        <x-policy-ui-table-search action="{{ route('policy-ui.permission.index') }}" />
-                        <x-policy-ui-shared:link genre="raised" color="primary" href="{{ route('policy-ui.permission.create') }}" class="ml-2">Create new Permission</x-policy-ui-shared:link>
-                    </div>
+    <x-policy-ui-shared:outer-list-layout>
+        <x-policy-ui-shared:default-list-actions>
+            <x-policy-ui-table-search action="{{ route('policy-ui.permission.index') }}" />
+            <x-policy-ui-shared:link genre="raised" color="primary" href="{{ route('policy-ui.permission.create') }}" class="ml-2">Create new Permission</x-policy-ui-shared:link>
+        </x-policy-ui-shared:default-list-actions>
 
-                    <div class="my-2"></div>
+        <div class="my-2"></div>
 
-                    <x-policy-ui-table>
-                        <x-slot name="header">
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <x-policy-ui-shared:table-sort-header class="justify-start" column="name">
-                                    {{ _('Name') }}
-                                </x-policy-ui-shared:table-sort-header>
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <x-policy-ui-shared:table-sort-header class="justify-start" column="description">
-                                    {{ _('Description') }}
-                                </x-policy-ui-shared:table-sort-header>
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Decision Strategy
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Type
-                            </th>
-                            <th scope="col" class="relative px-6 py-3 w-1">
-                                <span class="sr-only">Actions</span>
-                            </th>
-                        </x-slot>
-                        <x-slot name="rows">
-                            @if (count($items) != 0)
-                                @foreach ($items as $item)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{ $item->name }}</div>
-                                            <div class="text-sm text-gray-500">{{ $item->label }}</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->description }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            <x-policy-ui-permission:chip-decision-strategy :item="$item->decision_strategy" />
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            <x-policy-ui-permission:chip-type :item="$item" />
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <x-policy-ui-shared:dropdown>¨
-                                                <x-slot name="trigger">
-                                                    <x-policy-ui-shared:button genre="icon">
-                                                        <x-policy-ui-shared:icon size="small">dots-vertical</x-policy-ui-shared:icon>
-                                                    </x-policy-ui-shared:button>
-                                                </x-slot>
-                                                <x-slot name="content">
-                                                    <x-policy-ui-shared:dropdown-link
-                                                                     :href="route('policy-ui.permission.edit', ['permission' => $item->id])">
-                                                        {{ __('Edit') }}
-                                                    </x-policy-ui-shared:dropdown-link>
-                                                    <x-policy-ui-shared:dropdown-link
-                                                                     :href="route('policy-ui.permission.delete', ['permission' => $item->id])"
-                                                                     data-remote data-modal>
-                                                        {{ __('Delete') }}
-                                                    </x-policy-ui-shared:dropdown-link>
-                                                </x-slot>
-                                            </x-policy-ui-shared:dropdown>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="10">
-                                        <div class="flex items-center justify-center mb-2 mt-3 text-gray-500">No Role
-                                            found...</div>
-                                    <td>
-                                </tr>
-                            @endif
-                        </x-slot>
-                        <x-slot name="footer">
-                            {{ $items->links() }}
-                        </x-slot>
-                    </x-policy-ui-table>
+        <x-policy-ui-table>
+            <x-slot name="header">
+                <x-policy-ui-shared:default-table-header-column>
+                    <x-policy-ui-shared:table-sort-header class="justify-start" column="name" header="{{ _('Name') }}" />
+                </x-policy-ui-shared:default-table-header-column>
+                <x-policy-ui-shared:default-table-header-column>
+                    <x-policy-ui-shared:table-sort-header class="justify-start" column="description" header="{{ _('Description') }}" />
+                </x-policy-ui-shared:default-table-header-column>
+                <x-policy-ui-shared:default-table-header-column>
+                    <x-policy-ui-shared:table-sort-header class="justify-start" column="decision_strategy" header="{{ _('Decision Strategy') }}" />
+                </x-policy-ui-shared:default-table-header-column>
+                <x-policy-ui-shared:default-table-header-column header="{{ _('Type') }}" />
+                <x-policy-ui-shared:default-table-header-column>
+                    <span class="sr-only">Actions</span>
+                </x-policy-ui-shared:default-table-header-column>
+            </x-slot>
+            <x-slot name="rows">
+                @if (count($items) != 0)
+                    @foreach ($items as $item)
+                        <x-policy-ui-shared:default-table-row>
+                            <x-policy-ui-shared:default-table-row-content>
+                                <div class="text-sm text-gray-900">{{ $item->name }}</div>
+                                <div class="text-sm text-gray-500">{{ $item->label }}</div>
+                            </x-policy-ui-shared:default-table-row-content>
+                            <x-policy-ui-shared:default-table-row-content content="{{ $item->description }}" />
+                            <x-policy-ui-shared:default-table-row-content>
+                                <x-policy-ui-permission:chip-decision-strategy :item="$item->decision_strategy" />
+                            </x-policy-ui-shared:default-table-row-content>
+                            <x-policy-ui-shared:default-table-row-content>
+                                <x-policy-ui-permission:chip-type :item="$item" />
+                            </x-policy-ui-shared:default-table-row-content>
+                            <x-policy-ui-shared:default-table-row-actions>
+                                <x-policy-ui-shared:dropdown>¨
+                                    <x-slot name="trigger">
+                                        <x-policy-ui-shared:button genre="icon">
+                                            <x-policy-ui-shared:icon size="small">dots-vertical</x-policy-ui-shared:icon>
+                                        </x-policy-ui-shared:button>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <x-policy-ui-shared:dropdown-link :href="route('policy-ui.permission.edit', ['permission' => $item->id])" content="{{ __('Edit') }}" />
+                                        <x-policy-ui-shared:dropdown-link :href="route('policy-ui.permission.delete', ['permission' => $item->id])" data-remote data-modal content="{{ __('Delete') }}" />
+                                    </x-slot>
+                                </x-policy-ui-shared:dropdown>
+                            </x-policy-ui-shared:default-table-row-actions>
+                        </x-policy-ui-shared:default-table-row>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="10">
+                            <div class="flex items-center justify-center mb-2 mt-3 text-gray-500">No permission found...</div>
+                        <td>
+                    </tr>
+                @endif
+            </x-slot>
+            <x-slot name="footer">
+                {{ $items->links() }}
+            </x-slot>
+        </x-policy-ui-table>
 
-                </div>
-            </div>
-        </div>
-    </div>
+    </x-policy-ui-shared:outer-list-layout>
 </x-app-layout>

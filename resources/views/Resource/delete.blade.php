@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-policy-ui-shared:default-header header="{{ __('Delete Resource') }} {{ $item->name }}" />
+        <x-policy-ui-shared:default-header header="{{ __('Delete Resource') }} '{{ $item->name }}'" />
     </x-slot>
 
     <x-policy-ui-shared:outer-modal-layout>

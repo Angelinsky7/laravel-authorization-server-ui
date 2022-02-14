@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-policy-ui-shared:default-header header="{{ __('Edit scope permission') }} {{ $item->name }}" />
+        <x-policy-ui-shared:default-header header="{{ __('Edit scope permission') }} '{{ $item->parent->name }}'" />
     </x-slot>
 
     <x-policy-ui-shared:outer-form-layout>
@@ -18,7 +18,7 @@
                  }">
                 <x-policy-ui-shared:inner-form-layout>
 
-                    @include('policy-ui::Permission.Permission.update')
+                    @include('policy-ui::Permission.Permission.update', ['item' => $item->parent])
 
                     <x-policy-ui-shared:input-group header="{{ _('Resource') }}">
                         <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]" :value="old('resource') ?? $item->resource" x-on:item-change="resourceChanged($event)" aria-disabled="true" disabled />

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-policy-ui-shared:default-header header="{{ __('Edit Resource Permission') }} {{ $item->name }}" />
+        <x-policy-ui-shared:default-header header="{{ __('Edit Resource Permission') }} '{{ $item->parent->name }}'" />
     </x-slot>
 
     <x-policy-ui-shared:outer-form-layout>
@@ -13,7 +13,7 @@
             <div class="overflow-hidden">
                 <x-policy-ui-shared:inner-form-layout>
 
-                    @include('policy-ui::Permission.Permission.update')
+                    @include('policy-ui::Permission.Permission.update', ['item' => $item->parent])
 
                     <x-policy-ui-shared:input-group header="{{ _('Resource Type') }}">
                         <x-policy-ui-resource:input-resource-type id="resource_type" name="resource_type" value="{{ old('resource_type') ?? $item->resource_type }}" />
