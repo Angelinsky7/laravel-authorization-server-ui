@@ -16,7 +16,7 @@ function listBox(config) {
     };
 
     return {
-        config: this.config = Object.assign({}, defaultConfig, config),
+        config: Object.assign({}, defaultConfig, config),
         // panelVisible: false,
         // search: '',
         dataSource: [],

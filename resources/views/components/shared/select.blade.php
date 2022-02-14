@@ -18,7 +18,7 @@ $unique_component_options = 'x_policy_ui_shared_select_' . $id . '_options_' . $
                    value="{{ $value }}" />
             <input x-ref="control"
                    type="text" aria-label="{{ $name }}"
-                   x-model.debounce="search"
+                   x-model.debounce.250ms="search"
                    x-on:click="togglePanel()"
                    x-on:keydown.enter.stop.prevent="selectOption(currentSelectedOption)"
                    x-on:keydown.arrow-up.prevent="focusPreviousOption()"
@@ -27,11 +27,13 @@ $unique_component_options = 'x_policy_ui_shared_select_' . $id . '_options_' . $
                    data-placeholder="{{ $placeholder }}" aria-invalid="false" aria-required="{{ $required }}"
                    autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
                    aria-haspopup="true" {{ $attributes->has('disabled') ? 'disabled' : '' }} />
+            <template x-if="isValueSet && !$refs.control.disabled">
+                <button x-on:click="cleanInput()" type="button" class="absolute inset-y-0 right-5 inline-flex items-center pr-2 mr-1">
+                    <x-policy-ui-shared:icon class="text-red-600" size="small">x-circle</x-policy-ui-shared:icon>
+                </button>
+            </template>
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none mr-1">
-                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <x-policy-ui-shared:icon class="text-gray-600" size="small">chevron-down</x-policy-ui-shared:icon>
             </span>
         </div>
         <div x-ref="popup"

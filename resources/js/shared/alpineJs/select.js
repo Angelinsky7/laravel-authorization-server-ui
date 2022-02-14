@@ -18,13 +18,15 @@ function select(config) {
     };
 
     return {
-        config: this.config = Object.assign({}, defaultConfig, config),
+        config: Object.assign({}, defaultConfig, config),
         panelVisible: false,
         search: '',
         options: [],
         focusedOptionIndex: -1,
         initialValueControl: null,
         initialOption: null,
+        isValueSet: false,
+
         init() {
             this.options = this.config.options;
             if (this.config.autoActiveFirstOption) { this.focusedOptionIndex = 0; }
@@ -36,6 +38,7 @@ function select(config) {
                 if (this.initialOption != null) { this.$nextTick(() => this.$dispatch('item-change', { option: this.initialOption })); }
                 this.search = this.$refs.control.value;
                 if (this.search) { this.filterOptions(this.search); }
+                this.isValueSet = this._isValueSetEvaluator();
             }
 
             popperInstance = window.policy.popperJs.createPopper(this.$refs.control, this.$refs.popup, {
@@ -46,6 +49,7 @@ function select(config) {
             this.$watch('search', (value) => {
                 if (!value || this.options.filter(p => p.caption == value) == 0) {
                     this.$refs.input.value = null;
+                    this.isValueSet = this._isValueSetEvaluator();
                     this.$dispatch('item-change', { option: null });
                 }
                 this.filterOptions(value);
@@ -53,10 +57,15 @@ function select(config) {
 
             initialized = true;
         },
+
         get currentSelectedOption() {
             if (this.focusedOptionIndex == -1) { return null; }
             return this.options[this.focusedOptionIndex];
         },
+        _isValueSetEvaluator() {
+            return this.$refs.control.value != null && this.$refs.control.value != '';
+        },
+
         filterOptions(value) {
             if (initialized && !this.panelVisible) { this.togglePanel(); }
 
@@ -108,10 +117,21 @@ function select(config) {
 
             this.$refs.input.value = selectedOption.value;
             this.$refs.control.value = selectedOption.caption;
+            this.isValueSet = this._isValueSetEvaluator();
 
             this.closePanel();
 
             this.$dispatch('item-change', { option: option });
+        },
+
+        cleanInput() {
+            this.search = '';
+            this.$refs.input.value = null;
+            this.$refs.control.value = null;
+            this.isValueSet = this._isValueSetEvaluator();
+
+            this.$dispatch('item-change', { option: null });
+            this.$nextTick(() => this.closePanel());
         }
     };
 

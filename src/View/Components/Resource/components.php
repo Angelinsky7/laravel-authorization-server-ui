@@ -3,5 +3,6 @@
 namespace Darkink\AuthorizationServerUI\View\Components\Resource;
 
 return [
-    Select::class
+    Select::class,
+    InputResourceType::class
 ];

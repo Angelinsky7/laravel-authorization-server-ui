@@ -16,7 +16,8 @@
                     @include('policy-ui::Permission.Permission.update')
 
                     <x-policy-ui-shared:input-group header="{{ _('Resource Type') }}">
-                        <x-policy-ui-shared:input-base id="resource_type" name="resource_type" type="text" value="{{ old('resource_type') ?? $item->resource_type }}" />
+                        <x-policy-ui-resource:input-resource-type id="resource_type" name="resource_type" value="{{ old('resource_type') ?? $item->resource_type }}" />
+                        {{-- <x-policy-ui-shared:input-base id="resource_type" name="resource_type" type="text" value="{{ old('resource_type') ?? $item->resource_type }}" /> --}}
                         <x-policy-ui-form-field-error field="resource_type" />
                     </x-policy-ui-shared:input-group>
 
