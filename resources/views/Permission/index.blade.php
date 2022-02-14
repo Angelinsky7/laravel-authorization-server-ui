@@ -35,9 +35,8 @@
                         <x-policy-ui-shared:default-table-row>
                             <x-policy-ui-shared:default-table-row-content>
                                 <div class="text-sm text-gray-900">{{ $item->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $item->label }}</div>
                             </x-policy-ui-shared:default-table-row-content>
-                            <x-policy-ui-shared:default-table-row-content content="{{ $item->description }}" />
+                            <x-policy-ui-shared:default-table-row-content content="{{ darkink_lasui_abbreviate($item->description, 50) }}" />
                             <x-policy-ui-shared:default-table-row-content>
                                 <x-policy-ui-permission:chip-decision-strategy :item="$item->decision_strategy" />
                             </x-policy-ui-shared:default-table-row-content>

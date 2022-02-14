@@ -1,69 +1,38 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit role') }} {{ $item->name }}
-        </h2>
+        <x-policy-ui-shared:default-header header="{{ __('Edit Role') }} '{{ $item->name }}'" />
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+    <x-policy-ui-shared:outer-form-layout>
+        <form method="POST" action="{{ route('policy-ui.role.update', ['role' => $item->id]) }}">
+            @method('PUT')
+            @csrf
+            <input id="id" name="id" value="{{ $item->id }}" type="hidden" />
 
-                    <div class="mt-10 sm:mt-0">
-                        <div class="mt-5 md:mt-0 md:col-span-2">
-                            <form method="POST" action="{{route('policy-ui.role.update', ['role' => $item->id])}}">
-                                @method('PUT')
-                                @csrf
-                                <div class="overflow-hidden">
-                                    <div class="px-4 py-5 bg-white sm:p-6">
-                                        <div class="grid grid-cols-6 gap-6">
-                                            <div class="col-span-6 sm:col-span-6">
-                                                <label for="name"
-                                                       class="block text-sm font-medium text-gray-700">
-                                                    Name
-                                                </label>
-                                                <input type="text" name="name" id="name"
-                                                       value="{{ old('name') ?? $item->name }}"
-                                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }}">
-                                                <x-policy-ui-form-field-error field="name"></x-policy-ui-form-field-error>
-                                            </div>
+            <div class="overflow-hidden">
+                <x-policy-ui-shared:inner-form-layout>
+                    <x-policy-ui-shared:input-group header="{{ _('Name') }}">
+                        <x-policy-ui-shared:input-base id="name" name="name" type="text" value="{{ old('name') ?? $item->name }}" />
+                        <x-policy-ui-form-field-error field="name" />
+                    </x-policy-ui-shared:input-group>
 
-                                            <div class="col-span-6 sm:col-span-6">
-                                                <label for="label"
-                                                       class="block text-sm font-medium text-gray-700">
-                                                    Label
-                                                </label>
-                                                <input type="text" name="label" id="label"
-                                                       value="{{ old('label') ?? $item->label }}"
-                                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md  {{ $errors->has('label') ? 'border-red-500' : 'border-gray-300' }}">
-                                                <x-policy-ui-form-field-error field="label"></x-policy-ui-form-field-error>
-                                            </div>
+                    <x-policy-ui-shared:input-group header="{{ _('Label') }}">
+                        <x-policy-ui-shared:input-base id="label" name="label" type="text" value="{{ old('label') ?? $item->label }}" />
+                        <x-policy-ui-form-field-error field="label" />
+                    </x-policy-ui-shared:input-group>
 
-                                            <div class="col-span-6 sm:col-span-6">
-                                                <label for="description"
-                                                       class="block text-sm font-medium text-gray-700">
-                                                    Description
-                                                </label>
-                                                <div class="mt-1">
-                                                    <textarea id="description" name="description" rows="3"
-                                                              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                                                              placeholder="a simple description">{{ old('description') ?? $item->description }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="px-4 py-3 text-right sm:px-6">
-                                        <x-policy-ui-shared:link href="{{ route('policy-ui.role.index') }}">Cancel</x-policy-ui-shared:link>
-                                        <x-policy-ui-shared:button genre="raised" color="primary" type="submit">Update</x-policy-ui-shared:button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    <x-policy-ui-shared:input-group header="{{ _('Description') }}">
+                        {{-- <x-policy-ui-shared:input-base id="description" name="description" type="text" value="{{ old('description') ?? $item->description }}" /> --}}
+                        <x-policy-ui-shared:input-textarea id="description" name="description" rows="3" placeholder="a simple description" value="{{ old('description') ?? $item->description }}" />
+                        <x-policy-ui-form-field-error field="description" />
+                    </x-policy-ui-shared:input-group>
+                </x-policy-ui-shared:inner-form-layout>
 
-                </div>
+                <x-policy-ui-shared:actions-form-layout>
+                    <x-policy-ui-shared:link href="{{ route('policy-ui.role.index') }}">Cancel</x-policy-ui-shared:link>
+                    <x-policy-ui-shared:button genre="raised" color="primary" type="submit">Update</x-policy-ui-shared:button>
+                </x-policy-ui-shared:actions-form-layout>
             </div>
-        </div>
-    </div>
+        </form>
+    </x-policy-ui-shared:outer-form-layout>
 </x-app-layout>
