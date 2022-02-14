@@ -62,6 +62,28 @@ class PolicyUI
                 Route::get('/{permission}/delete', [PermissionController::class, 'delete'])->middleware('can:permission.delete')->name('policy-ui.permission.delete');
                 Route::delete('/{permission}', [PermissionController::class, 'destroy'])->middleware('can:permission.delete')->name('policy-ui.permission.destroy');
             });
+
+
+
+
+
+
+
+            Route::group(['prefix' => 'client'], function () {
+                Route::get('/', [ClientController::class, 'index'])->middleware('can:client.see')->name('policy-ui.client.index');
+            });
+            Route::group(['prefix' => 'user'], function () {
+                Route::get('/', [UserController::class, 'index'])->middleware('can:user.see')->name('policy-ui.user.index');
+            });
+            Route::group(['prefix' => 'group'], function () {
+                Route::get('/', [GroupController::class, 'index'])->middleware('can:group.see')->name('policy-ui.group.index');
+            });
+            Route::group(['prefix' => 'policy'], function () {
+                Route::get('/', [PolicyController::class, 'index'])->middleware('can:policy.see')->name('policy-ui.policy.index');
+            });
+
+
+
         });
     }
 
