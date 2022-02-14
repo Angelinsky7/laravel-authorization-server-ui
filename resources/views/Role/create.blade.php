@@ -16,9 +16,9 @@
                         <x-policy-ui-form-field-error field="name" />
                     </x-policy-ui-shared:input-group>
 
-                    <x-policy-ui-shared:input-group header="{{ _('Label') }}">
-                        <x-policy-ui-shared:input-base id="label" name="label" type="text" value="{{ old('label') }}" />
-                        <x-policy-ui-form-field-error field="label" />
+                    <x-policy-ui-shared:input-group header="{{ _('Display Name') }}">
+                        <x-policy-ui-shared:input-base id="display_name" name="display_name" type="text" value="{{ old('display_name') }}" />
+                        <x-policy-ui-form-field-error field="display_name" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Description') }}">

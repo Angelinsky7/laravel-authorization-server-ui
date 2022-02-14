@@ -43,7 +43,7 @@ class RoleController
 
         $this->repo->create(
             $validated['name'],
-            $validated['label'],
+            $validated['display_name'],
             $validated['description']
         );
 
@@ -64,7 +64,7 @@ class RoleController
         $this->repo->update(
             $role,
             $validated['name'],
-            $validated['label'],
+            $validated['display_name'],
             $validated['description']
         );
 

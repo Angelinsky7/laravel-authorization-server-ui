@@ -30,4 +30,5 @@ return array_merge(
     require(__DIR__ . '/Permission/components.php'),
     require(__DIR__ . '/Resource/components.php'),
     require(__DIR__ . '/Scope/components.php'),
+    require(__DIR__ . '/Role/components.php'),
 );

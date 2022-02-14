@@ -21,10 +21,10 @@
                 <x-policy-ui-shared:default-table-header-column>
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="description" header="{{ _('Description') }}" />
                 </x-policy-ui-shared:default-table-header-column>
-                <x-policy-ui-shared:default-table-header-column>
+                <x-policy-ui-shared:default-table-header-column content-class="justify-center">
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="decision_strategy" header="{{ _('Decision Strategy') }}" />
                 </x-policy-ui-shared:default-table-header-column>
-                <x-policy-ui-shared:default-table-header-column header="{{ _('Type') }}" />
+                <x-policy-ui-shared:default-table-header-column content-class="justify-center" header="{{ _('Type') }}" />
                 <x-policy-ui-shared:default-table-header-column>
                     <span class="sr-only">Actions</span>
                 </x-policy-ui-shared:default-table-header-column>
@@ -37,10 +37,10 @@
                                 <div class="text-sm text-gray-900">{{ $item->name }}</div>
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-content content="{{ darkink_lasui_abbreviate($item->description, 50) }}" />
-                            <x-policy-ui-shared:default-table-row-content>
+                            <x-policy-ui-shared:default-table-row-content content-class="justify-center items-center">
                                 <x-policy-ui-permission:chip-decision-strategy :item="$item->decision_strategy" />
                             </x-policy-ui-shared:default-table-row-content>
-                            <x-policy-ui-shared:default-table-row-content>
+                            <x-policy-ui-shared:default-table-row-content content-class="justify-center items-center">
                                 <x-policy-ui-permission:chip-type :item="$item" />
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-actions>
