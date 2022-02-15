@@ -8,14 +8,17 @@ $unique_component_options = 'x_policy_ui_shared_select_' . $id . '_options_' . $
     var {{ $unique_component_options }} = {!! json_encode($options ?? []) !!};
 </script>
 <div {{ $attributes }} x-data="window.policy.alpineJs.select({
-    options: {{ $unique_component_options }}
+    options: {{ $unique_component_options }},
+    initialValueControlFromJs: {{ json_encode($initialValueControlFromJs) }}
 })"
      x-on:click.outside="closePanel()"
      x-on:keydown.escape="closePanel()">
     <div>
         <div class="relative">
-            <input x-ref="input" id="{{ $id }}" name="{{ $name }}" type="hidden"
-                   value="{{ $value }}" />
+            @if (!$disableHiddenInput)
+                <input x-ref="input" id="{{ $id }}" name="{{ $name }}" type="hidden"
+                       value="{{ $value }}" />
+            @endif
             <input x-ref="control"
                    type="text" aria-label="{{ $name }}"
                    x-model.debounce.250ms="search"

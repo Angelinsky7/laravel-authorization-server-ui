@@ -6,16 +6,18 @@ function select(config) {
     var defaultConfig = {
         options: [],
         autoActiveFirstOption: false,
+        initialValueControlFromJs: false,
         emptyOptionsMessage: null,
         filterValue(value) { return value.toString().toLowerCase(); },
         filterOptions(options, filterValue) { return options.filter(p => p.caption.toLowerCase().includes(filterValue)); },
-        // getOptionCaption(option) { return option.caption ?? option; },
-        // getOptionValue(option) { return option.value ?? option; },
         isOptionDisabled(option) { return option.disabled ?? false; },
         isOptionActive(focusedOptionIndex, index) { return focusedOptionIndex === index; },
         findOptionByValue(options, value) { return options.find(p => p.value == value); },
-        onItemChange: null
     };
+
+    var blockExternalEvent = false;
+    var blockPanelOpening = false;
+    var resetBlockNextSearch = false;
 
     return {
         config: Object.assign({}, defaultConfig, config),
@@ -31,15 +33,19 @@ function select(config) {
             this.options = this.config.options;
             if (this.config.autoActiveFirstOption) { this.focusedOptionIndex = 0; }
 
-            this.initialValueControl = this.$refs.input.value;
-            if (this.initialValueControl && this.options.length != 0) {
-                this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
-                this.$refs.control.value = this.initialOption != null ? this.initialOption.caption : null;
-                if (this.initialOption != null) { this.$nextTick(() => this.$dispatch('item-change', { option: this.initialOption })); }
-                this.search = this.$refs.control.value;
-                if (this.search) { this.filterOptions(this.search); }
-                this.isValueSet = this._isValueSetEvaluator();
+            this.initialValueControl = this.$refs.input != null ? this.$refs.input.value : null;
+
+            if (config.initialValueControlFromJs) {
+                this.$nextTick(() => {
+                    blockExternalEvent = true;
+                    blockPanelOpening = true;
+                    this.initialValueControl = this._findInitialValueFromJs();
+                    this._setInitialValue(false);
+                    resetBlockNextSearch = true;
+                });
             }
+
+            this._setInitialValue();
 
             popperInstance = window.policy.popperJs.createPopper(this.$refs.control, this.$refs.popup, {
                 placement: 'bottom-start',
@@ -48,14 +54,41 @@ function select(config) {
 
             this.$watch('search', (value) => {
                 if (!value || this.options.filter(p => p.caption == value) == 0) {
-                    this.$refs.input.value = null;
+                    if (this.$refs.input != null) {
+                        this.$refs.input.value = null;
+                    }
                     this.isValueSet = this._isValueSetEvaluator();
-                    this.$dispatch('item-change', { option: null });
+                    if (!blockExternalEvent) {
+                        this.$dispatch('item-change', { option: null });
+                    }
                 }
                 this.filterOptions(value);
+
+                if (resetBlockNextSearch) {
+                    resetBlockNextSearch = false;
+                    blockExternalEvent = false;
+                    blockPanelOpening = false;
+                }
             });
 
             initialized = true;
+        },
+
+        _setInitialValue(sendEvent = true) {
+            if (this.initialValueControl && this.options.length != 0) {
+                this.initialOption = this.config.findOptionByValue(this.options, this.initialValueControl);
+                this.$refs.control.value = this.initialOption != null ? this.initialOption.caption : null;
+                if (this.initialOption != null && sendEvent) { this.$nextTick(() => this.$dispatch('item-change', { option: this.initialOption })); }
+                this.search = this.$refs.control.value;
+                if (this.search) { this.filterOptions(this.search); }
+                this.isValueSet = this._isValueSetEvaluator();
+            }
+        },
+
+        _findInitialValueFromJs() {
+            var evt = { value: null };
+            this.$dispatch('initialize', { option: evt });
+            return evt.value;
         },
 
         get currentSelectedOption() {
@@ -67,7 +100,7 @@ function select(config) {
         },
 
         filterOptions(value) {
-            if (initialized && !this.panelVisible) { this.togglePanel(); }
+            if (initialized && !this.panelVisible && !blockPanelOpening) { this.togglePanel(); }
 
             const filterValue = this.config.filterValue(value);
             this.options = this.config.filterOptions(this.config.options, filterValue);
@@ -115,7 +148,9 @@ function select(config) {
             let selectedOption = option ?? this.options[this.focusedOptionIndex];
             if (selectedOption == null || this.config.isOptionDisabled(selectedOption)) { return; }
 
-            this.$refs.input.value = selectedOption.value;
+            if (this.$refs.input != null) {
+                this.$refs.input.value = selectedOption.value;
+            }
             this.$refs.control.value = selectedOption.caption;
             this.isValueSet = this._isValueSetEvaluator();
 
@@ -126,7 +161,9 @@ function select(config) {
 
         cleanInput() {
             this.search = '';
-            this.$refs.input.value = null;
+            if (this.$refs.input != null) {
+                this.$refs.input.value = null;
+            }
             this.$refs.control.value = null;
             this.isValueSet = this._isValueSetEvaluator();
 

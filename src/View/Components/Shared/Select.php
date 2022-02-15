@@ -13,17 +13,21 @@ class Select extends Component
     public bool $required;
 
     public string | null $panelMaxHeight;
+    public bool $disableHiddenInput;
+    public bool $initialValueControlFromJs;
 
     public mixed $options;
     public mixed $value;
 
     public function __construct(
-        string $id,
-        string $name,
-        mixed $value,
+        string $id = '',
+        string $name = '',
+        mixed $value = null,
         string $placeholder = '',
         bool $required = false,
         string | null $panelMaxHeight = null,
+        bool $disableHiddenInput = false,
+        bool $initialValueControlFromJs = false,
         array $options = []
     ) {
         $this->id = $id;
@@ -32,6 +36,8 @@ class Select extends Component
         $this->required = $required;
 
         $this->panelMaxHeight = $panelMaxHeight;
+        $this->disableHiddenInput = $disableHiddenInput;
+        $this->initialValueControlFromJs = $initialValueControlFromJs;
 
         $this->options = $options;
         $this->value = $value;

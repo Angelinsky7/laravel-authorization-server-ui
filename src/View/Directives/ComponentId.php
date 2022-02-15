@@ -2,15 +2,12 @@
 
 namespace Darkink\AuthorizationServerUI\View\Directives;
 
+use Darkink\AuthorizationServerUI\Helpers\ComponentIdService;
+
 class ComponentId
 {
-    private static $ids = [];
-
     public static function execute($expression)
     {
-        if (!array_key_exists($expression, static::$ids)) {
-            static::$ids[$expression] = 0;
-        }
-        return static::$ids[$expression]++;
+        return ComponentIdService::getInstance()->getId($expression);
     }
 }

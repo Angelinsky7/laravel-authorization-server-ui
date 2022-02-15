@@ -1,19 +1,19 @@
 <?php
 
-namespace Darkink\AuthorizationServerUI\View\Components\Resource;
+namespace Darkink\AuthorizationServerUI\View\Components\Role;
 
-use Darkink\AuthorizationServer\Models\Resource;
-use Darkink\AuthorizationServer\Repositories\ResourceRepository;
+use Darkink\AuthorizationServer\Models\Role;
+use Darkink\AuthorizationServer\Repositories\RoleRepository;
 use Darkink\AuthorizationServerUI\View\Components\Shared\Select as SharedSelect;
 use Illuminate\View\Component;
 
 class Select extends SharedSelect
 {
     public function __construct(
-        ResourceRepository $resourceRepository,
+        RoleRepository $roleRepository,
         string $id = '',
         string $name = '',
-        Resource | string | int | null $value = null,
+        Role | string | int | null $value = null,
         string $placeholder = '',
         bool $required = false,
         string | null $panelMaxHeight = null,
@@ -21,7 +21,7 @@ class Select extends SharedSelect
         bool $initialValueControlFromJs = false,
         array $options = []
     ) {
-        $options = $resourceRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'caption' => $p->display_name, 'scopes' => $p->scopes()->get()]);
+        $options = $roleRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'caption' => $p->display_name]);
 
         parent::__construct(
             $id,

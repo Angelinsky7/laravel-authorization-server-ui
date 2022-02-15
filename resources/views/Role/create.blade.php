@@ -3,7 +3,7 @@
         <x-policy-ui-shared:default-header header="{{ __('Create a new Role') }}" />
     </x-slot>
 
-    {{-- <x-policy-ui-shared:validation-error-helper /> --}}
+    <x-policy-ui-shared:validation-error-helper />
 
     <x-policy-ui-shared:outer-form-layout>
         <form method="POST">
@@ -25,6 +25,31 @@
                         {{-- <x-policy-ui-shared:input-base id="description" name="description" type="text" value="{{ old('description') }}" /> --}}
                         <x-policy-ui-shared:input-textarea id="description" name="description" rows="3" placeholder="a simple description" value="{{ old('description') }}" />
                         <x-policy-ui-form-field-error field="description" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Parents') }}">
+                        <x-policy-ui-shared:manage-list id="parents" name="parents" :items="old('parents')">
+                            <!-- TODO(demarco): Saldy it's not working correctly... -->
+                            <!-- { -->
+                            <x-slot name="item_template">
+                                <div class="flex mb-1">
+                                    <div class="flex flex-col flex-1">
+                                        <x-policy-ui-role:select class="flex-1" panelMaxHeight="max-h-[200px]" disableHiddenInput="true" initialValueControlFromJs="true"
+                                                                 x-on:item-change="updateItem(listItemIndex, $event.detail.option != null ? $event.detail.option.value : null)"
+                                                                 x-on:initialize="$event.detail.option.value = items[listItemIndex]" />
+                                        <x-policy-ui-form-field-error js="`parents.${listItemIndex}`" />
+                                    </div>
+                                    <x-policy-ui-shared:button type="button" color="primary"
+                                                               x-on:click="removeItem(listItemIndex)">
+                                        {{ _('Remove') }}
+                                    </x-policy-ui-shared:button>
+                                </div>
+                            </x-slot>
+                            <!-- } -->
+                        </x-policy-ui-shared:manage-list>
+                        {{-- <x-policy-ui-shared:input-base id="parents[]" name="parents[]" type="text" value="" /> --}}
+                        {{-- value="{{ old('parents') }}" --}}
+                        <x-policy-ui-form-field-error field="parents" />
                     </x-policy-ui-shared:input-group>
 
                 </x-policy-ui-shared:inner-form-layout>
