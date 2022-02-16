@@ -28,6 +28,17 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('memberOfs') }}">
+                        <div class="flex">
+                            <x-policy-ui-shared:listbox class="border border-basic-400 flex-1 min-h-[200px]">
+                                <x-slot name="item_template">
+                                    <span class="w-full">Test</span>
+                                </x-slot>
+                            </x-policy-ui-shared:listbox>
+                            <div class="flex flex-col ml-2">
+                                <x-policy-ui-shared:button genre="stroked" color="secondary" type="button">{{ _('Add member') }}</x-policy-ui-shared:button>
+                                <x-policy-ui-shared:button class="mt-1" genre="stroked" color="secondary" type="button">{{ _('Remove member') }}</x-policy-ui-shared:button>
+                            </div>
+                        </div>
                         <x-policy-ui-form-field-error field="memberOfs" />
                     </x-policy-ui-shared:input-group>
 
@@ -38,8 +49,8 @@
                 </x-policy-ui-shared:inner-form-layout>
 
                 <x-policy-ui-shared:actions-form-layout>
-                    <x-policy-ui-shared:link href="{{ route('policy-ui.role.index') }}">Cancel</x-policy-ui-shared:link>
-                    <x-policy-ui-shared:button genre="raised" color="primary" type="submit">Create</x-policy-ui-shared:button>
+                    <x-policy-ui-shared:link href="{{ route('policy-ui.role.index') }}">{{ _('Cancel') }}</x-policy-ui-shared:link>
+                    <x-policy-ui-shared:button genre="raised" color="primary" type="submit">{{ _('Create') }}</x-policy-ui-shared:button>
                 </x-policy-ui-shared:actions-form-layout>
             </div>
         </form>

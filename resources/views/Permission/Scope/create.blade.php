@@ -30,8 +30,8 @@
                 </x-policy-ui-shared:inner-form-layout>
 
                 <x-policy-ui-shared:actions-form-layout>
-                    <x-policy-ui-shared:link genre="stroked" href="{{ route('policy-ui.permission.index') }}">Cancel</x-policy-ui-shared:link>
-                    <x-policy-ui-shared:button genre="flat" color="primary" type="submit">Create</x-policy-ui-shared:button>
+                    <x-policy-ui-shared:link genre="stroked" href="{{ route('policy-ui.permission.index') }}">{{ _('Cancel') }}</x-policy-ui-shared:link>
+                    <x-policy-ui-shared:button genre="flat" color="primary" type="submit">{{ _('Create') }}</x-policy-ui-shared:button>
                 </x-policy-ui-shared:actions-form-layout>
             </div>
         </form>

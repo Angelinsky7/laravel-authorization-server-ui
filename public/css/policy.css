@@ -812,6 +812,32 @@
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.policy-ui-listbox {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.policy-ui-listbox-item:not([disabled]) {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.policy-ui-listbox-item:not([disabled]):hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.policy-ui-item-active:not([disabled]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -908,6 +934,10 @@
   margin-left: 0.5rem;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -930,10 +960,6 @@
 
 .mb-4 {
   margin-bottom: 1rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
 }
 
 .mt-10 {
@@ -1008,20 +1034,28 @@
   height: 2.5rem;
 }
 
-.h-2 {
-  height: 0.5rem;
-}
-
 .h-\[29px\] {
   height: 29px;
+}
+
+.h-2 {
+  height: 0.5rem;
 }
 
 .max-h-\[200px\] {
   max-height: 200px;
 }
 
+.min-h-\[200px\] {
+  min-height: 200px;
+}
+
 .min-h-\[29px\] {
   min-height: 29px;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .w-\[50\%\] {
@@ -1050,10 +1084,6 @@
 
 .w-\[40px\] {
   width: 40px;
-}
-
-.w-full {
-  width: 100%;
 }
 
 .w-16 {
@@ -1090,12 +1120,12 @@
   max-width: 24rem;
 }
 
-.max-w-7xl {
-  max-width: 80rem;
-}
-
 .max-w-full {
   max-width: 100%;
+}
+
+.max-w-7xl {
+  max-width: 80rem;
 }
 
 .flex-1 {
@@ -1356,16 +1386,16 @@
   padding: 1rem;
 }
 
+.p-0 {
+  padding: 0px;
+}
+
 .p-\[1px\] {
   padding: 1px;
 }
 
 .p-6 {
   padding: 1.5rem;
-}
-
-.p-0 {
-  padding: 0px;
 }
 
 .px-4 {
@@ -1413,14 +1443,14 @@
   padding-bottom: 0.25rem;
 }
 
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
 .px-\[10px\] {
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .pr-2 {

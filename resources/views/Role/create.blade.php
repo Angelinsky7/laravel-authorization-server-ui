@@ -51,8 +51,8 @@
                 </x-policy-ui-shared:inner-form-layout>
 
                 <x-policy-ui-shared:actions-form-layout>
-                    <x-policy-ui-shared:link href="{{ route('policy-ui.role.index') }}">Cancel</x-policy-ui-shared:link>
-                    <x-policy-ui-shared:button genre="raised" color="primary" type="submit">Create</x-policy-ui-shared:button>
+                    <x-policy-ui-shared:link href="{{ route('policy-ui.role.index') }}">{{ _('Cancel') }}</x-policy-ui-shared:link>
+                    <x-policy-ui-shared:button genre="raised" color="primary" type="submit">{{ _('Create') }}</x-policy-ui-shared:button>
                 </x-policy-ui-shared:actions-form-layout>
             </div>
         </form>

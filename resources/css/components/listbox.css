@@ -1,0 +1,11 @@
+@layer components {
+  .policy-ui-listbox {
+    @apply bg-white text-black;
+  }
+  .policy-ui-listbox-item:not([disabled]) {
+    @apply text-black hover:text-white hover:bg-gray-600;
+  }
+  .policy-ui-item-active:not([disabled]) {
+    @apply text-white bg-gray-600;
+  }
+}

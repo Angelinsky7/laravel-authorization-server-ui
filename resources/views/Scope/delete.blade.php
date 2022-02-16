@@ -25,7 +25,7 @@
             </div>
 
             <x-policy-ui-shared:default-modal-actions>
-                <x-policy-ui-shared:link href="{{ route('policy-ui.scope.index') }}">Cancel</x-policy-ui-shared:link>
+                <x-policy-ui-shared:link href="{{ route('policy-ui.scope.index') }}">{{ _('Cancel') }}</x-policy-ui-shared:link>
                 <x-policy-ui-shared:button genre="raised" color="alert" type="submit">Delete</x-policy-ui-shared:button>
             </x-policy-ui-shared:default-modal-actions>
 
