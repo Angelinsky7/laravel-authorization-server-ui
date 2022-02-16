@@ -11,13 +11,16 @@ $unique_component_items = 'x_policy_ui_shared_manage_list_' . $id . '_items_' . 
      x-data="window.policy.alpineJs.manageList({items: {{ $unique_component_items }}})"
      x-id="['x-policy-ui-shared-manage-list']">
     <div class="values">
-        <template x-for="(option, index) in items" :key="index">
-            <input x-bind:id="getIdOrNameFieldValue('{{ $id }}', index)" x-bind:name="getIdOrNameFieldValue('{{ $id }}', index)" type="hidden" x-bind:value="option" />
+        <template x-for="(item, index) in items" :key="item.index">
+            <input type="hidden"
+                   x-bind:id="getIdOrNameFieldValue('{{ $id }}', index)"
+                   x-bind:name="getIdOrNameFieldValue('{{ $id }}', index)"
+                   x-bind:value="item.value" />
         </template>
     </div>
     {{-- <div x-text="items"></div> --}}
     <div class="flex flex-col">
-        <template x-for="(item, listItemIndex) in items" :key="listItemIndex">
+        <template x-for="(item, index) in items" :key="item.index">
             {{ $item_template }}
         </template>
     </div>

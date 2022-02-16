@@ -26,6 +26,28 @@
                         <x-policy-ui-shared:input-textarea id="description" name="description" rows="3" placeholder="a simple description" value="{{ old('description') ?? $item->description }}" />
                         <x-policy-ui-form-field-error field="description" />
                     </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Parents') }}">
+                        <x-policy-ui-shared:manage-list id="parents" name="parents" :items="old('parents') ?? $item->parents->map(fn($p) => $p->id)">
+                            <x-slot name="item_template">
+                                <div class="flex mb-1">
+                                    <div class="flex flex-col flex-1">
+                                        <x-policy-ui-role:select class="flex-1" panelMaxHeight="max-h-[200px]"
+                                                                 disableHiddenInput="true" initialValueControlFromJs="true"
+                                                                 x-on:item-change="updateItem(index, $event.detail.option != null ? $event.detail.option.value : null)"
+                                                                 x-on:initialize="$event.detail.option.value = items[index].value" />
+                                        <x-policy-ui-form-field-error js="`parents.${index}`" />
+                                    </div>
+                                    <x-policy-ui-shared:button type="button" color="primary"
+                                                               x-on:click="removeItem(index)">
+                                        {{ _('Remove') }}
+                                    </x-policy-ui-shared:button>
+                                </div>
+                            </x-slot>
+                        </x-policy-ui-shared:manage-list>
+                        <x-policy-ui-form-field-error field="parents" />
+                    </x-policy-ui-shared:input-group>
+
                 </x-policy-ui-shared:inner-form-layout>
 
                 <x-policy-ui-shared:actions-form-layout>

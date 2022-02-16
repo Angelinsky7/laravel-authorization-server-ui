@@ -32,5 +32,6 @@ return [
     Dropdown::class,
     DropdownLink::class,
     ValidationErrorHelper::class,
-    ManageList::class
+    ManageList::class,
+    Progress::class
 ];

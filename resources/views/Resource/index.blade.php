@@ -3,7 +3,7 @@
         <x-policy-ui-shared:default-header header="{{ __('Resources') }}" />
     </x-slot>
 
-    <x-policy-ui-success-message />
+    <x-policy-ui-flash-message />
 
     <x-policy-ui-shared:outer-list-layout>
         <x-policy-ui-shared:default-list-actions>

@@ -44,7 +44,8 @@ class RoleController
         $this->repo->create(
             $validated['name'],
             $validated['display_name'],
-            $validated['description']
+            $validated['description'],
+            $validated['parents'] ?? []
         );
 
         $request->session()->flash('success_message', 'Role created.');
@@ -65,7 +66,8 @@ class RoleController
             $role,
             $validated['name'],
             $validated['display_name'],
-            $validated['description']
+            $validated['description'],
+            $validated['parents'] ?? []
         );
 
         $request->session()->flash('success_message', 'Role updated.');

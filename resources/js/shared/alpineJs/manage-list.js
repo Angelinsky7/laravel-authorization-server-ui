@@ -1,4 +1,7 @@
 function manageList(config) {
+
+    var uniqueIndex = 0;
+
     var defaultConfig = {
         items: []
     };
@@ -7,7 +10,7 @@ function manageList(config) {
         config: Object.assign({}, defaultConfig, config),
         items: [],
         init() {
-            this.items = this.config.items;
+            this.items = this.config.items.map(p => ({ value: p, index: uniqueIndex++ }));
         },
 
         getIdOrNameFieldValue(prefix, index) {
@@ -15,21 +18,15 @@ function manageList(config) {
         },
 
         addItem() {
-            this.items.push(null);
+            this.items.push({ value: null, index: uniqueIndex++ });
         },
         removeItem(index) {
-            //TODO(demarco): It's working correctly this way... but why ???
             if (index <= this.items.length) {
-                const nextItems = [...this.items];
-                nextItems.splice(index, 1);
-                this.items = [];
-                this.$nextTick(() => {
-                    this.items = nextItems;
-                });
+                this.items.splice(index, 1);
             }
         },
         updateItem(index, value) {
-            this.items[index] = value;
+            this.items[index].value = value;
         }
     };
 }

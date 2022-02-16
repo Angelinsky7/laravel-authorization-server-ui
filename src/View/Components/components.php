@@ -19,7 +19,7 @@ $table = [
 $miscs = [
     IconBoolTick::class,
     FormFieldError::class,
-    SuccessMessage::class
+    FlashMessage::class
 ];
 
 return array_merge(
