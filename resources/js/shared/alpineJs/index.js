@@ -4,3 +4,5 @@ export * from './resource-input-resource-type';
 export * from './manage-list';
 export * from './form-field-error';
 export * from './listbox';
+export * from './modal-service';
+export * from './tooltip';

@@ -35,7 +35,16 @@
                     <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
                         <div class="flex" x-data="{
                             _items: [],
-                            remove() { this.$dispatch('x-policy-ui-shared:listbox-memberofs:remove-items', this._items); },
+                            remove() {
+                                const dialogRef = window.policy.alpineJs.modalService({
+                                    content: 'Test'
+                                });
+                                dialogRef.open(p => {
+                                    if(p){
+                                        this.$dispatch('x-policy-ui-shared:listbox-memberofs:remove-items', this._items);
+                                    }
+                                });
+                            },
                             removeIsDisabled(){ return this._items.length == 0; },
                             selectedItemChanged(event){ this._items = event.detail.items; },
                         }">

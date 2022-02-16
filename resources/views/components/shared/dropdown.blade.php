@@ -23,29 +23,14 @@ switch ($width) {
 @endphp
 
 <div class="relative w-fit"
-     x-data="{
-         open: false,
-         popper: null,
-         toggle() {
-             this.open = !this.open;
-             if(!this.popper){ this.popper = Popper.createPopper($refs.trigger, $refs.popover, {
-                 placement: 'bottom',
-                 modifiers: [{
-                   name: 'computeStyles',
-                   options: {
-                     adaptive: false
-                   },
-                 }]
-             }); }
-         }
-     }"
+     x-data="window.policy.alpineJs.tooltip()"
      @click.outside="open = false"
      @close.stop="open = false">
     <div @click="toggle()" x-ref="trigger">
         {{ $trigger }}
     </div>
 
-    <template x-teleport="body">
+    <template x-teleport="#policy-ui-tooltip-container">
         <div x-ref="popover">
             <div x-show="open"
                  x-cloak
@@ -63,4 +48,5 @@ switch ($width) {
             </div>
         </div>
     </template>
+
 </div>

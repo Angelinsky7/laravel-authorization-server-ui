@@ -1,8 +1,3 @@
-module.exports = {
-    createModal: createModalImpl,
-    closeModal: closeModalImpl
-};
-
 var createModalImpl = function (modal_content, container) {
     var modal = document.createElement("div");
     var id = (+container.getAttribute("modals-count")) + 1;
@@ -26,7 +21,7 @@ var closeModalImpl = function (modalId) {
 
 (function init() {
     var modals = document.createElement("div");
-    modals.id = "modals-container";
+    modals.id = "policy-ui-modals-container";
     document.body.append(modals);
 
     document.addEventListener("click", (e) => {
@@ -81,3 +76,5 @@ var closeModalImpl = function (modalId) {
     })
 
 })();
+
+export { createModalImpl as createModal, closeModalImpl as closeModal };

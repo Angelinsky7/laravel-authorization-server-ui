@@ -31,11 +31,11 @@ class PolicyServiceUIProvider extends ServiceProvider
             ], 'policy-ui-views');
 
             $this->publishes([
-                __DIR__ . '/../public/css/app.css' => base_path('resources/css/vendor/laravel-authorization-server.css'),
+                __DIR__ . '/../public/css/app.css' => base_path('resources/css/vendor/laravel-authorization-ui-server.css'),
             ], 'policy-ui-public-css');
 
             $this->publishes([
-                __DIR__ . '/../public/js/app.js' => base_path('resources/js/vendor/laravel-authorization-server.js'),
+                __DIR__ . '/../public/js/app.js' => base_path('resources/js/vendor/laravel-authorization-ui-server.js'),
             ], 'policy-ui-public-js');
         }
 
