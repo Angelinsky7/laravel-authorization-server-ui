@@ -2,6 +2,7 @@
 
 namespace Darkink\AuthorizationServerUI;
 
+use Darkink\AuthorizationServerUI\Http\Controllers\GroupController;
 use Darkink\AuthorizationServerUI\Http\Controllers\RoleController;
 use Darkink\AuthorizationServerUI\Http\Controllers\PermissionController;
 use Darkink\AuthorizationServerUI\Http\Controllers\ResourceController;
@@ -63,7 +64,16 @@ class PolicyUI
                 Route::delete('/{permission}', [PermissionController::class, 'destroy'])->middleware('can:permission.delete')->name('policy-ui.permission.destroy');
             });
 
-
+            Route::group(['prefix' => 'group'], function () {
+                Route::get('/', [GroupController::class, 'index'])->middleware('can:group.see')->name('policy-ui.group.index');
+                Route::get('/create', [GroupController::class, 'create'])->middleware('can:group.create')->name('policy-ui.group.create');
+                Route::post('/create', [GroupController::class, 'store'])->middleware('can:group.create')->name('policy-ui.group.store');
+                Route::get('/{group}', [GroupController::class, 'show'])->middleware('can:group.see')->name('policy-ui.group.show');
+                Route::get('/{group}/edit', [GroupController::class, 'edit'])->middleware('can:group.update')->name('policy-ui.group.edit');
+                Route::put('/{group}', [GroupController::class, 'update'])->middleware('can:group.update')->name('policy-ui.group.update');
+                Route::get('/{group}/delete', [GroupController::class, 'delete'])->middleware('can:group.delete')->name('policy-ui.group.delete');
+                Route::delete('/{group}', [GroupController::class, 'destroy'])->middleware('can:group.delete')->name('policy-ui.group.destroy');
+            });
 
 
 
@@ -74,9 +84,6 @@ class PolicyUI
             });
             Route::group(['prefix' => 'user'], function () {
                 Route::get('/', [UserController::class, 'index'])->middleware('can:user.see')->name('policy-ui.user.index');
-            });
-            Route::group(['prefix' => 'group'], function () {
-                Route::get('/', [GroupController::class, 'index'])->middleware('can:group.see')->name('policy-ui.group.index');
             });
             Route::group(['prefix' => 'policy'], function () {
                 Route::get('/', [PolicyController::class, 'index'])->middleware('can:policy.see')->name('policy-ui.policy.index');
