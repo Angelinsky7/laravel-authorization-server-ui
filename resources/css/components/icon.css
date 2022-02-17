@@ -1,0 +1,19 @@
+@layer components {
+  .policy-ui-icon {
+    &.policy-ui-color-basic {
+      @apply text-policy-ui-basic-500;
+    }
+    &.policy-ui-color-primary {
+      @apply text-policy-ui-primary-500;
+    }
+    &.policy-ui-color-secondary {
+      @apply text-policy-ui-secondary-500;
+    }
+    &.policy-ui-color-alert {
+      @apply text-policy-ui-alert-500;
+    }
+    &.policy-ui-color-warning {
+      @apply text-policy-ui-warning-500;
+    }
+  }
+}

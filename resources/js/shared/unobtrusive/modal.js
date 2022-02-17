@@ -1,16 +1,22 @@
-var nextModalId = function(container){
-    var id = (+container.getAttribute("modals-count")) + 1;
+var nextModalId = function (container) {
+    const id = (+container.getAttribute("modals-count")) + 1;
     container.setAttribute("modals-count", id);
     return `policy-ui-modal_${id}`;
 }
 
-var createModalImpl = function (modal_content, container, modalId = null) {
-    var modal = document.createElement("div");
-    var id = modalId ?? nextModalId(container);
+var createModalImpl = function (modal_content, container, modalId = null, appendAsNode = false) {
+    const modal = document.createElement("div");
+    const id = modalId ?? nextModalId(container);
     modal.id = id;
     modal.className = "modal modal-container";
-    modal.innerHTML = modal_content;
-    container.append(modal);
+
+    if (appendAsNode) {
+        modal.appendChild(modal_content);
+        container.appendChild(modal);
+    } else {
+        modal.innerHTML = modal_content;
+        container.append(modal);
+    }
 
     // Alpine.discoverUninitializedComponents((el) => {
     //     Alpine.initializeComponent(el)
@@ -20,26 +26,26 @@ var createModalImpl = function (modal_content, container, modalId = null) {
 };
 
 var closeModalImpl = function (modalId) {
-    var modal = document.getElementById(modalId);
+    const modal = document.getElementById(modalId);
     if (modal) {
         modal.remove();
     }
 };
 
 (function init() {
-    var modals = document.createElement("div");
+    const modals = document.createElement("div");
     modals.id = "policy-ui-modals-container";
     document.body.append(modals);
 
     document.addEventListener("click", (e) => {
-        var el = e.target, found;
+        let el = e.target, found;
         while (el && !(found = el.matches("[data-remote][data-modal]"))) {
             el = el.parentElement;
         }
         if (found) {
             e.preventDefault();
 
-            var link_href = el.href;
+            let link_href = el.href;
             if (link_href == null) {
                 let formData = new FormData(el);
                 let search = new URLSearchParams(formData);
@@ -62,7 +68,7 @@ var closeModalImpl = function (modalId) {
     })
 
     document.addEventListener("click", (e) => {
-        var el = e.target, found;
+        let el = e.target, found;
         while (el && !(found = el.matches("[data-cancel]"))) {
             el = el.parentElement;
         }

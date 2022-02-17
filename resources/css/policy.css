@@ -6,6 +6,7 @@
 @import './components/button.css';
 @import './components/autocomplete.css';
 @import './components/listbox.css';
+@import './components/icon.css';
 
 [x-cloak] {
   display: none !important;

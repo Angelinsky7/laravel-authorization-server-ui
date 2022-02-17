@@ -33,22 +33,51 @@
                     {{-- {{ json_encode($item->memberOfs->map(fn($p) => ['value' => $p->id, 'item' => $p])) }} --}}
 
                     <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
-                        <div class="flex" x-data="{
-                            _items: [],
-                            remove() {
-                                const dialogRef = window.policy.alpineJs.modalService({
-                                    title: 'This is a test',
-                                    content: '<div class=\'flex flex-row w-64 h-48 p-2 m-2\'>Delete ? <button x-on:click=\'close(false)\' type=\'button\'>Cancel</button><button  x-on:click=\'close(true)\' type=\'button\'>Ok</button></div>'
-                                });
-                                dialogRef.open(p => {
-                                    if(p){
-                                        this.$dispatch('x-policy-ui-shared:listbox-memberofs:remove-items', this._items);
-                                    }
-                                });
+                        <template id="memberofs-add-dialog">
+                            <x-policy-ui-shared:outer-modal-layout modal="true">
+                                <div x-data="{
+                                    _items: [],
+                                    selectedItemChanged(event){ this._items = event.detail.items; },
+                                    addButtonDisabled() { return this._items.length == 0; }
+                                }">
+                                    <div class="flex flex-row">
+                                        <x-policy-ui-shared:inner-modal-layout>
+                                            <x-policy-ui-shared:default-modal-title title="{{ _('Add member') }}" />
+                                            <x-policy-ui-shared:default-modal-content>
+                                                <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[200px]" :items="array_map(fn($p) => ['value' => $p, 'item' => $p], [1,2,3,4,5,6,7,8])" x-on:selected-items="selectedItemChanged($event)">
+                                                    <x-slot name="item_template">
+                                                        <span class="w-full" x-text="`${item.value}`"></span>
+                                                        {{-- <span class="w-full" x-text="`${item.item.display_name}`"></span> --}}
+                                                    </x-slot>
+                                                </x-policy-ui-shared:listbox>
+                                            </x-policy-ui-shared:default-modal-content>
+                                        </x-policy-ui-shared:inner-modal-layout>
+                                    </div>
+
+                                    <x-policy-ui-shared:default-modal-actions>
+                                        <x-policy-ui-shared:button x-on:click="close({confirm: false, items: []})" type="button">{{ _('Cancel') }}</x-policy-ui-shared:button>
+                                        <x-policy-ui-shared:button x-on:click="close({confirm: true, items: _items})" x-bind:disabled="addButtonDisabled()" genre="raised" color="primary" type="button">{{ _('Add') }}</x-policy-ui-shared:button>
+                                    </x-policy-ui-shared:default-modal-actions>
+                                </div>
+                            </x-policy-ui-shared:outer-modal-layout>
+
+                        </template>
+                        <template id="memberofs-delete-dialog">
+                            <x-policy-ui-dialog:default-confirmation-dialog title="{{ _('Remove member') }}"
+                                                                            content="Are you sure you want to delete this member ? This action cannot be undone."
+                                                                            actionCaption="{{ _('Delete') }}" />
+                        </template>
+                        <div class="flex" x-data="window.policy.components.group.memberOfControl({
+                            id: 'memberofs',
+                            add: {
+                                title: '{{ _('Members') }}',
+                                content: 'memberofs-add-dialog'
                             },
-                            removeIsDisabled(){ return this._items.length == 0; },
-                            selectedItemChanged(event){ this._items = event.detail.items; },
-                        }">
+                            remove: {
+                                title: '{{ _('Confirmation') }}',
+                                content: 'memberofs-delete-dialog'
+                            }
+                        })">
                             <x-policy-ui-shared:listbox class="flex-1 min-h-[200px]"
                                                         id="memberOfs" name="memberOfs" :items="old_with('memberOfs', $item->memberOfs, 'id', fn($p) => ['value' => $p->id, 'item' => $p]) ?? $item->memberOfs->map(fn($p) => ['value' => $p->id, 'item' => $p])"
                                                         x-on:selected-items="selectedItemChanged($event)">
@@ -57,7 +86,7 @@
                                 </x-slot>
                             </x-policy-ui-shared:listbox>
                             <div class="flex flex-col ml-2">
-                                <x-policy-ui-shared:button genre="stroked" color="secondary" type="button">{{ _('Add member') }}</x-policy-ui-shared:button>
+                                <x-policy-ui-shared:button x-on:click="add()" genre="stroked" color="secondary" type="button">{{ _('Add member') }}</x-policy-ui-shared:button>
                                 <x-policy-ui-shared:button x-on:click="remove()" class="mt-1" genre="stroked" color="secondary" type="button" x-bind:disabled="removeIsDisabled()">{{ _('Remove member') }}</x-policy-ui-shared:button>
                             </div>
                         </div>

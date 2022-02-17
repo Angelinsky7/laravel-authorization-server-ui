@@ -8,9 +8,9 @@ class OuterModalLayout extends Component
 {
     public mixed $modal;
 
-    public function __construct()
+    public function __construct(bool | null $modal = null)
     {
-        $this->modal = request()->get('modal');
+        $this->modal = $modal ?? request()->get('modal');
     }
 
     public function render()

@@ -17,11 +17,10 @@ function modalService(config) {
    <div class="fixed inset-0 z-50 grid justify-center content-center">
        <div class="bg-white shadow-lg rounded-lg sm:mt-8 sm:mb-8 overflow-hidden">
            <div class="flex flex-col h-full justify-between modal">
-               <main>
+               <main id="content">
                    <div class="p-4 pb-0">
                        __HEADER__
                    </div>
-                   __CONTENT__
                </main>
            </div>
        </div>
@@ -32,6 +31,8 @@ function modalService(config) {
         window: defaultWindow,
         title: '',
         content: '',
+        titleRef: null,
+        contentRef: null,
         // footer: ''
     };
 
@@ -44,6 +45,18 @@ function modalService(config) {
     var _modalEventBase;
     var _modalEventFunctionClose;
 
+    var _getWindowContent = function (contentAsString, contentAsRef) {
+        if (contentAsRef != null) {
+            const contentTemplate = document.querySelector(`template#${contentAsRef}`);
+            const templateInstance = contentTemplate.content.cloneNode(true);
+            const result = document.importNode(templateInstance, true)
+            return result;
+        }
+        const dummyDiv = document.createElement('div');
+        dummyDiv.innerHTML = contentAsString;
+        return dummyDiv;
+    };
+
     return {
         config: Object.assign({}, defaultConfig, config),
         modalRef: null,
@@ -51,13 +64,19 @@ function modalService(config) {
             _modalRefCallback = callback;
             const nextModalId = window.policy.unobtrusive.nextModalId(modals);
 
+            const windowContainerAsNode = document.createElement('div');
             let strWindow = this.config.window;
             strWindow = replaceWindowContent(strWindow, '__MODAL_ID__', nextModalId);
-            strWindow = replaceWindowContent(strWindow, '__HEADER__', this.config.title);
-            strWindow = replaceWindowContent(strWindow, '__CONTENT__', this.config.content);
+            strWindow = replaceWindowContent(strWindow, '__HEADER__', _getWindowContent(this.config.title, this.config.titleRef).innerHTML);
+            windowContainerAsNode.innerHTML = strWindow;
+
+            //strWindow = replaceWindowContent(strWindow, '__CONTENT__', _getWindowContent(this.config.content, this.config.contentRef));
             // strWindow = replaceWindowContent(strWindow, '__FOOTER__', this.config.footer);
 
-            this.modalRef = window.policy.unobtrusive.createModal(strWindow, modals, nextModalId);
+            var mainAsNode = windowContainerAsNode.querySelector('main#content');
+            mainAsNode.appendChild(_getWindowContent(this.config.content, this.config.contentRef));
+
+            this.modalRef = window.policy.unobtrusive.createModal(windowContainerAsNode.childNodes[1], modals, nextModalId, true);
             _modalEventBase = `js-policy-ui-modal-${this.modalRef}`;
             _modalEventFunctionClose = p => this.close(p);
             window.addEventListener(`${_modalEventBase}-close`, _modalEventFunctionClose);

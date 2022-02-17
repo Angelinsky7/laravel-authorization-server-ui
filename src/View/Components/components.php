@@ -27,6 +27,7 @@ return array_merge(
     $table,
     $miscs,
     require(__DIR__ . '/Shared/components.php'),
+    require(__DIR__ . '/Dialog/components.php'),
     require(__DIR__ . '/Permission/components.php'),
     require(__DIR__ . '/Resource/components.php'),
     require(__DIR__ . '/Scope/components.php'),
