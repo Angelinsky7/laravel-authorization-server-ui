@@ -1,8 +1,13 @@
-var createModalImpl = function (modal_content, container) {
-    var modal = document.createElement("div");
+var nextModalId = function(container){
     var id = (+container.getAttribute("modals-count")) + 1;
     container.setAttribute("modals-count", id);
-    modal.id = "modal_" + id;
+    return `policy-ui-modal_${id}`;
+}
+
+var createModalImpl = function (modal_content, container, modalId = null) {
+    var modal = document.createElement("div");
+    var id = modalId ?? nextModalId(container);
+    modal.id = id;
     modal.className = "modal modal-container";
     modal.innerHTML = modal_content;
     container.append(modal);
@@ -10,6 +15,8 @@ var createModalImpl = function (modal_content, container) {
     // Alpine.discoverUninitializedComponents((el) => {
     //     Alpine.initializeComponent(el)
     // }, container)
+
+    return id;
 };
 
 var closeModalImpl = function (modalId) {
@@ -77,4 +84,4 @@ var closeModalImpl = function (modalId) {
 
 })();
 
-export { createModalImpl as createModal, closeModalImpl as closeModal };
+export { createModalImpl as createModal, closeModalImpl as closeModal, nextModalId };

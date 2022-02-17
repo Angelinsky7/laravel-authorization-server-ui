@@ -6,3 +6,4 @@ export * from './form-field-error';
 export * from './listbox';
 export * from './modal-service';
 export * from './tooltip';
+export * from './modal';

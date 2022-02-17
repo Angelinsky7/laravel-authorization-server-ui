@@ -37,7 +37,7 @@
                             _items: [],
                             remove() {
                                 const dialogRef = window.policy.alpineJs.modalService({
-                                    content: 'Test'
+                                    content: '<div class=\'flex flex-row w-64 h-48 p-2 m-2\'>Delete ? <button x-on:click=\'close(false)\' type=\'button\'>Cancel</button><button  x-on:click=\'close(true)\' type=\'button\'>Ok</button></div>'
                                 });
                                 dialogRef.open(p => {
                                     if(p){
