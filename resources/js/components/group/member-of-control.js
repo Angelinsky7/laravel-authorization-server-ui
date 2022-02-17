@@ -22,7 +22,7 @@ function memberOfControl(config) {
             });
             dialogRef.open(p => {
                 if (p.confirm) {
-                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:add-items`, p.items);
+                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:add-items`, { items: p.items, preventDuplicates: true });
                 }
             });
         },
@@ -33,7 +33,7 @@ function memberOfControl(config) {
             });
             dialogRef.open(p => {
                 if (p) {
-                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:remove-items`, this._items);
+                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:remove-items`, { items: this._items });
                 }
             });
         },

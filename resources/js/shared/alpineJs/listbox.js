@@ -34,12 +34,19 @@ function listbox(config) {
         },
 
         addItems(itemsToAdd) {
-            this.items.push(...itemsToAdd);
+            let items = itemsToAdd.items;
+            if (itemsToAdd.preventDuplicates) {
+                items = items.filter(p => !this.items.map(a => a.value).includes(p.value));
+            }
+            items = items.map(p => ({ value: p.value, item: p.item, index: uniqueIndex++ }));
+            this.items.push(...items);
         },
         removeItems(itemsToRemove) {
-            if (itemsToRemove != null && itemsToRemove.length != 0) {
-                for (let i = itemsToRemove.length - 1; i >= 0; --i) {
-                    const itemToRemove = this.items.find(p => p.value === itemsToRemove[i].value);
+            const items = itemsToRemove.items;
+
+            if (items != null && items.length != 0) {
+                for (let i = items.length - 1; i >= 0; --i) {
+                    const itemToRemove = this.items.find(p => p.value === items[i].value);
                     if (itemToRemove != null) {
                         const indexToRemove = this.items.indexOf(itemToRemove);
                         this.items.splice(indexToRemove, 1);

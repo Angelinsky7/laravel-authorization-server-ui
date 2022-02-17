@@ -34,7 +34,11 @@ class GroupController
 
     public function create()
     {
-        return view('policy-ui::Group.create');
+        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => $p]);
+
+        return view('policy-ui::Group.create', [
+            'all_groups' => $all_groups
+        ]);
     }
 
     public function store(StoreGroupRequest $request)
@@ -50,21 +54,25 @@ class GroupController
         );
 
         $request->session()->flash('success_message', 'Group created.');
-        return redirect()->route('policy-ui.Group.index');
+        return redirect()->route('policy-ui.group.index');
     }
 
-    public function edit(Group $Group)
+    public function edit(Group $group)
     {
+
+        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => $p]);
+
         return view('policy-ui::Group.update', [
-            'item' => $Group
+            'item' => $group,
+            'all_groups' => $all_groups
         ]);
     }
 
-    public function update(UpdateGroupRequest $request, Group $Group)
+    public function update(UpdateGroupRequest $request, Group $group)
     {
         $validated = $request->validated();
         $this->repo->update(
-            $Group,
+            $group,
             $validated['name'],
             $validated['display_name'],
             $validated['description'],
@@ -76,16 +84,16 @@ class GroupController
         return redirect()->route('policy-ui.group.index');
     }
 
-    public function delete(Group $Group)
+    public function delete(Group $group)
     {
         return view('policy-ui::Group.delete', [
-            'item' => $Group
+            'item' => $group
         ]);
     }
 
-    public function destroy(Group $Group)
+    public function destroy(Group $group)
     {
-        $this->repo->delete($Group);
+        $this->repo->delete($group);
 
         request()->session()->flash('success_message', 'Group deleted.');
         return redirect()->route('policy-ui.group.index');

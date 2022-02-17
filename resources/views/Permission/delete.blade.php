@@ -10,7 +10,7 @@
 
             <div class="flex flex-row">
                 <x-policy-ui-shared:default-modal-icon>
-                    <x-policy-ui-shared:icon class="text-red-600" size="big">exclamation</x-policy-ui-shared:icon>
+                    <x-policy-ui-shared:icon color="alert" size="big">exclamation</x-policy-ui-shared:icon>
                 </x-policy-ui-shared:default-modal-icon>
 
                 <x-policy-ui-shared:inner-modal-layout>

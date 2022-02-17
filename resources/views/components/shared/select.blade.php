@@ -32,7 +32,7 @@ $unique_component_options = 'x_policy_ui_shared_select_' . $id . '_options_' . $
                    aria-haspopup="true" {{ $attributes->has('disabled') ? 'disabled' : '' }} />
             <template x-if="isValueSet && !$refs.control.disabled">
                 <button x-on:click="cleanInput()" type="button" class="absolute inset-y-0 right-5 inline-flex items-center pr-2 mr-1">
-                    <x-policy-ui-shared:icon class="text-red-600" size="small">x-circle</x-policy-ui-shared:icon>
+                    <x-policy-ui-shared:icon color="alert" size="small">x-circle</x-policy-ui-shared:icon>
                 </button>
             </template>
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none mr-1">

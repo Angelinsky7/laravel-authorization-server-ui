@@ -34,7 +34,7 @@
 
                     <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
                         <template id="memberofs-add-dialog">
-                            <x-policy-ui-shared:outer-modal-layout modal="true">
+                            <x-policy-ui-shared:outer-modal-layout modal="true" padding-size="custom">
                                 <div x-data="{
                                     _items: [],
                                     selectedItemChanged(event){ this._items = event.detail.items; },
@@ -44,10 +44,9 @@
                                         <x-policy-ui-shared:inner-modal-layout>
                                             <x-policy-ui-shared:default-modal-title title="{{ _('Add member') }}" />
                                             <x-policy-ui-shared:default-modal-content>
-                                                <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[200px]" :items="array_map(fn($p) => ['value' => $p, 'item' => $p], [1,2,3,4,5,6,7,8])" x-on:selected-items="selectedItemChanged($event)">
+                                                <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px]" :items="$all_groups" x-on:selected-items="selectedItemChanged($event)">
                                                     <x-slot name="item_template">
-                                                        <span class="w-full" x-text="`${item.value}`"></span>
-                                                        {{-- <span class="w-full" x-text="`${item.item.display_name}`"></span> --}}
+                                                        <span class="w-full" x-text="`${item.item.display_name}`"></span>
                                                     </x-slot>
                                                 </x-policy-ui-shared:listbox>
                                             </x-policy-ui-shared:default-modal-content>
@@ -70,7 +69,7 @@
                         <div class="flex" x-data="window.policy.components.group.memberOfControl({
                             id: 'memberofs',
                             add: {
-                                title: '{{ _('Members') }}',
+                                title: '',
                                 content: 'memberofs-add-dialog'
                             },
                             remove: {
