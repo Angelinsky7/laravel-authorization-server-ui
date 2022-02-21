@@ -14,7 +14,11 @@ function modal(config) {
             this.show = this.config.showByDefault;
         },
         close(result) {
+            this._close();
             this.$dispatch(`js-policy-ui-modal-${this.id}-close`, { result: result });
+        },
+        _close() {
+            this.show = false;
         }
     };
 }

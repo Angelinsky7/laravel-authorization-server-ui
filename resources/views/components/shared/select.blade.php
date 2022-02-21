@@ -5,12 +5,13 @@ $unique_component_options = 'x_policy_ui_shared_select_' . $id . '_options_' . $
 @endphp
 
 <script>
-    var {{ $unique_component_options }} = {!! json_encode($options ?? []) !!};
+    window.policy.store['{{ $unique_component_options }}'] = {!! json_encode($options ?? []) !!};
 </script>
-<div {{ $attributes }} x-data="window.policy.alpineJs.select({
-    options: {{ $unique_component_options }},
-    initialValueControlFromJs: {{ json_encode($initialValueControlFromJs) }}
-})"
+<div {{ $attributes }}
+     x-data="window.policy.alpineJs.select({
+            options: window.policy.store['{{ $unique_component_options }}'],
+            initialValueControlFromJs: {{ json_encode($initialValueControlFromJs) }}
+         })"
      x-on:click.outside="closePanel()"
      x-on:keydown.escape="closePanel()">
     <div>

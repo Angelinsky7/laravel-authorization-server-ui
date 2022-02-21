@@ -19,6 +19,7 @@ class Select extends SharedSelect
         string | null $panelMaxHeight = null,
         bool $disableHiddenInput = false,
         bool $initialValueControlFromJs = false,
+        string $jsId = '',
         array $options = []
     ) {
         $options = $roleRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'caption' => $p->display_name]);
@@ -32,7 +33,8 @@ class Select extends SharedSelect
             $panelMaxHeight,
             $disableHiddenInput,
             $initialValueControlFromJs,
-            $options->toArray()
+            $jsId,
+            $options->toArray(),
         );
     }
 }

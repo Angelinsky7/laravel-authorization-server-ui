@@ -3,7 +3,7 @@ function listbox(config) {
     var uniqueIndex = 0;
 
     var defaultConfig = {
-        items: [],
+        items: []
     };
 
     var lastSelectedEventItemsSent = [];
@@ -13,11 +13,22 @@ function listbox(config) {
         items: [],
         selected: [],
         init() {
-            this.items = this.config.items.map(p => ({ value: p.value, item: p.item, index: uniqueIndex++ }));
+            this.items = this._remapItems(this.config.items);
+            this.$nextTick(() => {
+                let evt = { handle: false, items: this.items, values: this.config.items };
+                this.$dispatch('initialized', evt);
+                if (evt.handle) {
+                    this.items = this._remapItems(evt.items);
+                }
+            });
         },
 
         isItemSelected(item) {
             return this.selected.some(p => p.value == item.value);
+        },
+
+        _remapItems(src) {
+            return src.filter(p => p.item).map(p => ({ value: p.value, item: p.item, index: uniqueIndex++ }));
         },
 
         _onSelectedItemChanged() {

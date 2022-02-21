@@ -38,7 +38,7 @@ function memberOfControl(config) {
             });
         },
         removeIsDisabled() { return this._items.length == 0; },
-        selectedItemChanged(event) { this._items = event.detail.items; },
+        selectedItemChanged(event) { this._items = event.detail.items; }
     };
 }
 

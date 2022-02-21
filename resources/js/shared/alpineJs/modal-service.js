@@ -10,6 +10,7 @@ function modalService(config) {
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100 transform translate-x-0"
     x-transition:leave-end="opacity-0 transform translate-x-10"
+    x-trap.noscroll="show"
     role="dialog" aria-modal="true" aria-labelledby="modal-headline">
 
    <div class="fixed inset-0 bg-gray-500 opacity-50 z-40"></div>
@@ -82,6 +83,8 @@ function modalService(config) {
             window.addEventListener(`${_modalEventBase}-close`, _modalEventFunctionClose);
         },
         close(event) {
+            const currentWindow = document.querySelector(`div#${this.modalRef} > div[x-data]`);
+            if (currentWindow != null) { currentWindow._x_dataStack[0]._close(); }
             window.removeEventListener(`${_modalEventBase}-close`, _modalEventFunctionClose);
             const result = event.detail.result;
             window.policy.unobtrusive.closeModal(this.modalRef);

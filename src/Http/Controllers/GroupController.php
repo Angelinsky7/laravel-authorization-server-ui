@@ -5,6 +5,7 @@ namespace Darkink\AuthorizationServerUI\Http\Controllers;
 use Darkink\AuthorizationServer\Http\Requests\Group\StoreGroupRequest;
 use Darkink\AuthorizationServer\Http\Requests\Group\UpdateGroupRequest;
 use Darkink\AuthorizationServer\Models\Group;
+use Darkink\AuthorizationServer\Policy;
 use Darkink\AuthorizationServer\Repositories\GroupRepository;
 use Darkink\AuthorizationServerUI\Traits\HasSearch;
 use Darkink\AuthorizationServerUI\Traits\HasSorting;
@@ -34,10 +35,14 @@ class GroupController
 
     public function create()
     {
-        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => $p]);
+        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
+        $all_users = Policy::user()->all()->map(fn ($p) => ['value' => 'u' . $p->id, 'item' => ['caption' => $p->name, 'type' => 'user'], 'order' => $p->name]);
+        $all_groups_users = array_merge($all_groups->toArray(), $all_users->toArray());
+        usort($all_groups_users, fn ($a, $b) => strcmp($a['order'], $b['order']));
 
         return view('policy-ui::Group.create', [
-            'all_groups' => $all_groups
+            'all_groups' => $all_groups,
+            'all_groups_users' => $all_groups_users
         ]);
     }
 
@@ -49,7 +54,7 @@ class GroupController
             $validated['name'],
             $validated['display_name'],
             $validated['description'],
-            $validated['memberOfs'] ?? [],
+            $validated['memberofs'] ?? [],
             $validated['members'] ?? []
         );
 
@@ -60,11 +65,15 @@ class GroupController
     public function edit(Group $group)
     {
 
-        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => $p]);
+        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
+        $all_users = Policy::user()->all()->map(fn ($p) => ['value' => 'u' . $p->id, 'item' => ['caption' => $p->name, 'type' => 'user' ], 'order' => $p->name]);
+        $all_groups_users = array_merge($all_groups->toArray(), $all_users->toArray());
+        usort($all_groups_users, fn ($a, $b) => strcmp($a['order'], $b['order']));
 
         return view('policy-ui::Group.update', [
             'item' => $group,
-            'all_groups' => $all_groups
+            'all_groups' => $all_groups,
+            'all_groups_users' => $all_groups_users
         ]);
     }
 
@@ -76,7 +85,7 @@ class GroupController
             $validated['name'],
             $validated['display_name'],
             $validated['description'],
-            $validated['memberOfs'] ?? [],
+            $validated['memberofs'] ?? [],
             $validated['members'] ?? []
         );
 

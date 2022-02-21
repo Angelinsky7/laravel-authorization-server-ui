@@ -11,6 +11,7 @@ class Select extends Component
     public string $name;
     public string $placeholder;
     public bool $required;
+    public string $jsId;
 
     public string | null $panelMaxHeight;
     public bool $disableHiddenInput;
@@ -28,7 +29,8 @@ class Select extends Component
         string | null $panelMaxHeight = null,
         bool $disableHiddenInput = false,
         bool $initialValueControlFromJs = false,
-        array $options = []
+        string $jsId = '',
+        array $options = [],
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -38,6 +40,8 @@ class Select extends Component
         $this->panelMaxHeight = $panelMaxHeight;
         $this->disableHiddenInput = $disableHiddenInput;
         $this->initialValueControlFromJs = $initialValueControlFromJs;
+
+        $this->jsId = "+$jsId";
 
         $this->options = $options;
         $this->value = $value;

@@ -27,15 +27,17 @@ $unique_component_items = 'x_policy_ui_shared_listbox_' . $id . '_items_' . $uni
 
     <div class="flex flex-col">
         <template x-for="(item, index) in items" :key="item.index">
-            <div class="policy-ui-listbox-item min-h-[29px] h-[29px] leading-[29px] whitespace-nowrap overflow-hidden text-ellipsis p-0 px-[10px] text-left no-underlines relative outline-none flex flex-row max-w-full box-border items-center select-none"
-                 tabindex="0" role="option"
-                 x-on:click.stop="toggleItem($event, index, item)"
-                 x-bind:class="{'policy-ui-item-active': isItemSelected(item)}"
-                 x-bind:data="item.value"
-                 x-bind:disabled="isItemDisabled(item)"
-                 x-bind:aria-disabled="isItemDisabled(item)">
-                {{ $item_template }}
-            </div>
+            <template x-if="item && item.item">
+                <div class="policy-ui-listbox-item group min-h-[29px] h-[29px] leading-[29px] whitespace-nowrap overflow-hidden text-ellipsis p-0 px-[10px] text-left no-underlines relative outline-none flex flex-row max-w-full box-border items-center select-none"
+                     tabindex="0" role="option"
+                     x-on:click.stop="toggleItem($event, index, item)"
+                     x-bind:class="{'policy-ui-item-active': isItemSelected(item)}"
+                     x-bind:data="item.value"
+                     x-bind:disabled="isItemDisabled(item)"
+                     x-bind:aria-disabled="isItemDisabled(item)">
+                    {{ $item_template }}
+                </div>
+            </template>
         </template>
     </div>
 </div>

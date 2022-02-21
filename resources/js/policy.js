@@ -3,6 +3,8 @@ import * as alpineJs from './shared/alpineJs';
 import * as popperJsModifiers from './shared/popperJs';
 import * as unobtrusive from './shared/unobtrusive';
 import * as components from './components';
+import { id as componentId } from './shared/component-id';
+
 
 window.policy = {
     // tableSelect: require('./shared/table-select'),
@@ -12,5 +14,7 @@ window.policy = {
     alpineJs: alpineJs,
     popperJs: popperJs,
     popperJsModifiers: popperJsModifiers,
-    components: components
+    components: components,
+    store: {},
+    id: componentId
 };

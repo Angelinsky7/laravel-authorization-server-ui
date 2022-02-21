@@ -8,6 +8,7 @@
      x-transition:leave="transition ease-in duration-200"
      x-transition:leave-start="opacity-100 transform translate-x-0"
      x-transition:leave-end="opacity-0 transform translate-x-10"
+     x-trap.noscroll="show"
      role="dialog" aria-modal="true" aria-labelledby="modal-headline">
 
     <div class="fixed inset-0 bg-gray-500 opacity-50 z-40"></div>

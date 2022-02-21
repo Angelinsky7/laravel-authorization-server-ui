@@ -33,7 +33,7 @@
                                 <div class="flex mb-1">
                                     <div class="flex flex-col flex-1">
                                         <x-policy-ui-role:select class="flex-1" panelMaxHeight="max-h-[200px]"
-                                                                 disableHiddenInput="true" initialValueControlFromJs="true"
+                                                                 disableHiddenInput="true" initialValueControlFromJs="true" jsId="window.policy.id('x_policy_ui_shared_select', index)"
                                                                  x-on:item-change="updateItem(index, $event.detail.option != null ? $event.detail.option.value : null)"
                                                                  x-on:initialize="$event.detail.option.value = items[index].value" />
                                         <x-policy-ui-form-field-error js="`parents.${index}`" />
