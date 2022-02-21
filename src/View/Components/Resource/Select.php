@@ -19,6 +19,7 @@ class Select extends SharedSelect
         string | null $panelMaxHeight = null,
         bool $disableHiddenInput = false,
         bool $initialValueControlFromJs = false,
+        string $jsId = '',
         array $options = []
     ) {
         $options = $resourceRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'caption' => $p->display_name, 'scopes' => $p->scopes()->get()]);
@@ -32,6 +33,7 @@ class Select extends SharedSelect
             $panelMaxHeight,
             $disableHiddenInput,
             $initialValueControlFromJs,
+            $jsId,
             $options->toArray()
         );
     }
