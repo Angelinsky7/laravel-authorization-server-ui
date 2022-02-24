@@ -1,7 +1,14 @@
 @layer components {
-  /* .policy-ui-tab-panel {
-    @apply flex flex-col;
-  } */
+  .policy-ui-tab-panel {
+  }
+
+  .policy-ui-tab-main {
+    grid-template-areas: "main";
+  }
+
+  .policy-ui-tab-item {
+    grid-area: main;
+  }
 
   /* .tab-item--active {
     @apply border-b border-policy-ui-primary-400;

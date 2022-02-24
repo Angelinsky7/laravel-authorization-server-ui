@@ -1,6 +1,6 @@
 <!-- x-policy-ui-shared:tab -->
 <div {{ $attributes->merge(['class' => 'policy-ui-tab-panel flex flex-col w-full']) }} id="{{ $id }}" role="tab"
-     x-data="window.policy.alpineJs.tab({})" x-transition.duration.500ms>
+     x-data="window.policy.alpineJs.tab({})">
     <header class="policy-ui-tab-headers flex flex-col relative">
         <div class="flex">
             {{ $slot }}
@@ -9,6 +9,6 @@
              x-bind:style="{left: `${headerBar.left}px`, width: `${headerBar.width}px`}">
         </div>
     </header>
-    <main>
+    <main class="policy-ui-tab-main p-1 grid grid-cols-1 grid-rows-1">
     </main>
 </div>

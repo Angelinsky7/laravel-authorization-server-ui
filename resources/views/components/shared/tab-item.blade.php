@@ -9,7 +9,13 @@
         {{ $header_caption ?? $slot }}
     </div>
     <template id="main">
-        <div class="tabItem-main" x-show="visible(currentTabIndex)" x-transition>
+        <div class="policy-ui-tab-item" x-show="visible(currentTabIndex)"
+             x-transition:enter="transition ease-out duration-100"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-90">
             {{ $slot }}
         </div>
     </template>

@@ -3,7 +3,6 @@ function tab(config) {
     let tabItems = [];
 
     let main_zone = null;
-    // let header_bar = null;
 
     return {
         currentTabIndex: 0,
@@ -14,7 +13,7 @@ function tab(config) {
         get tabItemsCount() { return tabItems.length; },
         init() {
             main_zone = this.$el.querySelector('main');
-            // header_bar = this.$el.querySelector('div.policy-ui-tab-header-bar');
+            this.$nextTick(() => this.changeTab(0));
         },
         register(tabItem, tabElement) {
             tabItems.push(tabItem);
