@@ -26,6 +26,6 @@ $unique_component_items = 'x_policy_ui_shared_manage_list_' . $id . '_items_' . 
     </div>
     <x-policy-ui-shared:button genre="raised" type="button" color="primary"
                                x-on:click="addItem()">
-        {{ _('Add Parent') }}
+        {{ $addCaption }}
     </x-policy-ui-shared:button>
 </div>

@@ -30,7 +30,7 @@
                     <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
                         <x-policy-ui-group:members id="memberofs" name="memberofs"
                                                    modalTitle="{{ _('Add member') }}" addCaption="{{ _('Add member') }}" removeCaption="{{ _('Remove member') }}"
-                                                   :values="old('memberofs') ?? $item->memberOfs->map(fn($p) => 'g' . $p->id)" remapOldValues="true"
+                                                   :values="old('memberofs') ?? $item->memberofs->map(fn($p) => 'g' . $p->id)" remapOldValues="true"
                                                    :items="$all_groups">
                         </x-policy-ui-group:members>
                         <x-policy-ui-form-field-error field="memberofs" />

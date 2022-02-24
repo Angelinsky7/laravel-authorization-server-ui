@@ -28,7 +28,7 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Parents') }}">
-                        <x-policy-ui-shared:manage-list id="parents" name="parents" :items="old('parents') ?? $item->parents->map(fn($p) => $p->id)">
+                        <x-policy-ui-shared:manage-list id="parents" name="parents" addCaption="{{ _('Add Parent') }}" :items="old('parents') ?? $item->parents->map(fn($p) => $p->id)">
                             <x-slot name="item_template">
                                 <div class="flex mb-1">
                                     <div class="flex flex-col flex-1">
