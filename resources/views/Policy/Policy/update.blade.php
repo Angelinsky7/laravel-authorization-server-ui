@@ -14,3 +14,11 @@
                                      :item="old('logic') ?? $item->logic" />
     <x-policy-ui-form-field-error field="logic" />
 </x-policy-ui-shared:input-group>
+
+<x-policy-ui-shared:input-group header="{{ _('Permissions') }}">
+    <x-policy-ui-permission:members id="permissions" name="permissions"
+                                    modalTitle="{{ _('Add permission') }}" addCaption="{{ _('Add permission') }}" removeCaption="{{ _('Remove permission') }}"
+                                    :values="old('permissions') ?? $item->permissions->map(fn($p) => $p->id)" :remapOldValues="true">
+    </x-policy-ui-permission:members>
+    <x-policy-ui-form-field-error field="permissions" />
+</x-policy-ui-shared:input-group>

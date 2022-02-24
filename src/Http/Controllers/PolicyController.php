@@ -85,6 +85,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            $validated['permissions'] ?? [],
             $validated['groups'],
         );
 
@@ -152,6 +153,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            $validated['permissions'] ?? [],
             $validated['groups'],
         );
 

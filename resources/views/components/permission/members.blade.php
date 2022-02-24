@@ -1,7 +1,7 @@
-<!-- x-policy-ui-policy:member -->
+<!-- x-policy-ui-permission:member -->
 @php
-$unique_component_num = \Darkink\AuthorizationServerUI\View\Directives\ComponentId::execute('x-policy-ui-policy:member');
-$unique_component_items = 'x_policy_ui_policy_member_' . $id . '_items_' . $unique_component_num;
+$unique_component_num = \Darkink\AuthorizationServerUI\View\Directives\ComponentId::execute('x-policy-ui-permission:member');
+$unique_component_items = 'x_policy_ui_permission_member_' . $id . '_items_' . $unique_component_num;
 @endphp
 
 <script>
@@ -40,8 +40,8 @@ $unique_component_items = 'x_policy_ui_policy_member_' . $id . '_items_' . $uniq
 
     </template>
     <template id="{{ $id }}-delete-dialog">
-        <x-policy-ui-dialog:default-confirmation-dialog title="{{ _('Remove policy') }}"
-                                                        content="Are you sure you want to delete this policy ? This action cannot be undone."
+        <x-policy-ui-dialog:default-confirmation-dialog title="{{ _('Remove permission') }}"
+                                                        content="Are you sure you want to delete this permission ? This action cannot be undone."
                                                         actionCaption="{{ _('Delete') }}" />
     </template>
     <div class="flex"
