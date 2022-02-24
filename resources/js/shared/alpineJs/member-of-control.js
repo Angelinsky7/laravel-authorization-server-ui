@@ -22,6 +22,7 @@ function memberOfListbox(config) {
             });
             dialogRef.open(p => {
                 if (p.confirm) {
+                    console.log('send event to', `x-policy-ui-shared:listbox-${this.config.id}:add-items`);
                     this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:add-items`, { items: p.items, preventDuplicates: true });
                 }
             });

@@ -55,6 +55,7 @@ class PolicyController
 
         switch ($type) {
             case "group":
+                //TODO(demarco): Please remove for new version
                 $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
                 return view('policy-ui::Policy.Group.create', [
                     'all_groups' => $all_groups,
@@ -115,6 +116,7 @@ class PolicyController
 
         switch (get_class($policy->policy)) {
             case GroupPolicy::class:
+                //TODO(demarco): Please remove for new version
                 $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
                 return view('policy-ui::Policy.Group.update', [
                     'item' => $policy->policy,

@@ -37,6 +37,7 @@ class UserController
 
     public function create()
     {
+        //TODO(demarco): Please remove for new version
         $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
 
         return view('policy-ui::User.create', [
@@ -64,6 +65,7 @@ class UserController
     {
         $user = Policy::user()->find($userId);
 
+        //TODO(demarco): Please remove for new version
         $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
 
         return view('policy-ui::User.update', [

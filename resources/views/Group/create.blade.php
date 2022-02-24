@@ -27,21 +27,33 @@
                         <x-policy-ui-form-field-error field="description" />
                     </x-policy-ui-shared:input-group>
 
-                    <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
+                    {{-- <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
                         <x-policy-ui-group:members id="memberofs" name="memberofs"
                                                    modalTitle="{{ _('Add member') }}" addCaption="{{ _('Add member') }}" removeCaption="{{ _('Remove member') }}"
                                                    :values="old('memberofs')" :remapOldValues="old('memberofs') != null"
                                                    :items="$all_groups">
                         </x-policy-ui-group:members>
                         <x-policy-ui-form-field-error field="memberofs" />
+                    </x-policy-ui-shared:input-group> --}}
+
+                    <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
+                        <x-policy-ui-group:entity-list id="memberofs" name="memberofs"
+                                                       :values="old('memberofs')" :remapOldValues="old('memberofs') != null" />
+                        <x-policy-ui-form-field-error field="memberofs" />
                     </x-policy-ui-shared:input-group>
 
-                    <x-policy-ui-shared:input-group header="{{ _('Members') }}">
+                    {{-- <x-policy-ui-shared:input-group header="{{ _('Members') }}">
                         <x-policy-ui-group:members id="members" name="members"
                                                    modalTitle="{{ _('Add member') }}" addCaption="{{ _('Add member') }}" removeCaption="{{ _('Remove member') }}"
                                                    :values="old('members')" :remapOldValues="old('members') != null"
                                                    :items="$all_groups_users">
                         </x-policy-ui-group:members>
+                        <x-policy-ui-form-field-error field="members" />
+                    </x-policy-ui-shared:input-group> --}}
+
+                    <x-policy-ui-shared:input-group header="{{ _('Members') }}">
+                        <x-policy-ui-group:entity-list id="members" name="members" mode="all"
+                                                       :values="old('members')" :remapOldValues="old('members') != null" />
                         <x-policy-ui-form-field-error field="members" />
                     </x-policy-ui-shared:input-group>
 

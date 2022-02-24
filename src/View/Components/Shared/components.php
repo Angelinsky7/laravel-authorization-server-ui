@@ -36,5 +36,6 @@ return [
     ManageList::class,
     Progress::class,
     Tab::class,
-    TabItem::class
+    TabItem::class,
+    EntityList::class
 ];

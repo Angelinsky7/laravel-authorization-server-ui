@@ -5,5 +5,6 @@ namespace Darkink\AuthorizationServerUI\View\Components\Policy;
 return [
     ChipType::class,
     SelectLogic::class,
-    Members::class
+    Members::class,
+    EntityList::class
 ];

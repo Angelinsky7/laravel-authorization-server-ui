@@ -35,15 +35,7 @@ class GroupController
 
     public function create()
     {
-        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
-        $all_users = Policy::user()->all()->map(fn ($p) => ['value' => 'u' . $p->id, 'item' => ['caption' => $p->name, 'type' => 'user'], 'order' => $p->name]);
-        $all_groups_users = array_merge($all_groups->toArray(), $all_users->toArray());
-        usort($all_groups_users, fn ($a, $b) => strcmp($a['order'], $b['order']));
-
-        return view('policy-ui::Group.create', [
-            'all_groups' => $all_groups,
-            'all_groups_users' => $all_groups_users
-        ]);
+        return view('policy-ui::Group.create');
     }
 
     public function store(StoreGroupRequest $request)
@@ -64,16 +56,8 @@ class GroupController
 
     public function edit(Group $group)
     {
-
-        $all_groups = $this->repo->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
-        $all_users = Policy::user()->all()->map(fn ($p) => ['value' => 'u' . $p->id, 'item' => ['caption' => $p->name, 'type' => 'user' ], 'order' => $p->name]);
-        $all_groups_users = array_merge($all_groups->toArray(), $all_users->toArray());
-        usort($all_groups_users, fn ($a, $b) => strcmp($a['order'], $b['order']));
-
         return view('policy-ui::Group.update', [
             'item' => $group,
-            'all_groups' => $all_groups,
-            'all_groups_users' => $all_groups_users
         ]);
     }
 

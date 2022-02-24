@@ -3,5 +3,6 @@
 namespace Darkink\AuthorizationServerUI\View\Components\Group;
 
 return [
-    Members::class
+    Members::class,
+    EntityList::class
 ];
