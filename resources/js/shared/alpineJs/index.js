@@ -7,3 +7,4 @@ export * from './listbox';
 export * from './modal-service';
 export * from './tooltip';
 export * from './modal';
+export * from './tab';

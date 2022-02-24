@@ -34,5 +34,7 @@ return [
     ValidationErrorHelper::class,
     Listbox::class,
     ManageList::class,
-    Progress::class
+    Progress::class,
+    Tab::class,
+    TabItem::class
 ];
