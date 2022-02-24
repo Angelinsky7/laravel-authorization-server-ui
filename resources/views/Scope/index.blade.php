@@ -60,7 +60,7 @@
                     <tr>
                         <td colspan="10">
                             <div class="flex items-center justify-center mb-2 mt-3 text-gray-500">No scope found...</div>
-                        <td>
+                        </td>
                     </tr>
                 @endif
             </x-slot>
