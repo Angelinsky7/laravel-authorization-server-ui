@@ -22,7 +22,7 @@ $unique_component_items = 'x_policy_ui_group_members_' . $id . '_items_' . $uniq
                     <x-policy-ui-shared:inner-modal-layout>
                         <x-policy-ui-shared:default-modal-title title="{{ $modalTitle }}" />
                         <x-policy-ui-shared:default-modal-content>
-                            <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px]" :items="$items" x-on:selected-items="selectedItemChanged($event)">
+                            <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px] max-h-[400px]" :items="$items" x-on:selected-items="selectedItemChanged($event)">
                                 <x-slot name="item_template">
                                     <template x-if="item.item.type == 'group'">
                                         <x-policy-ui-shared:icon class="mr-1 group-hover:text-white">user-group</x-policy-ui-shared:icon>

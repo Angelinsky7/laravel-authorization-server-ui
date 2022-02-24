@@ -10,10 +10,14 @@ class InputBase extends Component
     public string $id;
     public string $name;
     public string $type;
-    public string $value;
+    public string | null $value;
 
-    public function __construct(string $id, string $name,  string $type = 'text', mixed $value = null)
-    {
+    public function __construct(
+        string $id = '',
+        string $name = '',
+        string $type = 'text',
+        mixed $value = null
+    ) {
         $this->id = $id;
         $this->name = $name;
         $this->type = $type;

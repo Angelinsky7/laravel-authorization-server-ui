@@ -14,15 +14,17 @@ $unique_component_items = 'x_policy_ui_permission_member_' . $id . '_items_' . $
     <template id="{{ $id }}-add-dialog">
         <x-policy-ui-shared:outer-modal-layout modal="true" padding-size="custom">
             <div x-data="{
-            modalItems: [],
-            selectedItemChanged(event){ this.modalItems = event.detail.items; },
-            addButtonDisabled() { return this.modalItems.length == 0; },
-        }">
+                search: '',
+                modalItems: [],
+                selectedItemChanged(event){ this.modalItems = event.detail.items; },
+                addButtonDisabled() { return this.modalItems.length == 0; },
+            }">
                 <div class="flex flex-row">
                     <x-policy-ui-shared:inner-modal-layout>
                         <x-policy-ui-shared:default-modal-title title="{{ $modalTitle }}" />
                         <x-policy-ui-shared:default-modal-content>
-                            <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px]" :items="$items" x-on:selected-items="selectedItemChanged($event)">
+                            <x-policy-ui-shared:input-base x-model.debounce="search" class="mb-1" type="text" placeholder="search" />
+                            <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px] max-h-[400px]" :items="$items" x-on:selected-items="selectedItemChanged($event)">
                                 <x-slot name="item_template">
                                     <span class="w-full" x-text="`${item.item.caption}`"></span>
                                 </x-slot>
