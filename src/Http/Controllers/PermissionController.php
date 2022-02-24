@@ -79,7 +79,6 @@ class PermissionController
                 return $this->storeScope(StoreScopePermissionRequest::createFrom($request));
             case "resource":
                 return $this->storeResource(StoreResourcePermissionRequest::createFrom($request));
-                return;
         }
         throw new Exception('Invaid type given');
     }
@@ -142,7 +141,6 @@ class PermissionController
                 return $this->updateScope(UpdateScopePermissionRequest::createFrom($request), $permission->permission);
             case "resource":
                 return $this->updateResource(UpdateResourcePermissionRequest::createFrom($request), $permission->permission);
-                return;
         }
         throw new Exception('Invaid type given');
     }

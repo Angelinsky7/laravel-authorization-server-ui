@@ -5,6 +5,7 @@ namespace Darkink\AuthorizationServerUI;
 use Darkink\AuthorizationServerUI\Http\Controllers\GroupController;
 use Darkink\AuthorizationServerUI\Http\Controllers\RoleController;
 use Darkink\AuthorizationServerUI\Http\Controllers\PermissionController;
+use Darkink\AuthorizationServerUI\Http\Controllers\PolicyController;
 use Darkink\AuthorizationServerUI\Http\Controllers\ResourceController;
 use Darkink\AuthorizationServerUI\Http\Controllers\ScopeController;
 use Darkink\AuthorizationServerUI\Http\Controllers\UserController;
@@ -54,10 +55,7 @@ class PolicyUI
             Route::group(['prefix' => 'permission'], function () {
                 Route::get('/', [PermissionController::class, 'index'])->middleware('can:permission.see')->name('policy-ui.permission.index');
                 Route::get('/create', [PermissionController::class, 'create'])->middleware('can:permission.create')->name('policy-ui.permission.create');
-                // Route::get('/create/scope', [PermissionController::class, 'createScope'])->middleware('can:permission.create-scope')->name('policy-ui.permission.create-scope');
-                // Route::get('/create/resource', [PermissionController::class, 'createResource'])->middleware('can:permission.create-resource')->name('policy-ui.permission.create-resource');
                 Route::post('/create', [PermissionController::class, 'store'])->middleware('can:permission.create')->name('policy-ui.permission.store');
-                // Route::post('/create/resource', [PermissionController::class, 'storeresource'])->middleware('can:permission.create-resource')->name('policy-ui.permission.store-resource');
                 Route::get('/{permission}', [PermissionController::class, 'show'])->middleware('can:permission.see')->name('policy-ui.permission.show');
                 Route::get('/{permission}/edit', [PermissionController::class, 'edit'])->middleware('can:permission.update')->name('policy-ui.permission.edit');
                 Route::put('/{permission}', [PermissionController::class, 'update'])->middleware('can:permission.update')->name('policy-ui.permission.update');
@@ -87,16 +85,21 @@ class PolicyUI
                 Route::delete('/{user}', [UserController::class, 'destroy'])->middleware('can:user.delete')->name('policy-ui.user.destroy');
             });
 
+            Route::group(['prefix' => 'policy'], function () {
+                Route::get('/', [PolicyController::class, 'index'])->middleware('can:policy.see')->name('policy-ui.policy.index');
+                Route::get('/create', [PolicyController::class, 'create'])->middleware('can:policy.create')->name('policy-ui.policy.create');
+                Route::post('/create', [PolicyController::class, 'store'])->middleware('can:policy.create')->name('policy-ui.policy.store');
+                Route::get('/{policy}', [PolicyController::class, 'show'])->middleware('can:policy.see')->name('policy-ui.policy.show');
+                Route::get('/{policy}/edit', [PolicyController::class, 'edit'])->middleware('can:policy.update')->name('policy-ui.policy.edit');
+                Route::put('/{policy}', [PolicyController::class, 'update'])->middleware('can:policy.update')->name('policy-ui.policy.update');
+                Route::get('/{policy}/delete', [PolicyController::class, 'delete'])->middleware('can:policy.delete')->name('policy-ui.policy.delete');
+                Route::delete('/{policy}', [PolicyController::class, 'destroy'])->middleware('can:policy.delete')->name('policy-ui.policy.destroy');
+            });
 
 
             Route::group(['prefix' => 'client'], function () {
                 Route::get('/', [ClientController::class, 'index'])->middleware('can:client.see')->name('policy-ui.client.index');
             });
-            Route::group(['prefix' => 'policy'], function () {
-                Route::get('/', [PolicyController::class, 'index'])->middleware('can:policy.see')->name('policy-ui.policy.index');
-            });
-
-
 
         });
     }
