@@ -1,16 +1,25 @@
 function tab(config) {
 
-    let tabIndexes = 0;
     let tabItems = [];
+
+    let main_zone = null;
+    // let header_bar = null;
 
     return {
         currentTabIndex: 0,
+        headerBar: {
+            left: 0,
+            width: 0,
+        },
         get tabItemsCount() { return tabItems.length; },
+        init() {
+            main_zone = this.$el.querySelector('main');
+            // header_bar = this.$el.querySelector('div.policy-ui-tab-header-bar');
+        },
         register(tabItem, tabElement) {
             tabItems.push(tabItem);
-            tabItem.tabIndexHeader = this.getNextTabIndex();
+            tabItem.tabIndexHeader = tabItems.length - 1;
 
-            const main_zone = this.$el.querySelector('main');
             const mainTemplate = tabElement.querySelector('template#main');
 
             if (main_zone && mainTemplate) {
@@ -24,9 +33,11 @@ function tab(config) {
         },
         changeTab(tabIndex) {
             this.currentTabIndex = tabIndex;
+            this._moveHeaderBar(tabItems[tabIndex]);
         },
-        getNextTabIndex() {
-            return tabIndexes++;
+        _moveHeaderBar(currentTabHeader) {
+            this.headerBar.left = currentTabHeader.tabElement.offsetLeft;
+            this.headerBar.width = currentTabHeader.tabElement.offsetWidth;
         }
     }
 }
@@ -34,7 +45,9 @@ function tab(config) {
 function tabItemRegister(tab) {
     return {
         tabIndexHeader: -1,
+        tabElement: null,
         init() {
+            this.tabElement = this.$el;
             tab.register(this, this.$el);
         },
         changeTab() {

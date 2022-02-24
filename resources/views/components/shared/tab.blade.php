@@ -1,8 +1,13 @@
 <!-- x-policy-ui-shared:tab -->
-<div {{ $attributes->merge(['class' => 'policy-ui-tab-panel w-full']) }} id="{{ $id }}" role="tab"
-     x-data="window.policy.alpineJs.tab({})" x-transition>
-    <header class="flex">
-        {{ $slot }}
+<div {{ $attributes->merge(['class' => 'policy-ui-tab-panel flex flex-col w-full']) }} id="{{ $id }}" role="tab"
+     x-data="window.policy.alpineJs.tab({})" x-transition.duration.500ms>
+    <header class="policy-ui-tab-headers flex flex-col relative">
+        <div class="flex">
+            {{ $slot }}
+        </div>
+        <div class="policy-ui-tab-header-bar absolute bottom-0 h-[2px] bg-policy-ui-primary-400 transition-width transition-left"
+             x-bind:style="{left: `${headerBar.left}px`, width: `${headerBar.width}px`}">
+        </div>
     </header>
     <main>
     </main>

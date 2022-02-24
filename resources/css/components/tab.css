@@ -1,13 +1,9 @@
 @layer components {
-  .policy-ui-tab-panel {
+  /* .policy-ui-tab-panel {
     @apply flex flex-col;
-    /* @apply grid grid-cols-1 grid-rows-2;
-    grid-template-areas:
-      'header'
-      'main'; */
-  }
+  } */
 
-  .tab-item--active {
+  /* .tab-item--active {
     @apply border-b border-policy-ui-primary-400;
-  }
+  } */
 }
