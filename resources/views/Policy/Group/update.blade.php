@@ -4,31 +4,26 @@
     </x-slot>
 
     <x-policy-ui-shared:outer-form-layout>
-        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'scope']) }}">
+        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'group']) }}">
             @method('PUT')
             @csrf
 
             <input type="hidden" id="id" name="id" value="{{ $item->id }}" />
 
             <div class="overflow-hidden"
-                 x-data="{
-                    resourceChanged(evt){
-                        this.$dispatch('x-policy-ui-shared:many-selector-scopes:set-options', {options: evt.detail.option != null ? evt.detail.option.scopes.map(p => ({ value: p.id, caption: p.display_name })) : []});
-                    }
-                 }">
+                 x-data>
                 <x-policy-ui-shared:inner-form-layout>
 
                     @include('policy-ui::Policy.Policy.update', ['item' => $item->parent])
 
-                    {{-- <x-policy-ui-shared:input-group header="{{ _('Resource') }}">
-                        <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]" :value="old('resource') ?? $item->resource" x-on:item-change="resourceChanged($event)" aria-disabled="true" disabled />
-                        <x-policy-ui-form-field-error field="resource" />
+                    <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
+                        <x-policy-ui-group:members id="groups" name="groups"
+                                                   modalTitle="{{ _('Add group') }}" addCaption="{{ _('Add group') }}" removeCaption="{{ _('Remove group') }}"
+                                                   :values="old('groups') ?? $item->groups->map(fn($p) => 'g' . $p->id)" :remapOldValues="true"
+                                                   :items="$all_groups">
+                        </x-policy-ui-group:members>
+                        <x-policy-ui-form-field-error field="groups" />
                     </x-policy-ui-shared:input-group>
-
-                    <x-policy-ui-shared:input-group header="{{ _('Scopes') }}">
-                        <x-policy-ui-shared:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes->map(fn($p) => $p->id)" />
-                        <x-policy-ui-form-field-error field="scopes" />
-                    </x-policy-ui-shared:input-group> --}}
 
                 </x-policy-ui-shared:inner-form-layout>
 

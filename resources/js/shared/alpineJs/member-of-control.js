@@ -1,6 +1,6 @@
-function memberOfControl(config) {
+function memberOfListbox(config) {
 
-    var defaultConfig = {
+    let defaultConfig = {
         id: '',
         add: {
             title: null,
@@ -42,4 +42,28 @@ function memberOfControl(config) {
     };
 }
 
-export { memberOfControl };
+function memberOfControl(config) {
+
+    let defaultConfig = {
+        memberItems: [],
+        remap: false
+    };
+
+    return {
+        config: Object.assign({}, defaultConfig, config),
+        memberItems: null,
+        remap: false,
+        init() {
+            this.memberItems = this.config.memberItems;
+            this.remap = this.config.remap;
+        },
+        listboxInit(event) {
+            if (this.remap) {
+                event.detail.handle = true;
+                event.detail.items = this.memberItems.filter(p => event.detail.values.includes(p.value));
+            }
+        }
+    };
+}
+
+export { memberOfListbox, memberOfControl };

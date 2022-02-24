@@ -14,3 +14,11 @@
                                                      :item="old('decision_strategy') ?? $item->decision_strategy" />
     <x-policy-ui-form-field-error field="decision_strategy" />
 </x-policy-ui-shared:input-group>
+
+<x-policy-ui-shared:input-group header="{{ _('Policies') }}">
+    <x-policy-ui-policy:members id="policies" name="policies"
+                               modalTitle="{{ _('Add policy') }}" addCaption="{{ _('Add policy') }}" removeCaption="{{ _('Remove policy') }}"
+                               :values="old('policies') ?? $item->policies->map(fn($p) => $p->id)" :remapOldValues="true">
+    </x-policy-ui-policy:members>
+    <x-policy-ui-form-field-error field="policies" />
+</x-policy-ui-shared:input-group>

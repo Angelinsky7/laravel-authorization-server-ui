@@ -1,7 +1,7 @@
-<!-- x-policy-ui-group:members -->
+<!-- x-policy-ui-policy:policy -->
 @php
-$unique_component_num = \Darkink\AuthorizationServerUI\View\Directives\ComponentId::execute('x-policy-ui-group:members');
-$unique_component_items = 'x_policy_ui_group_members_' . $id . '_items_' . $unique_component_num;
+$unique_component_num = \Darkink\AuthorizationServerUI\View\Directives\ComponentId::execute('x-policy-ui-policy:policy');
+$unique_component_items = 'x_policy_ui_policy_policy_' . $id . '_items_' . $unique_component_num;
 @endphp
 
 <script>
@@ -9,7 +9,7 @@ $unique_component_items = 'x_policy_ui_group_members_' . $id . '_items_' . $uniq
 </script>
 <div x-data="window.policy.alpineJs.memberOfControl({
     memberItems: {{ $unique_component_items }},
-    remap: {{ json_encode($remapOldValues) }}
+    remap: {{ json_encode($remapOldValues) }},
 })">
     <template id="{{ $id }}-add-dialog">
         <x-policy-ui-shared:outer-modal-layout modal="true" padding-size="custom">
@@ -24,12 +24,6 @@ $unique_component_items = 'x_policy_ui_group_members_' . $id . '_items_' . $uniq
                         <x-policy-ui-shared:default-modal-content>
                             <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px]" :items="$items" x-on:selected-items="selectedItemChanged($event)">
                                 <x-slot name="item_template">
-                                    <template x-if="item.item.type == 'group'">
-                                        <x-policy-ui-shared:icon class="mr-1 group-hover:text-white">user-group</x-policy-ui-shared:icon>
-                                    </template>
-                                    <template x-if="item.item.type == 'user'">
-                                        <x-policy-ui-shared:icon class="mr-1 group-hover:text-white">user</x-policy-ui-shared:icon>
-                                    </template>
                                     <span class="w-full" x-text="`${item.item.caption}`"></span>
                                 </x-slot>
                             </x-policy-ui-shared:listbox>
@@ -46,8 +40,8 @@ $unique_component_items = 'x_policy_ui_group_members_' . $id . '_items_' . $uniq
 
     </template>
     <template id="{{ $id }}-delete-dialog">
-        <x-policy-ui-dialog:default-confirmation-dialog title="{{ _('Remove member') }}"
-                                                        content="Are you sure you want to delete this member ? This action cannot be undone."
+        <x-policy-ui-dialog:default-confirmation-dialog title="{{ _('Remove policy') }}"
+                                                        content="Are you sure you want to delete this policy ? This action cannot be undone."
                                                         actionCaption="{{ _('Delete') }}" />
     </template>
     <div class="flex"
@@ -67,12 +61,6 @@ $unique_component_items = 'x_policy_ui_group_members_' . $id . '_items_' . $uniq
                                     x-on:initialized="listboxInit($event)"
                                     x-on:selected-items="selectedItemChanged($event)">
             <x-slot name="item_template">
-                <template x-if="item.item.type == 'group'">
-                    <x-policy-ui-shared:icon class="mr-1 group-hover:text-white">user-group</x-policy-ui-shared:icon>
-                </template>
-                <template x-if="item.item.type == 'user'">
-                    <x-policy-ui-shared:icon class="mr-1 group-hover:text-white">user</x-policy-ui-shared:icon>
-                </template>
                 <span class="w-full" x-text="`${item.item.caption}`"></span>
             </x-slot>
         </x-policy-ui-shared:listbox>

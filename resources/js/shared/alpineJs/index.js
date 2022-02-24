@@ -8,3 +8,4 @@ export * from './modal-service';
 export * from './tooltip';
 export * from './modal';
 export * from './tab';
+export * from './member-of-control';

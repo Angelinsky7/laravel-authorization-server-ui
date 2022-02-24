@@ -53,6 +53,7 @@ class PermissionController
     public function create(Request $request)
     {
         $type = $request->query('type');
+
         switch ($type) {
             case "scope":
                 return view('policy-ui::Permission.Scope.create');
@@ -91,6 +92,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            $validated['policies'] ?? [],
             $validated['resource'],
             $validated['scopes']
         );
@@ -107,6 +109,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            $validated['policies'] ?? [],
             $validated['resource_type'],
             $validated['resource'],
         );
@@ -154,6 +157,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            $validated['policies'] ?? [],
             $validated['resource'],
             $validated['scopes']
         );
@@ -171,6 +175,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            $validated['policies'] ?? [],
             $validated['resource_type'],
             $validated['resource'],
         );

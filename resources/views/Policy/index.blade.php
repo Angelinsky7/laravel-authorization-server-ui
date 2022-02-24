@@ -19,6 +19,10 @@
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="name" header="{{ _('Name') }}" />
                 </x-policy-ui-shared:default-table-header-column>
                 <x-policy-ui-shared:default-table-header-column>
+                    <x-policy-ui-shared:table-sort-header class="justify-center" column="description" header="{{ _('Description') }}" />
+                </x-policy-ui-shared:default-table-header-column>
+                <x-policy-ui-shared:default-table-header-column content-class="justify-center" header="{{ _('Type') }}" />
+                <x-policy-ui-shared:default-table-header-column>
                     <span class="sr-only">Actions</span>
                 </x-policy-ui-shared:default-table-header-column>
             </x-slot>
@@ -30,6 +34,12 @@
                                 <div class="text-sm text-gray-900">{{ $item->name }}</div>
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-content>
+                                <div class="text-sm text-gray-900">{{ darkink_lasui_abbreviate($item->description, 50) }}</div>
+                            </x-policy-ui-shared:default-table-row-content>
+                            <x-policy-ui-shared:default-table-row-content content-class="justify-center items-center">
+                                <x-policy-ui-policy:chip-type :item="$item" />
+                            </x-policy-ui-shared:default-table-row-content>
+                            <x-policy-ui-shared:default-table-row-actions>
                                 <x-policy-ui-shared:dropdown>
                                     <x-slot name="trigger">
                                         <x-policy-ui-shared:button genre="icon">

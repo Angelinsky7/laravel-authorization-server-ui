@@ -11,6 +11,7 @@ use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Repositories\PolicyRepository;
 use Darkink\AuthorizationServer\Repositories\GroupPolicyRepository;
+use Darkink\AuthorizationServer\Repositories\GroupRepository;
 use Darkink\AuthorizationServerUI\Traits\HasSearch;
 use Darkink\AuthorizationServerUI\Traits\HasSorting;
 use Exception;
@@ -23,13 +24,16 @@ class PolicyController
 
     protected PolicyRepository $policyRepository;
     protected GroupPolicyRepository $groupPolicyRepository;
+    protected GroupRepository $groupRepository;
 
     public function __construct(
         PolicyRepository $policyRepository,
         GroupPolicyRepository $groupPolicyRepository,
+        GroupRepository $groupRepository
     ) {
         $this->policyRepository = $policyRepository;
         $this->groupPolicyRepository = $groupPolicyRepository;
+        $this->groupRepository = $groupRepository;
     }
 
     public function index()
@@ -47,11 +51,17 @@ class PolicyController
     public function create(Request $request)
     {
         $type = $request->query('type');
+        // $all_policies = $this->policyRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
+
         switch ($type) {
             case "group":
-                return view('policy-ui::Policy.Group.create');
-            // case "resource":
-            //     return view('policy-ui::Policy.Resource.create');
+                $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
+                return view('policy-ui::Policy.Group.create', [
+                    'all_groups' => $all_groups,
+                    // 'all_policies' => $all_policies
+                ]);
+                // case "resource":
+                //     return view('policy-ui::Policy.Resource.create');
         }
         return view('policy-ui::Policy.create');
     }
@@ -61,8 +71,8 @@ class PolicyController
         switch ($request->query('type')) {
             case "group":
                 return $this->storeGroup(StoreGroupPolicyRequest::createFrom($request));
-            // case "resource":
-            //     return $this->storeResource(StoreResourcePermissionRequest::createFrom($request));
+                // case "resource":
+                //     return $this->storeResource(StoreResourcePermissionRequest::createFrom($request));
         }
         throw new Exception('Invaid type given');
     }
@@ -73,10 +83,9 @@ class PolicyController
 
         $this->groupPolicyRepository->create(
             $validated['name'],
-            // $validated['description'],
-            // $validated['decision_strategy'],
-            // $validated['resource'],
-            // $validated['scopes']
+            $validated['description'],
+            $validated['logic'],
+            $validated['groups'],
         );
 
         $request->session()->flash('success_message', 'Scope Permission created.');
@@ -101,17 +110,22 @@ class PolicyController
 
     public function edit(Policy $policy)
     {
+        // $all_policies = $this->policyRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
+
         switch (get_class($policy->policy)) {
             case GroupPolicy::class:
+                $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
                 return view('policy-ui::Policy.Group.update', [
-                    'item' => $policy->policy
+                    'item' => $policy->policy,
+                    'all_groups' => $all_groups,
+                    // 'all_policies' => $all_policies
                 ]);
                 break;
-            // case ResourcePermission::class:
-            //     return view('policy-ui::Policy.Resource.update', [
-            //         'item' => $policy->permission
-            //     ]);
-            //     break;
+                // case ResourcePermission::class:
+                //     return view('policy-ui::Policy.Resource.update', [
+                //         'item' => $policy->permission
+                //     ]);
+                //     break;
         }
         return view('policy-ui::Policy.update', [
             'item' => $policy
@@ -122,24 +136,23 @@ class PolicyController
     {
         switch ($request->query('type')) {
             case "group":
-                return $this->updateGroup(UpdateGroupPolicyRequest::createFrom($request), $policy->permission);
-            // case "resource":
-            //     return $this->updateResource(UpdateResourcePermissionRequest::createFrom($request), $policy->permission);
+                return $this->updatePolicy(UpdateGroupPolicyRequest::createFrom($request), $policy->policy);
+                // case "resource":
+                //     return $this->updateResource(UpdateResourcePermissionRequest::createFrom($request), $policy->permission);
         }
         throw new Exception('Invaid type given');
     }
 
-    public function updateGroup(UpdateGroupPolicyRequest $request, GroupPolicy $policy)
+    public function updatePolicy(UpdateGroupPolicyRequest $request, GroupPolicy $policy)
     {
         $validated = $request->validate($request->rules());
 
         $this->groupPolicyRepository->update(
             $policy,
             $validated['name'],
-            // $validated['description'],
-            // $validated['decision_strategy'],
-            // $validated['resource'],
-            // $validated['scopes']
+            $validated['description'],
+            $validated['logic'],
+            $validated['groups'],
         );
 
         $request->session()->flash('success_message', 'Group Policy updated.');

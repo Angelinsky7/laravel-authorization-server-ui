@@ -26,6 +26,7 @@ class SelectDecisionStrategy extends Component
 
     public function render()
     {
-        return view('policy-ui::components.permission.select-decision-strategy');
+        // return view('policy-ui::components.permission.select-decision-strategy');
+        return view('policy-ui::components.shared.enum-select');
     }
 }

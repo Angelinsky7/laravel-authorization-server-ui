@@ -3,6 +3,8 @@
         <x-policy-ui-shared:default-header header="{{ __('Create a new Group Policy') }}" />
     </x-slot>
 
+    <x-policy-ui-shared:validation-error-helper />
+
     <x-policy-ui-shared:outer-form-layout>
         <form method="POST">
             @csrf
@@ -13,15 +15,14 @@
 
                     @include('policy-ui::Policy.Policy.create')
 
-                    {{-- <x-policy-ui-shared:input-group header="{{ _('Resource') }}">
-                        <x-policy-ui-resource:select id="resource" name="resource" panelMaxHeight="max-h-[200px]" :value="old('resource')" x-on:item-change="resourceChanged($event)" />
-                        <x-policy-ui-form-field-error field="resource" />
+                    <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
+                        <x-policy-ui-group:members id="groups" name="groups"
+                                                   modalTitle="{{ _('Add group') }}" addCaption="{{ _('Add group') }}" removeCaption="{{ _('Remove group') }}"
+                                                   :values="old('groups')" :remapOldValues="old('groups') != null"
+                                                   :items="$all_groups">
+                        </x-policy-ui-group:members>
+                        <x-policy-ui-form-field-error field="groups" />
                     </x-policy-ui-shared:input-group>
-
-                    <x-policy-ui-shared:input-group header="{{ _('Scopes') }}">
-                        <x-policy-ui-shared:many-selector id="scopes" name="scopes" :values="old('scopes')" />
-                        <x-policy-ui-form-field-error field="scopes" />
-                    </x-policy-ui-shared:input-group> --}}
 
                 </x-policy-ui-shared:inner-form-layout>
 
