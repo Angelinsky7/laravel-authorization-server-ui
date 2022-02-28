@@ -75,8 +75,8 @@ class PolicyController
                 return view('policy-ui::Policy.Role.create');
             case "user":
                 return view('policy-ui::Policy.User.create');
-            case "aggregate":
-                return view('policy-ui::Policy.Aggregate.create');
+            case "aggregated":
+                return view('policy-ui::Policy.Aggregated.create');
         }
         return view('policy-ui::Policy.create');
     }
@@ -90,8 +90,8 @@ class PolicyController
                 return $this->storeRole(StoreRolePolicyRequest::createFrom($request));
             case "user":
                 return $this->storeUser(StoreUserPolicyRequest::createFrom($request));
-            case "aggregate":
-                return $this->storeAggregate(StoreAggregatedPolicyRequest::createFrom($request));
+            case "aggregated":
+                return $this->storeAggregated(StoreAggregatedPolicyRequest::createFrom($request));
         }
         throw new Exception('Invaid type given');
     }
@@ -144,7 +144,7 @@ class PolicyController
         return redirect()->route('policy-ui.policy.index');
     }
 
-    public function storeAggregate(StoreAggregatedPolicyRequest $request)
+    public function storeAggregated(StoreAggregatedPolicyRequest $request)
     {
         $validated = $request->validate($request->rules());
 
@@ -184,7 +184,7 @@ class PolicyController
                 ]);
                 break;
             case AggregatedPolicy::class:
-                return view('policy-ui::Policy.Aggregate.update', [
+                return view('policy-ui::Policy.Aggregated.update', [
                     'item' => $policy->policy
                 ]);
                 break;
@@ -203,8 +203,8 @@ class PolicyController
                 return $this->updateRole(UpdateRolePolicyRequest::createFrom($request), $policy->policy);
             case "user":
                 return $this->updateUser(UpdateUserPolicyRequest::createFrom($request), $policy->policy);
-            case "aggregate":
-                return $this->updateAggregate(UpdateAggregatedPolicyRequest::createFrom($request), $policy->policy);
+            case "aggregated":
+                return $this->updateAggregated(UpdateAggregatedPolicyRequest::createFrom($request), $policy->policy);
         }
         throw new Exception('Invaid type given');
     }
@@ -260,7 +260,7 @@ class PolicyController
         return redirect()->route('policy-ui.policy.index');
     }
 
-    public function updateAggregate(UpdateAggregatedPolicyRequest $request, AggregatedPolicy $policy)
+    public function updateAggregated(UpdateAggregatedPolicyRequest $request, AggregatedPolicy $policy)
     {
         $validated = $request->validate($request->rules());
 

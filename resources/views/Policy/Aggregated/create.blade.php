@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-policy-ui-shared:default-header header="{{ __('Create a new Aggregate Policy') }}" />
+        <x-policy-ui-shared:default-header header="{{ __('Create a new Aggregated Policy') }}" />
     </x-slot>
 
     <x-policy-ui-shared:validation-error-helper />

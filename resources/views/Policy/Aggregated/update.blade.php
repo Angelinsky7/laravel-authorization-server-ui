@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-policy-ui-shared:default-header header="{{ __('Edit Aggregate Policy') }} '{{ $item->parent->name }}'" />
+        <x-policy-ui-shared:default-header header="{{ __('Edit Aggregated Policy') }} '{{ $item->parent->name }}'" />
     </x-slot>
 
     <x-policy-ui-shared:validation-error-helper />
 
     <x-policy-ui-shared:outer-form-layout>
-        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'aggregate']) }}">
+        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'aggregated']) }}">
             @method('PUT')
             @csrf
 
