@@ -2,22 +2,22 @@
 
 namespace Darkink\AuthorizationServerUI\Http\Controllers;
 
-use Darkink\AuthorizationServer\Http\Requests\Policy\StorePolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\StoreAggregatedPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreRolePolicyRequest;
-use Darkink\AuthorizationServer\Http\Requests\Policy\StoreScopePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreUserPolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateAggregatedPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateRolePolicyRequest;
-use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateScopePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateUserPolicyRequest;
+use Darkink\AuthorizationServer\Models\AggregatedPolicy;
 use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Models\RolePolicy;
 use Darkink\AuthorizationServer\Models\UserPolicy;
+use Darkink\AuthorizationServer\Repositories\AggregatedPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\PolicyRepository;
 use Darkink\AuthorizationServer\Repositories\GroupPolicyRepository;
-use Darkink\AuthorizationServer\Repositories\GroupRepository;
 use Darkink\AuthorizationServer\Repositories\RolePolicyRepository;
 use Darkink\AuthorizationServer\Repositories\UserPolicyRepository;
 use Darkink\AuthorizationServerUI\Traits\HasSearch;
@@ -34,17 +34,20 @@ class PolicyController
     protected GroupPolicyRepository $groupPolicyRepository;
     protected RolePolicyRepository $rolePolicyRepository;
     protected UserPolicyRepository $userPolicyRepository;
+    protected AggregatedPolicyRepository $aggregatedPolicyRepository;
 
     public function __construct(
         PolicyRepository $policyRepository,
         GroupPolicyRepository $groupPolicyRepository,
         RolePolicyRepository $rolePolicyRepository,
-        UserPolicyRepository $userPolicyRepository
+        UserPolicyRepository $userPolicyRepository,
+        AggregatedPolicyRepository $aggregatedPolicyRepository
     ) {
         $this->policyRepository = $policyRepository;
         $this->groupPolicyRepository = $groupPolicyRepository;
         $this->rolePolicyRepository = $rolePolicyRepository;
         $this->userPolicyRepository = $userPolicyRepository;
+        $this->aggregatedPolicyRepository = $aggregatedPolicyRepository;
     }
 
     public function index()
@@ -72,6 +75,8 @@ class PolicyController
                 return view('policy-ui::Policy.Role.create');
             case "user":
                 return view('policy-ui::Policy.User.create');
+            case "aggregate":
+                return view('policy-ui::Policy.Aggregate.create');
         }
         return view('policy-ui::Policy.create');
     }
@@ -85,6 +90,8 @@ class PolicyController
                 return $this->storeRole(StoreRolePolicyRequest::createFrom($request));
             case "user":
                 return $this->storeUser(StoreUserPolicyRequest::createFrom($request));
+            case "aggregate":
+                return $this->storeAggregate(StoreAggregatedPolicyRequest::createFrom($request));
         }
         throw new Exception('Invaid type given');
     }
@@ -137,6 +144,22 @@ class PolicyController
         return redirect()->route('policy-ui.policy.index');
     }
 
+    public function storeAggregate(StoreAggregatedPolicyRequest $request)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->aggregatedPolicyRepository->create(
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['decision_strategy'],
+            $validated['policies'],
+        );
+
+        $request->session()->flash('success_message', 'Aggregate Policy created.');
+        return redirect()->route('policy-ui.policy.index');
+    }
 
     #endregion
 
@@ -160,6 +183,11 @@ class PolicyController
                     'item' => $policy->policy
                 ]);
                 break;
+            case AggregatedPolicy::class:
+                return view('policy-ui::Policy.Aggregate.update', [
+                    'item' => $policy->policy
+                ]);
+                break;
         }
         return view('policy-ui::Policy.update', [
             'item' => $policy
@@ -175,6 +203,8 @@ class PolicyController
                 return $this->updateRole(UpdateRolePolicyRequest::createFrom($request), $policy->policy);
             case "user":
                 return $this->updateUser(UpdateUserPolicyRequest::createFrom($request), $policy->policy);
+            case "aggregate":
+                return $this->updateAggregate(UpdateAggregatedPolicyRequest::createFrom($request), $policy->policy);
         }
         throw new Exception('Invaid type given');
     }
@@ -227,6 +257,24 @@ class PolicyController
         );
 
         $request->session()->flash('success_message', 'User Policy updated.');
+        return redirect()->route('policy-ui.policy.index');
+    }
+
+    public function updateAggregate(UpdateAggregatedPolicyRequest $request, AggregatedPolicy $policy)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->aggregatedPolicyRepository->update(
+            $policy,
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['decision_strategy'],
+            $validated['policies'],
+        );
+
+        $request->session()->flash('success_message', 'Aggregate Policy updated.');
         return redirect()->route('policy-ui.policy.index');
     }
 

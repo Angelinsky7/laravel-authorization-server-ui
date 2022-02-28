@@ -47,4 +47,9 @@ class EntityList extends SharedEntityList
             $this->items = $policyRepository->gets()->get()->map(fn ($p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
         }
     }
+
+    public function render()
+    {
+        return view('policy-ui::components.policy.entity-list');
+    }
 }
