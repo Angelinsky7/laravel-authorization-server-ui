@@ -22,7 +22,7 @@ function memberOfListbox(config) {
             });
             dialogRef.open(p => {
                 if (p.confirm) {
-                    console.log('send event to', `x-policy-ui-shared:listbox-${this.config.id}:add-items`);
+                    // console.log('send event to', `x-policy-ui-shared:listbox-${this.config.id}:add-items`);
                     this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:add-items`, { items: p.items, preventDuplicates: true });
                 }
             });
@@ -61,8 +61,9 @@ function memberOfControl(config) {
         listboxInit(event) {
             if (this.remap) {
                 event.detail.handle = true;
-                event.detail.items = this.memberItems.filter(p => event.detail.values.includes(p.value));
+                event.detail.items = this.memberItems.filter(p => event.detail.values.includes(`${p.value}`));
             }
+            // console.log('remap', this.remap, this.memberItems, event.detail.items, event.detail.values);
         }
     };
 }
