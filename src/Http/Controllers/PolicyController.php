@@ -6,16 +6,20 @@ use Darkink\AuthorizationServer\Http\Requests\Policy\StorePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreRolePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreScopePolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\StoreUserPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateRolePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateScopePolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateUserPolicyRequest;
 use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Models\RolePolicy;
+use Darkink\AuthorizationServer\Models\UserPolicy;
 use Darkink\AuthorizationServer\Repositories\PolicyRepository;
 use Darkink\AuthorizationServer\Repositories\GroupPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\GroupRepository;
 use Darkink\AuthorizationServer\Repositories\RolePolicyRepository;
+use Darkink\AuthorizationServer\Repositories\UserPolicyRepository;
 use Darkink\AuthorizationServerUI\Traits\HasSearch;
 use Darkink\AuthorizationServerUI\Traits\HasSorting;
 use Exception;
@@ -29,15 +33,18 @@ class PolicyController
     protected PolicyRepository $policyRepository;
     protected GroupPolicyRepository $groupPolicyRepository;
     protected RolePolicyRepository $rolePolicyRepository;
+    protected UserPolicyRepository $userPolicyRepository;
 
     public function __construct(
         PolicyRepository $policyRepository,
         GroupPolicyRepository $groupPolicyRepository,
-        RolePolicyRepository $rolePolicyRepository
+        RolePolicyRepository $rolePolicyRepository,
+        UserPolicyRepository $userPolicyRepository
     ) {
         $this->policyRepository = $policyRepository;
         $this->groupPolicyRepository = $groupPolicyRepository;
         $this->rolePolicyRepository = $rolePolicyRepository;
+        $this->userPolicyRepository = $userPolicyRepository;
     }
 
     public function index()
@@ -63,6 +70,8 @@ class PolicyController
                 return view('policy-ui::Policy.Group.create');
             case "role":
                 return view('policy-ui::Policy.Role.create');
+            case "user":
+                return view('policy-ui::Policy.User.create');
         }
         return view('policy-ui::Policy.create');
     }
@@ -74,6 +83,8 @@ class PolicyController
                 return $this->storeGroup(StoreGroupPolicyRequest::createFrom($request));
             case "role":
                 return $this->storeRole(StoreRolePolicyRequest::createFrom($request));
+            case "user":
+                return $this->storeUser(StoreUserPolicyRequest::createFrom($request));
         }
         throw new Exception('Invaid type given');
     }
@@ -110,21 +121,22 @@ class PolicyController
         return redirect()->route('policy-ui.policy.index');
     }
 
-    // public function storeResource(StoreResourcePermissionRequest $request)
-    // {
-    //     $validated = $request->validate($request->rules());
+    public function storeUser(StoreUserPolicyRequest $request)
+    {
+        $validated = $request->validate($request->rules());
 
-    //     $this->groupPolicyRepository->create(
-    //         $validated['name'],
-    //         $validated['description'],
-    //         $validated['decision_strategy'],
-    //         $validated['resource_type'],
-    //         $validated['resource'],
-    //     );
+        $this->userPolicyRepository->create(
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['users'],
+        );
 
-    //     $request->session()->flash('success_message', 'Resource permission created.');
-    //     return redirect()->route('policy-ui.policy.index');
-    // }
+        $request->session()->flash('success_message', 'User Policy created.');
+        return redirect()->route('policy-ui.policy.index');
+    }
+
 
     #endregion
 
@@ -143,11 +155,11 @@ class PolicyController
                     'item' => $policy->policy
                 ]);
                 break;
-                // case ResourcePermission::class:
-                //     return view('policy-ui::Policy.Resource.update', [
-                //         'item' => $policy->permission
-                //     ]);
-                //     break;
+            case UserPolicy::class:
+                return view('policy-ui::Policy.User.update', [
+                    'item' => $policy->policy
+                ]);
+                break;
         }
         return view('policy-ui::Policy.update', [
             'item' => $policy
@@ -161,8 +173,8 @@ class PolicyController
                 return $this->updateGroup(UpdateGroupPolicyRequest::createFrom($request), $policy->policy);
             case "role":
                 return $this->updateRole(UpdateRolePolicyRequest::createFrom($request), $policy->policy);
-                // case "resource":
-                //     return $this->updateResource(UpdateResourcePermissionRequest::createFrom($request), $policy->permission);
+            case "user":
+                return $this->updateUser(UpdateUserPolicyRequest::createFrom($request), $policy->policy);
         }
         throw new Exception('Invaid type given');
     }
@@ -201,22 +213,22 @@ class PolicyController
         return redirect()->route('policy-ui.policy.index');
     }
 
-    // public function updateResource(UpdateGroupPolicyRequest $request, GroupPolicy $policy)
-    // {
-    //     $validated = $request->validate($request->rules());
+    public function updateUser(UpdateUserPolicyRequest $request, UserPolicy $policy)
+    {
+        $validated = $request->validate($request->rules());
 
-    //     $this->resourcepolicyRepository->update(
-    //         $policy,
-    //         $validated['name'],
-    //         $validated['description'],
-    //         $validated['decision_strategy'],
-    //         $validated['resource_type'],
-    //         $validated['resource'],
-    //     );
+        $this->userPolicyRepository->update(
+            $policy,
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['users'],
+        );
 
-    //     $request->session()->flash('success_message', 'Resource Permission updated.');
-    //     return redirect()->route('policy-ui.policy.index');
-    // }
+        $request->session()->flash('success_message', 'User Policy updated.');
+        return redirect()->route('policy-ui.policy.index');
+    }
 
     #endregion
 
