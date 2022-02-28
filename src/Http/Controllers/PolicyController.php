@@ -138,6 +138,7 @@ class PolicyController
                     'item' => $policy->policy
                 ]);
                 break;
+            case RolePolicy::class:
                 return view('policy-ui::Policy.Role.update', [
                     'item' => $policy->policy
                 ]);

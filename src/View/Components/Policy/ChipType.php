@@ -4,6 +4,7 @@ namespace Darkink\AuthorizationServerUI\View\Components\Policy;
 
 use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
+use Darkink\AuthorizationServer\Models\RolePolicy;
 use Illuminate\View\Component;
 
 class ChipType extends Component
@@ -26,11 +27,14 @@ class ChipType extends Component
             case GroupPolicy::class:
                 return _('Group Policy');
                 break;
-            // case ResourcePolicy::class:
-            //     return _('Resource Policy');
-            //     break;
+            case RolePolicy::class:
+                return _('Role Policy');
+                break;
+                // case ResourcePolicy::class:
+                //     return _('Resource Policy');
+                //     break;
         }
-        return _('Policy');
+        return _('Policy') . '(' . $fullClassName . ')';
     }
 
     public function render()

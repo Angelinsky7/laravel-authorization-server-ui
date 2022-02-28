@@ -61,7 +61,7 @@ function memberOfControl(config) {
         listboxInit(event) {
             if (this.remap) {
                 event.detail.handle = true;
-                event.detail.items = this.memberItems.filter(p => event.detail.values.includes(`${p.value}`));
+                event.detail.items = this.memberItems.filter(p => event.detail.values.map(p => `${p}`).includes(`${p.value}`));
             }
             // console.log('remap', this.remap, this.memberItems, event.detail.items, event.detail.values);
         }

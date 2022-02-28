@@ -1,6 +1,7 @@
 @if ($field != '')
     @if ($errors->has($field))
         <!-- x-policy-ui-form-field-error -->
+        <!-- TODO(demarco): we must add the subfields here -->
         @foreach ($errors->get($field) as $message)
             <p class="text-red-500 text-xs italic">{{ $message }}</p>
         @endforeach

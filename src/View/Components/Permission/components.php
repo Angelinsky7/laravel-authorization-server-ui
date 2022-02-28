@@ -6,5 +6,6 @@ return [
     ChipType::class,
     ChipDecisionStrategy::class,
     SelectDecisionStrategy::class,
-    Members::class
+    Members::class,
+    EntityList::class
 ];

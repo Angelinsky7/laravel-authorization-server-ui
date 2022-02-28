@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-policy-ui-shared:outer-form-layout>
-        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'group']) }}">
+        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'role']) }}">
             @method('PUT')
             @csrf
 
@@ -15,15 +15,6 @@
                 <x-policy-ui-shared:inner-form-layout>
 
                     @include('policy-ui::Policy.Policy.update', ['item' => $item->parent])
-
-                    {{-- <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
-                        <x-policy-ui-group:members id="groups" name="groups"
-                                                   modalTitle="{{ _('Add group') }}" addCaption="{{ _('Add group') }}" removeCaption="{{ _('Remove group') }}"
-                                                   :values="old('groups') ?? $item->groups->map(fn($p) => 'g' . $p->id)" :remapOldValues="true"
-                                                   :items="$all_groups">
-                        </x-policy-ui-group:members>
-                        <x-policy-ui-form-field-error field="groups" />
-                    </x-policy-ui-shared:input-group> --}}
 
                     <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
                         <x-policy-ui-group:entity-list id="groups" name="groups"

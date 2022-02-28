@@ -3,6 +3,8 @@
         <x-policy-ui-shared:default-header header="{{ __('Edit Role Policy') }} '{{ $item->parent->name }}'" />
     </x-slot>
 
+    <x-policy-ui-shared:validation-error-helper />
+
     <x-policy-ui-shared:outer-form-layout>
         <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'role']) }}">
             @method('PUT')
@@ -17,8 +19,8 @@
                     @include('policy-ui::Policy.Policy.update', ['item' => $item->parent])
 
                     <x-policy-ui-shared:input-group header="{{ _('Roles') }}">
-                        <x-policy-ui-group:entity-list id="roles" name="roles"
-                                                       :values="old('roles')?? $item->roles->map(fn($p) => 'g' . $p->id)" :remapOldValues="true" />
+                        <x-policy-ui-role:entity-list id="roles" name="roles"
+                                                       :values="old('roles')?? $item->roles->map(fn($p) => $p->id)" :remapOldValues="true" />
                         <x-policy-ui-form-field-error field="roles" />
                     </x-policy-ui-shared:input-group>
 

@@ -8,13 +8,16 @@ class FormFieldError extends Component
 {
     public string $field;
     public string $js;
+    public bool $subfields;
 
     public function __construct(
         string $field = '',
-        string $js = ''
+        string $js = '',
+        bool $subfields = false
     ) {
         $this->field = $field;
         $this->js = $js;
+        $this->subfields = $subfields;
     }
 
     public function render()

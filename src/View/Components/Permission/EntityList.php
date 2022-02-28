@@ -1,14 +1,14 @@
 <?php
 
-namespace Darkink\AuthorizationServerUI\View\Components\Role;
+namespace Darkink\AuthorizationServerUI\View\Components\Permission;
 
-use Darkink\AuthorizationServer\Repositories\RoleRepository;
+use Darkink\AuthorizationServer\Repositories\PermissionRepository;
 use Darkink\AuthorizationServerUI\View\Components\Shared\EntityList as SharedEntityList;
 
 class EntityList extends SharedEntityList
 {
     public function __construct(
-        RoleRepository $roleRepository,
+        PermissionRepository $permissionRepository,
         string $id = '',
         string $name = '',
         mixed $items = [],
@@ -30,26 +30,27 @@ class EntityList extends SharedEntityList
             $name,
             $items,
             $values,
-            $modalTitle ?? _('Add role'),
-            $addCaption ?? _('Add role'),
-            $removeCaption ?? _('Remove role'),
+            $modalTitle ?? _('Add permission'),
+            $addCaption ?? _('Add permission'),
+            $removeCaption ?? _('Remove permission'),
             $remapOldValues,
             $addCancelCaption ?? _('Cancel'),
             $addAddCaption ?? _('Add'),
-            $deleteTitle ?? _('Remove role'),
-            $deleteContent ?? _('Are you sure you want to delete this role ? This action cannot be undone.'),
+            $deleteTitle ?? _('Remove permission'),
+            $deleteContent ?? _('Are you sure you want to delete this permission ? This action cannot be undone.'),
             $deleteActionCaption ?? _('Remove'),
             $addDialogTitle ?? '',
             $deleteDialogTitle ?? ''
         );
 
         if (count($this->items) == 0) {
-            $this->items = $roleRepository->gets()->get()->map(fn ($p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
+            $this->items = $permissionRepository->gets()->get()->map(fn ($p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
         }
     }
 
     public function render()
     {
-        return view('policy-ui::components.role.entity-list');
+        return view('policy-ui::components.permission.entity-list');
     }
+
 }
