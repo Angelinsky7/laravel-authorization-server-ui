@@ -15,6 +15,7 @@ class EntityList extends SharedEntityList
         string $name = '',
         mixed $items = [],
         mixed $values = [],
+        mixed $excludes = [],
         string | null $modalTitle = null,
         string | null $addCaption = null,
         string | null $removeCaption = null,
@@ -26,6 +27,7 @@ class EntityList extends SharedEntityList
         string | null $deleteActionCaption = null,
         string | null $addDialogTitle = null,
         string | null $deleteDialogTitle = null,
+        bool $excludeAlreadyAddedItems = true,
         EntityListMode | string $mode = 'group'
     ) {
         parent::__construct(
@@ -33,6 +35,7 @@ class EntityList extends SharedEntityList
             $name,
             $items,
             $values,
+            $excludes,
             $modalTitle ?? _('Add Member'),
             $addCaption ?? _('Add Member'),
             $removeCaption ?? _('Remove Member'),
@@ -43,7 +46,8 @@ class EntityList extends SharedEntityList
             $deleteContent ?? _('Are you sure you want to delete this member ? This action cannot be undone.'),
             $deleteActionCaption ?? _('Remove'),
             $addDialogTitle ?? '',
-            $deleteDialogTitle ?? ''
+            $deleteDialogTitle ?? '',
+            $excludeAlreadyAddedItems
         );
 
         $mode = is_string($mode) ? EntityListMode::tryFrom($mode) : $mode;

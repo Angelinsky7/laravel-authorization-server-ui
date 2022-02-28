@@ -2,29 +2,32 @@
 @php
 $unique_component_num = \Darkink\AuthorizationServerUI\View\Directives\ComponentId::execute('x-policy-ui-shared:entity-list');
 $unique_component_items = 'x_policy_ui_shared_entity_list_' . $id . '_items_' . $unique_component_num;
+$unique_component_excludes = 'x_policy_ui_shared_entity_list_' . $id . '_excludes_' . $unique_component_num;
 @endphp
 
 <script>
     var {{ $unique_component_items }} = {!! json_encode($items ?? []) !!};
+    var {{ $unique_component_excludes }} = {!! json_encode($excludes ?? []) !!};
 </script>
 <div x-data="window.policy.alpineJs.memberOfControl({
     memberItems: {{ $unique_component_items }},
+    memberExcludeItems: {{ $unique_component_excludes }},
     remap: {{ json_encode($remapOldValues) }},
 })">
     <template id="{{ $unique_component_items }}-{{ $id }}-add-dialog">
         <x-policy-ui-shared:outer-modal-layout modal="true" padding-size="custom">
-            <div x-data="{
-                search: '',
-                modalItems: [],
-                selectedItemChanged(event){ this.modalItems = event.detail.items; },
-                addButtonDisabled() { return this.modalItems.length == 0; },
-            }">
+            <div x-data="window.policy.alpineJs.dialogEntityListListBox({
+                excludeAlreadyAddedItems: {{ json_encode($excludeAlreadyAddedItems) }},
+                memberExcludeItems: modalData.exludeItems
+            })">
                 <div class="flex flex-row">
                     <x-policy-ui-shared:inner-modal-layout>
                         <x-policy-ui-shared:default-modal-title title="{{ $modalTitle }}" />
                         <x-policy-ui-shared:default-modal-content>
                             <x-policy-ui-shared:input-base x-model.debounce="search" class="mb-1" type="text" placeholder="search" />
-                            <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px] max-h-[400px]" :items="$items" x-on:selected-items="selectedItemChanged($event)">
+                            <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] min-w-[400px] max-h-[400px]" :items="$items"
+                                                        x-on:initialize="dialogListboxInit($event)"
+                                                        x-on:selected-items="selectedItemChanged($event)">
                                 <x-slot name="item_template">
                                     {{ $listbox_item_template }}
                                 </x-slot>
@@ -60,7 +63,8 @@ $unique_component_items = 'x_policy_ui_shared_entity_list_' . $id . '_items_' . 
     })">
         <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] max-h-[400px]"
                                     id="{{ $id }}" name="{{ $name }}" :items="$values"
-                                    x-on:initialized="listboxInit($event)"
+                                    x-on:initialize="listboxInit($event)"
+                                    x-on:items-changed="storeListboxItems($event)"
                                     x-on:selected-items="selectedItemChanged($event)">
             <x-slot name="item_template">
                 {{ $listbox_item_template }}

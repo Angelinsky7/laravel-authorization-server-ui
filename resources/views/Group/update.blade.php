@@ -27,33 +27,19 @@
                         <x-policy-ui-form-field-error field="description" />
                     </x-policy-ui-shared:input-group>
 
-                    {{-- <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
-                        <x-policy-ui-group:members id="memberofs" name="memberofs"
-                                                   modalTitle="{{ _('Add member') }}" addCaption="{{ _('Add member') }}" removeCaption="{{ _('Remove member') }}"
-                                                   :values="old('memberofs') ?? $item->memberofs->map(fn($p) => 'g' . $p->id)" remapOldValues="true"
-                                                   :items="$all_groups">
-                        </x-policy-ui-group:members>
-                        <x-policy-ui-form-field-error field="memberofs" />
-                    </x-policy-ui-shared:input-group> --}}
-
                     <x-policy-ui-shared:input-group header="{{ _('Members of') }}">
                         <x-policy-ui-group:entity-list id="memberofs" name="memberofs"
-                                                       :values="old('memberofs')  ?? $item->memberofs->map(fn($p) => 'g' . $p->id)" :remapOldValues="true" />
+                                                       :values="old('memberofs')  ?? $item->memberofs->map(fn($p) => 'g' . $p->id)"
+                                                       :excludes="['g'.$item->id]"
+                                                       :remapOldValues="true" />
                         <x-policy-ui-form-field-error field="memberofs" />
                     </x-policy-ui-shared:input-group>
 
-                    {{-- <x-policy-ui-shared:input-group header="{{ _('Members') }}">
-                        <x-policy-ui-group:members id="members" name="members"
-                                                   modalTitle="{{ _('Add member') }}" addCaption="{{ _('Add member') }}" removeCaption="{{ _('Remove member') }}"
-                                                   :values="old('members') ?? $item->members()->map(fn($p) => ($p->pivot->member_user_id != null ? 'u' : 'g') . $p->id)" remapOldValues="true"
-                                                   :items="$all_groups_users">
-                        </x-policy-ui-group:members>
-                        <x-policy-ui-form-field-error field="members" />
-                    </x-policy-ui-shared:input-group> --}}
-
                     <x-policy-ui-shared:input-group header="{{ _('Members') }}">
                         <x-policy-ui-group:entity-list id="members" name="members" mode="all"
-                                                       :values="old('members') ?? $item->members()->map(fn($p) => ($p->pivot->member_user_id != null ? 'u' : 'g') . $p->id)" :remapOldValues="true" />
+                                                       :values="old('members') ?? $item->members()->map(fn($p) => ($p->pivot->member_user_id != null ? 'u' : 'g') . $p->id)"
+                                                       :excludes="['g'.$item->id]"
+                                                       :remapOldValues="true" />
                         <x-policy-ui-form-field-error field="members" />
                     </x-policy-ui-shared:input-group>
 

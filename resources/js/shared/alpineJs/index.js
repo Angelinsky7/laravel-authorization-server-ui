@@ -9,3 +9,4 @@ export * from './tooltip';
 export * from './modal';
 export * from './tab';
 export * from './member-of-control';
+export * from './entity-list';

@@ -1,7 +1,7 @@
 function modalService(config) {
 
     var defaultWindow = `
-<div x-data="window.policy.alpineJs.modal({id: '__MODAL_ID__'})"
+<div x-data="window.policy.alpineJs.modal({id: '__MODAL_ID__', modalData: __MODAL_DATA__})"
     x-show="show"
     x-cloak
     x-transition:enter="transition ease-out duration-300"
@@ -34,6 +34,7 @@ function modalService(config) {
         content: '',
         titleRef: null,
         contentRef: null,
+        data: {}
         // footer: ''
     };
 
@@ -58,6 +59,12 @@ function modalService(config) {
         return dummyDiv;
     };
 
+    var _getDataAsString = function(data){
+        let result = JSON.stringify(data);
+        result = result.replaceAll('"', '\'');
+        return result;
+    };
+
     return {
         config: Object.assign({}, defaultConfig, config),
         modalRef: null,
@@ -69,6 +76,7 @@ function modalService(config) {
             let strWindow = this.config.window;
             strWindow = replaceWindowContent(strWindow, '__MODAL_ID__', nextModalId);
             strWindow = replaceWindowContent(strWindow, '__HEADER__', _getWindowContent(this.config.title, this.config.titleRef).innerHTML);
+            strWindow = replaceWindowContent(strWindow, '__MODAL_DATA__', _getDataAsString(this.config.data));
             windowContainerAsNode.innerHTML = strWindow;
 
             //strWindow = replaceWindowContent(strWindow, '__CONTENT__', _getWindowContent(this.config.content, this.config.contentRef));

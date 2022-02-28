@@ -60,7 +60,7 @@ $unique_component_items = 'x_policy_ui_permission_member_' . $id . '_items_' . $
     })">
         <x-policy-ui-shared:listbox class="flex-1 min-h-[200px] max-h-[400px]"
                                     id="{{ $id }}" name="{{ $name }}" :items="$values"
-                                    x-on:initialized="listboxInit($event)"
+                                    x-on:initialize="listboxInit($event)"
                                     x-on:selected-items="selectedItemChanged($event)">
             <x-slot name="item_template">
                 <span class="w-full" x-text="`${item.item.caption}`"></span>

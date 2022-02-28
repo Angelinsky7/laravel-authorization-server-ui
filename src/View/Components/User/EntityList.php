@@ -13,6 +13,7 @@ class EntityList extends SharedEntityList
         string $name = '',
         mixed $items = [],
         mixed $values = [],
+        mixed $excludes = [],
         string | null $modalTitle = null,
         string | null $addCaption = null,
         string | null $removeCaption = null,
@@ -23,13 +24,15 @@ class EntityList extends SharedEntityList
         string | null $deleteContent = null,
         string | null $deleteActionCaption = null,
         string | null $addDialogTitle = null,
-        string | null $deleteDialogTitle = null
+        string | null $deleteDialogTitle = null,
+        bool $excludeAlreadyAddedItems = true
     ) {
         parent::__construct(
             $id,
             $name,
             $items,
             $values,
+            $excludes,
             $modalTitle ?? _('Add user'),
             $addCaption ?? _('Add user'),
             $removeCaption ?? _('Remove user'),
@@ -40,7 +43,8 @@ class EntityList extends SharedEntityList
             $deleteContent ?? _('Are you sure you want to delete this user ? This action cannot be undone.'),
             $deleteActionCaption ?? _('Remove'),
             $addDialogTitle ?? '',
-            $deleteDialogTitle ?? ''
+            $deleteDialogTitle ?? '',
+            $excludeAlreadyAddedItems
         );
 
         if (count($this->items) == 0) {

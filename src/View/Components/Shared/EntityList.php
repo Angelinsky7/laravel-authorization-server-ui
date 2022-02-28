@@ -9,10 +9,13 @@ class EntityList extends Component
     public string $id;
     public string $name;
     public string $modalTitle;
+
     public mixed $items;
+    public mixed $values;
+    public mixed $excludes;
+
     public string $addCaption;
     public string $removeCaption;
-    public mixed $values;
     public bool $remapOldValues;
     public string $addCancelCaption;
     public string $addAddCaption;
@@ -21,12 +24,14 @@ class EntityList extends Component
     public string $deleteActionCaption;
     public string $addDialogTitle;
     public string $deleteDialogTitle;
+    public bool $excludeAlreadyAddedItems;
 
     public function __construct(
         string $id = '',
         string $name = '',
         mixed $items = [],
         mixed $values = [],
+        mixed $excludes = [],
         string $modalTitle = 'Title',
         string $addCaption = 'Add',
         string $removeCaption = 'Remove',
@@ -37,15 +42,17 @@ class EntityList extends Component
         string $deleteContent = 'Content',
         string $deleteActionCaption = 'Remove',
         string $addDialogTitle = '',
-        string $deleteDialogTitle = ''
+        string $deleteDialogTitle = '',
+        bool $excludeAlreadyAddedItems = true
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->modalTitle = $modalTitle;
         $this->items = $items;
+        $this->values = $values;
+        $this->excludes = $excludes;
         $this->addCaption = $addCaption;
         $this->removeCaption = $removeCaption;
-        $this->values = $values;
         $this->remapOldValues = $remapOldValues;
         $this->addCancelCaption = $addCancelCaption;
         $this->addAddCaption = $addAddCaption;
@@ -54,6 +61,7 @@ class EntityList extends Component
         $this->deleteActionCaption = $deleteActionCaption;
         $this->addDialogTitle = $addDialogTitle;
         $this->deleteDialogTitle = $deleteDialogTitle;
+        $this->excludeAlreadyAddedItems = $excludeAlreadyAddedItems;
     }
 
     public function render()

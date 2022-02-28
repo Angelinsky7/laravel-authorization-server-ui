@@ -14,11 +14,14 @@ function listbox(config) {
         selected: [],
         init() {
             this.items = this._remapItems(this.config.items);
+            this._onItemsChanged();
+
             this.$nextTick(() => {
                 let evt = { handle: false, items: this.items, values: this.config.items };
-                this.$dispatch('initialized', evt);
+                this.$dispatch('initialize', evt);
                 if (evt.handle) {
                     this.items = this._remapItems(evt.items);
+                    this._onItemsChanged();
                 }
             });
         },
@@ -37,6 +40,9 @@ function listbox(config) {
                 lastSelectedEventItemsSent = this.selected;
             }
         },
+        _onItemsChanged() {
+            this.$dispatch('items-changed', { items: this.items });
+        },
 
         isItemDisabled(item) { return false; },
 
@@ -51,6 +57,7 @@ function listbox(config) {
             }
             items = items.map(p => ({ value: p.value, item: p.item, index: uniqueIndex++ }));
             this.items.push(...items);
+            this._onItemsChanged();
         },
         removeItems(itemsToRemove) {
             const items = itemsToRemove.items;
@@ -63,6 +70,7 @@ function listbox(config) {
                         this.items.splice(indexToRemove, 1);
                     }
                 }
+                this._onItemsChanged();
             }
         },
         updateItem(index, value) {

@@ -12,13 +12,18 @@ function memberOfListbox(config) {
         }
     };
 
+    let innerListBoxItems = [];
+
     return {
         config: Object.assign({}, defaultConfig, config),
-        _items: [],
+        memberOfListboxItems: [],
         add() {
             const dialogRef = window.policy.alpineJs.modalService({
                 title: this.config.add.title,
-                contentRef: this.config.add.content
+                contentRef: this.config.add.content,
+                data: {
+                    exludeItems: [...this.memberExcludeItems, ...innerListBoxItems.map(p => p.value)]
+                }
             });
             dialogRef.open(p => {
                 if (p.confirm) {
@@ -34,12 +39,13 @@ function memberOfListbox(config) {
             });
             dialogRef.open(p => {
                 if (p) {
-                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:remove-items`, { items: this._items });
+                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:remove-items`, { items: this.memberOfListboxItems });
                 }
             });
         },
-        removeIsDisabled() { return this._items.length == 0; },
-        selectedItemChanged(event) { this._items = event.detail.items; }
+        removeIsDisabled() { return this.memberOfListboxItems.length == 0; },
+        selectedItemChanged(event) { this.memberOfListboxItems = event.detail.items; },
+        storeListboxItems(event) { innerListBoxItems = event.detail.items; }
     };
 }
 
@@ -47,24 +53,32 @@ function memberOfControl(config) {
 
     let defaultConfig = {
         memberItems: [],
+        memberExcludeItems: [],
         remap: false
     };
 
     return {
         config: Object.assign({}, defaultConfig, config),
         memberItems: null,
+        memberExcludeItems: null,
         remap: false,
         init() {
             this.memberItems = this.config.memberItems;
+            this.memberExcludeItems = this.config.memberExcludeItems;
             this.remap = this.config.remap;
         },
         listboxInit(event) {
             if (this.remap) {
                 event.detail.handle = true;
-                event.detail.items = this.memberItems.filter(p => event.detail.values.map(p => `${p}`).includes(`${p.value}`));
+                event.detail.items = this.memberItems.filter(p => event.detail.values.map(a => `${a}`).includes(`${p.value}`));
             }
             // console.log('remap', this.remap, this.memberItems, event.detail.items, event.detail.values);
-        }
+        },
+        // dialogListboxInit(event) {
+        //     if (this.memberExcludeItems && this.memberExcludeItems.length != 0) {
+        //         event.detail.items = this.memberItems.filter(p => this.memberExcludeItems.map(a => `${a}`).includes(`${p.value}`));
+        //     }
+        // }
     };
 }
 

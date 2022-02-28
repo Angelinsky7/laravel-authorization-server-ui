@@ -27,7 +27,8 @@
 
                     <x-policy-ui-shared:input-group header="{{ _('Policies') }}">
                         <x-policy-ui-policy:entity-list id="policies" name="policies"
-                                                        :values="old('policies')?? $item->policies->map(fn($p) => $p->id)" :remapOldValues="true" />
+                                                        :values="old('policies')?? $item->policies->map(fn($p) => $p->id)" :remapOldValues="true"
+                                                        :excludes="[$item->id]" />
                         <x-policy-ui-form-field-error field="policies" />
                     </x-policy-ui-shared:input-group>
 
