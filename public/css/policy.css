@@ -1167,6 +1167,10 @@
   width: 2.5rem;
 }
 
+.w-2 {
+  width: 0.5rem;
+}
+
 .min-w-full {
   min-width: 100%;
 }

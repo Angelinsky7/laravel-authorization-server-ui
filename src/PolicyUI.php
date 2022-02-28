@@ -2,6 +2,7 @@
 
 namespace Darkink\AuthorizationServerUI;
 
+use Darkink\AuthorizationServerUI\Http\Controllers\ClientController;
 use Darkink\AuthorizationServerUI\Http\Controllers\GroupController;
 use Darkink\AuthorizationServerUI\Http\Controllers\RoleController;
 use Darkink\AuthorizationServerUI\Http\Controllers\PermissionController;
@@ -96,11 +97,16 @@ class PolicyUI
                 Route::delete('/{policy}', [PolicyController::class, 'destroy'])->middleware('can:policy.delete')->name('policy-ui.policy.destroy');
             });
 
-
             Route::group(['prefix' => 'client'], function () {
                 Route::get('/', [ClientController::class, 'index'])->middleware('can:client.see')->name('policy-ui.client.index');
+                Route::get('/create', [ClientController::class, 'create'])->middleware('can:client.create')->name('policy-ui.client.create');
+                Route::post('/create', [ClientController::class, 'store'])->middleware('can:client.create')->name('policy-ui.client.store');
+                Route::get('/{client}', [ClientController::class, 'show'])->middleware('can:client.see')->name('policy-ui.client.show');
+                Route::get('/{client}/edit', [ClientController::class, 'edit'])->middleware('can:client.update')->name('policy-ui.client.edit');
+                Route::put('/{client}', [ClientController::class, 'update'])->middleware('can:client.update')->name('policy-ui.client.update');
+                Route::get('/{client}/delete', [ClientController::class, 'delete'])->middleware('can:client.delete')->name('policy-ui.client.delete');
+                Route::delete('/{client}', [ClientController::class, 'destroy'])->middleware('can:client.delete')->name('policy-ui.client.destroy');
             });
-
         });
     }
 
