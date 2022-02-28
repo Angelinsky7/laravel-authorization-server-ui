@@ -16,12 +16,18 @@
 
                     @include('policy-ui::Policy.Policy.update', ['item' => $item->parent])
 
-                    <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
+                    {{-- <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
                         <x-policy-ui-group:members id="groups" name="groups"
                                                    modalTitle="{{ _('Add group') }}" addCaption="{{ _('Add group') }}" removeCaption="{{ _('Remove group') }}"
                                                    :values="old('groups') ?? $item->groups->map(fn($p) => 'g' . $p->id)" :remapOldValues="true"
                                                    :items="$all_groups">
                         </x-policy-ui-group:members>
+                        <x-policy-ui-form-field-error field="groups" />
+                    </x-policy-ui-shared:input-group> --}}
+
+                    <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
+                        <x-policy-ui-group:entity-list id="groups" name="groups"
+                                                       :values="old('groups')?? $item->groups->map(fn($p) => 'g' . $p->id)" :remapOldValues="true" />
                         <x-policy-ui-form-field-error field="groups" />
                     </x-policy-ui-shared:input-group>
 

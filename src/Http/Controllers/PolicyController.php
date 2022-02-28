@@ -51,16 +51,10 @@ class PolicyController
     public function create(Request $request)
     {
         $type = $request->query('type');
-        // $all_policies = $this->policyRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
 
         switch ($type) {
             case "group":
-                //TODO(demarco): Please remove for new version
-                $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
-                return view('policy-ui::Policy.Group.create', [
-                    'all_groups' => $all_groups,
-                    // 'all_policies' => $all_policies
-                ]);
+                return view('policy-ui::Policy.Group.create');
                 // case "resource":
                 //     return view('policy-ui::Policy.Resource.create');
         }
@@ -112,16 +106,10 @@ class PolicyController
 
     public function edit(Policy $policy)
     {
-        // $all_policies = $this->policyRepository->gets()->all()->map(fn ($p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
-
         switch (get_class($policy->policy)) {
             case GroupPolicy::class:
-                //TODO(demarco): Please remove for new version
-                $all_groups = $this->groupRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
                 return view('policy-ui::Policy.Group.update', [
-                    'item' => $policy->policy,
-                    'all_groups' => $all_groups,
-                    // 'all_policies' => $all_policies
+                    'item' => $policy->policy
                 ]);
                 break;
                 // case ResourcePermission::class:

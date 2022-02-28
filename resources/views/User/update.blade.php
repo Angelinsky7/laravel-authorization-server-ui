@@ -107,11 +107,14 @@
                             <x-policy-ui-form-field-error field="roles" />
                         </x-policy-ui-shared:tab-item>
                         <x-policy-ui-shared:tab-item header="{{ _('Members of') }}">
-                            <x-policy-ui-group:members id="memberofs" name="memberofs"
+                            {{-- <x-policy-ui-group:members id="memberofs" name="memberofs"
                                                        modalTitle="{{ _('Add member') }}" addCaption="{{ _('Add member') }}" removeCaption="{{ _('Remove member') }}"
                                                        :values="old('memberofs') ?? $item->memberofs->map(fn($p) => 'g' . $p->id)" remapOldValues="true"
                                                        :items="$all_groups">
                             </x-policy-ui-group:members>
+                            <x-policy-ui-form-field-error field="memberofs" /> --}}
+                            <x-policy-ui-group:entity-list id="memberofs" name="memberofs"
+                                                           :values="old('memberofs')?? $item->memberofs->map(fn($p) => 'g' . $p->id)" remapOldValues="true" />
                             <x-policy-ui-form-field-error field="memberofs" />
                         </x-policy-ui-shared:tab-item>
                     </x-policy-ui-shared:tab>

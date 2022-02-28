@@ -45,37 +45,7 @@ class ManySelector extends Component
 
         $this->key = $key;
         $this->caption = $caption;
-
-        // $this->valuesIds = $this->mapValuesToIds($values, $keyEntityAccessor);
-        // //TODO(demarco): Please simply only use valueIds directly.... hanlde 3 list only all possible values (object), available ids and selected ids....
-        // $this->values = $this->useOptionObjectFromIds($this->valuesIds, $options, $value);
     }
-
-    // protected function mapValuesToIds($values, $key)
-    // {
-    //     if ($values == null || count($values) == 0) {
-    //         return $values;
-    //     }
-    //     if (is_int($values[0]) || is_string($values[0])) {
-    //         return $values;
-    //     }
-    //     return array_map(fn ($p) => $p[$key], $values);
-    // }
-
-    // protected function useOptionObjectFromIds(mixed $valueIds, mixed $options, string $value)
-    // {
-
-    //     if ($valueIds == null || count($valueIds) == 0) {
-    //         return [];
-    //     }
-
-    //     if ($options == null || count($options) == 0) {
-    //         return [];
-    //     }
-
-    //     $result = array_filter($options, fn ($p) => in_array($p[$value], $valueIds));
-    //     return array_values($result);
-    // }
 
     public function render()
     {
