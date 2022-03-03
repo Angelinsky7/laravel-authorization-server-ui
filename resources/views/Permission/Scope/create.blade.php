@@ -9,14 +9,16 @@
 
             <div class="overflow-hidden"
                  x-data="{
-                    resourceChanged(evt){
-                        {{-- TODO(demarco): Should be awsome to do that be it's not possible --}}
-                        {{-- this.$refs.scopes.setOptions({options: evt.detail.option != null ? evt.detail.option.scopes.map(p => ({ value: p.id, caption: p.display_name })) : []}); --}}
+                    resourceChanged(evt) {
+                        {{-- TODO(demarco): it's a evil hack but it's clearly working --}}
+                        {{-- this.$refs.scopes.querySelector('[x-data]')._x_dataStack[0].setOptions({detail: {options: evt.detail.option != null ? evt.detail.option.scopes.map(p => ({ value: p.id, caption: p.display_name })) : []}}); --}}
+                        {{-- TODO(demarco): it's a evil hack but it's clearly working --}}
+
                         this.$dispatch('x-policy-ui-shared:many-selector-scopes:set-options', {options: evt.detail.option != null ? evt.detail.option.scopes.map(p => ({ value: p.id, caption: p.display_name })) : []});
                     }
                  }">
 
-                 <x-policy-ui-shared:inner-form-layout>
+                <x-policy-ui-shared:inner-form-layout>
 
                     @include('policy-ui::Permission.Permission.create')
 
@@ -26,7 +28,9 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Scopes') }}">
-                        <x-policy-ui-shared:many-selector x-ref="scopes" id="scopes" name="scopes" :values="old('scopes')" />
+                        {{-- <div x-ref="scopes"> --}}
+                            <x-policy-ui-shared:many-selector id="scopes" name="scopes" :values="old('scopes')" />
+                        {{-- </div> --}}
                         <x-policy-ui-form-field-error field="scopes" />
                     </x-policy-ui-shared:input-group>
 
