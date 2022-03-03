@@ -39,7 +39,7 @@ class PolicyServiceUIProvider extends ServiceProvider
             ], 'policy-ui-public-js');
         }
 
-        $this->register_helpers();
+        $this->registerHelpers();
     }
 
     protected function loadDirectives(string $prefix, array $directives)
@@ -52,7 +52,7 @@ class PolicyServiceUIProvider extends ServiceProvider
         }
     }
 
-    public function register_helpers()
+    public function registerHelpers()
     {
         if (file_exists($file = __DIR__ . '/bladeHelper.php')) {
             require_once $file;
