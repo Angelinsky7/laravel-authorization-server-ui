@@ -25,7 +25,7 @@
                                 <x-policy-ui-form-field-error field="user_id" />
                             </x-policy-ui-shared:input-group>
                             <x-policy-ui-shared:input-group header="{{ _('Secret') }}">
-                                <x-policy-ui-shared:input-base id="secret" name="secret" type="password" value="{{ old('secret') ?? $item->secret }}" />
+                                <x-policy-ui-shared:input-base id="secret" name="secret" type="password" />
                                 <x-policy-ui-form-field-error field="secret" />
                             </x-policy-ui-shared:input-group>
                             <x-policy-ui-shared:input-group header="{{ _('Provider') }}">
@@ -76,16 +76,18 @@
                                 <x-policy-ui-shared:input-textarea id="description" name="description" rows="3" placeholder="a simple description" value="{{ old('description') ?? ($item->client != null ? $item->client->description : '') }}" />
                                 <x-policy-ui-form-field-error field="description" />
                             </x-policy-ui-shared:input-group>
+
                             <x-policy-ui-shared:input-group header="{{ _('Client Uri') }}">
                                 <x-policy-ui-shared:input-base id="client_uri" name="client_uri" type="text" value="{{ old('client_uri') ?? ($item->client != null ? $item->client->client_uri : '') }}" />
                                 <x-policy-ui-form-field-error field="client_uri" />
                             </x-policy-ui-shared:input-group>
+
                             <x-policy-ui-shared:input-group header="{{ _('Policy Enforcement') }}">
-                                <x-policy-ui-shared:input-base id="policy_enforcement" name="policy_enforcement" type="text" value="{{ old('policy_enforcement') ?? ($item->client != null ? $item->client->policy_enforcement : '') }}" />
+                                <x-policy-ui-shared:input-base id="policy_enforcement" name="policy_enforcement" type="text" value="{{ old('policy_enforcement') ?? ($item->client != null ? $item->client->policy_enforcement->value : '') }}" />
                                 <x-policy-ui-form-field-error field="policy_enforcement" />
                             </x-policy-ui-shared:input-group>
                             <x-policy-ui-shared:input-group header="{{ _('Decision Strategy') }}">
-                                <x-policy-ui-shared:input-base id="decision_strategy" name="decision_strategy" type="text" value="{{ old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy : '') }}" />
+                                <x-policy-ui-shared:input-base id="decision_strategy" name="decision_strategy" type="text" value="{{ old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy->value : '') }}" />
                                 <x-policy-ui-form-field-error field="decision_strategy" />
                             </x-policy-ui-shared:input-group>
                             <x-policy-ui-shared:input-group header="{{ _('Anaylyse mode enabled') }}">
