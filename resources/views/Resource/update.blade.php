@@ -32,7 +32,7 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Scopes') }}">
-                        <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes" />
+                        <x-policy-ui-scope:many-selector id="scopes" name="scopes" :values="old('scopes') ?? $item->scopes->map(fn($p) => $p->id)" />
                         <x-policy-ui-form-field-error field="scopes" />
                     </x-policy-ui-shared:input-group>
                 </x-policy-ui-shared:inner-form-layout>
