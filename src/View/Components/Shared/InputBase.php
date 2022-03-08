@@ -12,6 +12,9 @@ class InputBase extends Component
     public string $type;
     public string | null $value;
 
+    public bool $is_checkbox = false;
+    public bool $checked = false;
+
     public function __construct(
         string $id = '',
         string $name = '',
@@ -21,7 +24,15 @@ class InputBase extends Component
         $this->id = $id;
         $this->name = $name;
         $this->type = $type;
-        $this->value = $value;
+
+        $this->is_checkbox = $type == "checkbox";
+
+        if($this->is_checkbox){
+            $this->value = '1';
+            $this->checked = $value;
+        }else{
+            $this->value = $value;
+        }
     }
 
     public function render()
