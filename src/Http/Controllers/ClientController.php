@@ -61,6 +61,13 @@ class ClientController
             $validated['policy_enforcement'],
             $validated['decision_strategy'],
             $validated['analyse_mode_enabled'] ?? false,
+            $validated['all_resources'] ?? false,
+            $validated['all_scopes'] ?? false,
+            $validated['all_roles'] ?? false,
+            $validated['all_groups'] ?? false,
+            $validated['all_policies'] ?? false,
+            $validated['all_permissions'] ?? false,
+            $validated['permissions'] ?? []
         );
 
         $request->session()->flash('success_message', 'Client created.');
@@ -120,6 +127,13 @@ class ClientController
             $validated['policy_enforcement'],
             $validated['decision_strategy'],
             $validated['analyse_mode_enabled'] ?? false,
+            $validated['all_resources'] ?? false,
+            $validated['all_scopes'] ?? false,
+            $validated['all_roles'] ?? false,
+            $validated['all_groups'] ?? false,
+            $validated['all_policies'] ?? false,
+            $validated['all_permissions'] ?? false,
+            $validated['permissions'] ?? []
         );
 
         $request->session()->flash('success_message', 'Client updated.');
