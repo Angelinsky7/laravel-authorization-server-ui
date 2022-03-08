@@ -86,6 +86,12 @@
                                 <x-policy-ui-shared:input-base id="decision_strategy" name="decision_strategy" type="text" value="{{ old('decision_strategy') }}" />
                                 <x-policy-ui-form-field-error field="decision_strategy" />
                             </x-policy-ui-shared:input-group>
+
+                            <x-policy-ui-shared:input-group header="{{ _('Permission Splitter') }}">
+                                <x-policy-ui-shared:input-base id="permission_splitter" name="permission_splitter" type="text" value="{{ old('permission_splitter') }}" maxlength="1" />
+                                <x-policy-ui-form-field-error field="permission_splitter" />
+                            </x-policy-ui-shared:input-group>
+
                             <x-policy-ui-shared:input-group header="{{ _('Anaylyse mode enabled') }}">
                                 <div class="w-4">
                                     <x-policy-ui-shared:input-base id="analyse_mode_enabled" name="analyse_mode_enabled" type="checkbox" value="{{ old('analyse_mode_enabled') }}" />
