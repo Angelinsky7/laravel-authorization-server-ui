@@ -16,9 +16,9 @@
                 <div x-data="{
                     all_resources_tab_visible: {!! json_encode($item->client != null && $item->client->all_resources ? true : false) !!},
                     all_scopes_tab_visible: {!! json_encode($item->client != null && $item->client->all_scopes ? true : false) !!},
-                    all_roles_tab_visible: {!! json_encode($item->client != null && $item->client->all_roles ? true : false) !!},
+                    {{-- all_roles_tab_visible: {!! json_encode($item->client != null && $item->client->all_roles ? true : false) !!},
                     all_groups_tab_visible: {!! json_encode($item->client != null && $item->client->all_groups ? true : false) !!},
-                    all_policies_tab_visible: {!! json_encode($item->client != null && $item->client->all_policies ? true : false) !!},
+                    all_policies_tab_visible: {!! json_encode($item->client != null && $item->client->all_policies ? true : false) !!}, --}}
                     all_permissions_tab_visible: {!! json_encode($item->client != null && $item->client->all_permissions ? true : false) !!},
                 }">
 
@@ -133,7 +133,7 @@
                                     </div>
                                     <x-policy-ui-form-field-error field="all_scopes" />
                                 </x-policy-ui-shared:input-group>
-                                <x-policy-ui-shared:input-group header="{{ _('All roles') }}" inline="true" reverse="true">
+                                {{-- <x-policy-ui-shared:input-group header="{{ _('All roles') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base x-model="all_roles_tab_visible" id="all_roles" name="all_roles" type="checkbox" value="{{ old('all_roles') ?? ($item->client != null ? $item->client->all_roles : '') }}" />
                                     </div>
@@ -150,7 +150,7 @@
                                         <x-policy-ui-shared:input-base x-model="all_policies_tab_visible" id="all_policies" name="all_policies" type="checkbox" value="{{ old('all_policies') ?? ($item->client != null ? $item->client->all_policies : '') }}" />
                                     </div>
                                     <x-policy-ui-form-field-error field="all_policies" />
-                                </x-policy-ui-shared:input-group>
+                                </x-policy-ui-shared:input-group> --}}
                                 <x-policy-ui-shared:input-group header="{{ _('All permissions') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base x-model="all_permissions_tab_visible" id="all_permissions" name="all_permissions" type="checkbox" value="{{ old('all_permissions') ?? ($item->client != null ? $item->client->all_permissions : '') }}" />
@@ -165,14 +165,14 @@
                             <x-policy-ui-shared:tab-item header="{{ _('Scopes') }}" x-show="!all_scopes_tab_visible" x-cloak>
                             </x-policy-ui-shared:tab-item>
 
-                            <x-policy-ui-shared:tab-item header="{{ _('Roles') }}" x-show="!all_roles_tab_visible" x-cloak>
+                            {{-- <x-policy-ui-shared:tab-item header="{{ _('Roles') }}" x-show="!all_roles_tab_visible" x-cloak>
                             </x-policy-ui-shared:tab-item>
 
                             <x-policy-ui-shared:tab-item header="{{ _('Groups') }}" x-show="!all_groups_tab_visible" x-cloak>
                             </x-policy-ui-shared:tab-item>
 
                             <x-policy-ui-shared:tab-item header="{{ _('Policies') }}" x-show="!all_policies_tab_visible" x-cloak>
-                            </x-policy-ui-shared:tab-item>
+                            </x-policy-ui-shared:tab-item> --}}
 
                             <x-policy-ui-shared:tab-item header="{{ _('Permissions') }}" x-show="!all_permissions_tab_visible" x-cloak>
                                 <x-policy-ui-shared:input-group>
