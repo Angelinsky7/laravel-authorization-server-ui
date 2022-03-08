@@ -1,6 +1,6 @@
 <?php
 
-namespace Darkink\AuthorizationServerUI\View\Components\Permission;
+namespace Darkink\AuthorizationServerUI\View\Components\Common;
 
 use Darkink\AuthorizationServer\Models\DecisionStrategy;
 use Illuminate\View\Component;
@@ -14,19 +14,18 @@ class SelectDecisionStrategy extends Component
 
     public array $_items;
 
-    public function __construct(string $id, string $autocomplete, string $selectCaption, DecisionStrategy | null | string | int $item)
+    public function __construct(string $id = '', string $autocomplete = '', string | null $selectCaption = null, DecisionStrategy | null | string | int $item = null)
     {
         $this->id = $id;
         $this->autocomplete = $autocomplete;
-        $this->selectCaption = $selectCaption;
-        $this->item = (is_string($item) || is_int($item)) ? DecisionStrategy::from($item) : $item;
+        $this->selectCaption = $selectCaption ?? _('--Select a decision strategy--');
 
+        $this->item = (is_string($item) || is_int($item)) ? DecisionStrategy::from($item) : $item;
         $this->_items = array_slice(DecisionStrategy::cases(), 1);
     }
 
     public function render()
     {
-        // return view('policy-ui::components.permission.select-decision-strategy');
         return view('policy-ui::components.shared.enum-select');
     }
 }

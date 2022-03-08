@@ -51,6 +51,7 @@
                                 <x-policy-ui-form-field-error field="revoked" />
                             </x-policy-ui-shared:input-group>
                         </x-policy-ui-shared:tab-item>
+
                         <x-policy-ui-shared:tab-item header="{{ _('Properties') }}">
                             <x-policy-ui-shared:input-group header="{{ _('Enabled') }}">
                                 <div class="w-4">
@@ -83,13 +84,17 @@
                             </x-policy-ui-shared:input-group>
 
                             <x-policy-ui-shared:input-group header="{{ _('Policy Enforcement') }}">
-                                <x-policy-ui-shared:input-base id="policy_enforcement" name="policy_enforcement" type="text" value="{{ old('policy_enforcement') ?? ($item->client != null ? $item->client->policy_enforcement->value : '') }}" />
+                                <x-policy-ui-common:select-policy-enforcement id="policy_enforcement" autocomplete="policy_enforcement-name"
+                                                                              :item="old('policy_enforcement') ?? ($item->client != null ? $item->client->policy_enforcement->value : '')" />
                                 <x-policy-ui-form-field-error field="policy_enforcement" />
                             </x-policy-ui-shared:input-group>
+
                             <x-policy-ui-shared:input-group header="{{ _('Decision Strategy') }}">
-                                <x-policy-ui-shared:input-base id="decision_strategy" name="decision_strategy" type="text" value="{{ old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy->value : '') }}" />
+                                <x-policy-ui-common:select-decision-strategy id="decision_strategy" autocomplete="decision_strategy-name"
+                                                                             :item="old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy->value : '')" />
                                 <x-policy-ui-form-field-error field="decision_strategy" />
                             </x-policy-ui-shared:input-group>
+
                             <x-policy-ui-shared:input-group header="{{ _('Anaylyse mode enabled') }}">
                                 <div class="w-4">
                                     <x-policy-ui-shared:input-base id="analyse_mode_enabled" name="analyse_mode_enabled" type="checkbox" value="{{ old('analyse_mode_enabled') ?? ($item->client != null ? $item->client->analyse_mode_enabled : '') }}" />

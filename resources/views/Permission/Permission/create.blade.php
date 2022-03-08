@@ -9,9 +9,8 @@
 </x-policy-ui-shared:input-group>
 
 <x-policy-ui-shared:input-group header="{{ _('Decision Strategy') }}">
-    <x-policy-ui-permission:select-decision-strategy id="decision_strategy" autocomplete="decision_strategy-name"
-                                                     selectCaption="{{ _('--Select a decision strategy--') }}"
-                                                     :item="old('decision_strategy')" />
+    <x-policy-ui-common:select-decision-strategy id="decision_strategy" autocomplete="decision_strategy-name"
+                                                 :item="old('decision_strategy')" />
     <x-policy-ui-form-field-error field="decision_strategy" />
 </x-policy-ui-shared:input-group>
 

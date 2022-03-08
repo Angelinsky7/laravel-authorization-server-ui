@@ -9,9 +9,8 @@
 </x-policy-ui-shared:input-group>
 
 <x-policy-ui-shared:input-group header="{{ _('Logic') }}">
-    <x-policy-ui-policy:select-logic id="logic" autocomplete="logic-name"
-                                     selectCaption="{{ _('--Select a logic --') }}"
-                                     :item="old('logic') ?? $item->logic" />
+    <x-policy-ui-common:select-policy-logic id="logic" autocomplete="logic-name"
+                                            :item="old('logic') ?? $item->logic" />
     <x-policy-ui-form-field-error field="logic" />
 </x-policy-ui-shared:input-group>
 

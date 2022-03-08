@@ -1,11 +1,11 @@
 <?php
 
-namespace Darkink\AuthorizationServerUI\View\Components\Policy;
+namespace Darkink\AuthorizationServerUI\View\Components\Common;
 
 use Darkink\AuthorizationServer\Models\PolicyLogic;
 use Illuminate\View\Component;
 
-class SelectLogic extends Component
+class SelectPolicyLogic extends Component
 {
     public string $id;
     public string $autocomplete;
@@ -14,11 +14,11 @@ class SelectLogic extends Component
 
     public array $_items;
 
-    public function __construct(string $id, string $autocomplete, string $selectCaption, PolicyLogic | null | string | int $item)
+    public function __construct(string $id = '', string $autocomplete = '', string | null $selectCaption = null, PolicyLogic | null | string | int $item = null)
     {
         $this->id = $id;
         $this->autocomplete = $autocomplete;
-        $this->selectCaption = $selectCaption;
+        $this->selectCaption = $selectCaption ?? _('--Select a policy logic--');
 
         $this->item = (is_string($item) || is_int($item)) ? PolicyLogic::from($item) : $item;
         $this->_items = array_slice(PolicyLogic::cases(), 1);
