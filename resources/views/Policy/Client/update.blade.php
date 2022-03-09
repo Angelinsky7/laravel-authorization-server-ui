@@ -1,10 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-policy-ui-shared:default-header header="{{ __('Edit Group Policy') }} '{{ $item->parent->name }}'" />
+        <x-policy-ui-shared:default-header header="{{ __('Edit Client Policy') }} '{{ $item->parent->name }}'" />
     </x-slot>
 
+    <x-policy-ui-shared:validation-error-helper />
+
     <x-policy-ui-shared:outer-form-layout>
-        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'group']) }}">
+        <form method="POST" action="{{ route('policy-ui.policy.update', ['policy' => $item->id, 'type' => 'client']) }}">
             @method('PUT')
             @csrf
 
@@ -16,10 +18,10 @@
 
                     @include('policy-ui::Policy.Policy.update', ['item' => $item->parent])
 
-                    <x-policy-ui-shared:input-group header="{{ _('Groups') }}">
-                        <x-policy-ui-group:entity-list id="groups" name="groups"
-                                                       :values="old('groups')?? $item->groups->map(fn($p) => 'g' . $p->id)" :remapOldValues="true" />
-                        <x-policy-ui-form-field-error field="groups" />
+                    <x-policy-ui-shared:input-group header="{{ _('Clients') }}">
+                        <x-policy-ui-client:entity-list id="clients" name="clients"
+                                                       :values="old('clients')?? $item->clients->map(fn($p) => $p->id)" :remapOldValues="true" />
+                        <x-policy-ui-form-field-error field="clients" />
                     </x-policy-ui-shared:input-group>
 
                 </x-policy-ui-shared:inner-form-layout>

@@ -3,19 +3,23 @@
 namespace Darkink\AuthorizationServerUI\Http\Controllers;
 
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreAggregatedPolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\StoreClientPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreRolePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreUserPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateAggregatedPolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateClientPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateRolePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateUserPolicyRequest;
 use Darkink\AuthorizationServer\Models\AggregatedPolicy;
+use Darkink\AuthorizationServer\Models\ClientPolicy;
 use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Models\RolePolicy;
 use Darkink\AuthorizationServer\Models\UserPolicy;
 use Darkink\AuthorizationServer\Repositories\AggregatedPolicyRepository;
+use Darkink\AuthorizationServer\Repositories\ClientPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\PolicyRepository;
 use Darkink\AuthorizationServer\Repositories\GroupPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\RolePolicyRepository;
@@ -34,6 +38,7 @@ class PolicyController
     protected GroupPolicyRepository $groupPolicyRepository;
     protected RolePolicyRepository $rolePolicyRepository;
     protected UserPolicyRepository $userPolicyRepository;
+    protected ClientPolicyRepository $clientPolicyRepository;
     protected AggregatedPolicyRepository $aggregatedPolicyRepository;
 
     public function __construct(
@@ -41,12 +46,14 @@ class PolicyController
         GroupPolicyRepository $groupPolicyRepository,
         RolePolicyRepository $rolePolicyRepository,
         UserPolicyRepository $userPolicyRepository,
+        ClientPolicyRepository $clientPolicyRepository,
         AggregatedPolicyRepository $aggregatedPolicyRepository
     ) {
         $this->policyRepository = $policyRepository;
         $this->groupPolicyRepository = $groupPolicyRepository;
         $this->rolePolicyRepository = $rolePolicyRepository;
         $this->userPolicyRepository = $userPolicyRepository;
+        $this->clientPolicyRepository = $clientPolicyRepository;
         $this->aggregatedPolicyRepository = $aggregatedPolicyRepository;
     }
 
@@ -75,6 +82,8 @@ class PolicyController
                 return view('policy-ui::Policy.Role.create');
             case "user":
                 return view('policy-ui::Policy.User.create');
+            case "client":
+                return view('policy-ui::Policy.Client.create');
             case "aggregated":
                 return view('policy-ui::Policy.Aggregated.create');
         }
@@ -90,6 +99,8 @@ class PolicyController
                 return $this->storeRole(StoreRolePolicyRequest::createFrom($request));
             case "user":
                 return $this->storeUser(StoreUserPolicyRequest::createFrom($request));
+            case "client":
+                return $this->storeClient(StoreClientPolicyRequest::createFrom($request));
             case "aggregated":
                 return $this->storeAggregated(StoreAggregatedPolicyRequest::createFrom($request));
         }
@@ -144,6 +155,22 @@ class PolicyController
         return redirect()->route('policy-ui.policy.index');
     }
 
+    public function storeClient(StoreClientPolicyRequest $request)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->clientPolicyRepository->create(
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['clients'],
+        );
+
+        $request->session()->flash('success_message', 'Client Policy created.');
+        return redirect()->route('policy-ui.policy.index');
+    }
+
     public function storeAggregated(StoreAggregatedPolicyRequest $request)
     {
         $validated = $request->validate($request->rules());
@@ -183,6 +210,11 @@ class PolicyController
                     'item' => $policy->policy
                 ]);
                 break;
+            case ClientPolicy::class:
+                return view('policy-ui::Policy.Client.update', [
+                    'item' => $policy->policy
+                ]);
+                break;
             case AggregatedPolicy::class:
                 return view('policy-ui::Policy.Aggregated.update', [
                     'item' => $policy->policy
@@ -203,6 +235,8 @@ class PolicyController
                 return $this->updateRole(UpdateRolePolicyRequest::createFrom($request), $policy->policy);
             case "user":
                 return $this->updateUser(UpdateUserPolicyRequest::createFrom($request), $policy->policy);
+            case "client":
+                return $this->updateClient(UpdateClientPolicyRequest::createFrom($request), $policy->policy);
             case "aggregated":
                 return $this->updateAggregated(UpdateAggregatedPolicyRequest::createFrom($request), $policy->policy);
         }
@@ -257,6 +291,23 @@ class PolicyController
         );
 
         $request->session()->flash('success_message', 'User Policy updated.');
+        return redirect()->route('policy-ui.policy.index');
+    }
+
+    public function updateClient(UpdateClientPolicyRequest $request, ClientPolicy $policy)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->clientPolicyRepository->update(
+            $policy,
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['clients'],
+        );
+
+        $request->session()->flash('success_message', 'Client Policy updated.');
         return redirect()->route('policy-ui.policy.index');
     }
 

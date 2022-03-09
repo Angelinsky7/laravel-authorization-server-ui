@@ -3,6 +3,7 @@
 namespace Darkink\AuthorizationServerUI\View\Components\Policy;
 
 use Darkink\AuthorizationServer\Models\AggregatedPolicy;
+use Darkink\AuthorizationServer\Models\ClientPolicy;
 use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Models\RolePolicy;
@@ -34,6 +35,9 @@ class ChipType extends Component
                 break;
             case UserPolicy::class:
                 return _('User Policy');
+                break;
+            case ClientPolicy::class:
+                return _('Client Policy');
                 break;
             case AggregatedPolicy::class:
                 return _('Aggregated Policy');

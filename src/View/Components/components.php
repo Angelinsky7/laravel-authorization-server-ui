@@ -36,4 +36,5 @@ return array_merge(
     require(__DIR__ . '/Group/components.php'),
     require(__DIR__ . '/Policy/components.php'),
     require(__DIR__ . '/User/components.php'),
+    require(__DIR__ . '/Client/components.php'),
 );

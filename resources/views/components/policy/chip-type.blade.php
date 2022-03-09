@@ -7,6 +7,8 @@
         $class_name == \Darkink\AuthorizationServer\Models\RolePolicy::class,
     'bg-purple-100 text-purple-800' =>
         $class_name == \Darkink\AuthorizationServer\Models\UserPolicy::class,
+    'bg-red-100 text-red-800' =>
+        $class_name == \Darkink\AuthorizationServer\Models\ClientPolicy::class,
     'bg-yellow-100 text-yellow-800' =>
         $class_name ==
         \Darkink\AuthorizationServer\Models\AggregatedPolicy::class,
