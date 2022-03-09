@@ -102,13 +102,13 @@
                                 </x-policy-ui-shared:input-group>
 
                                 <x-policy-ui-shared:input-group header="{{ _('Decision Strategy') }}">
-                                    <x-policy-ui-common:select-decision-strategy id="decision_strategy" autocomplete="decision_strategy-name"
-                                                                                 :item="old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy->value : '')" />
+                                    <x-policy-ui-common:select-decision-strategy-client id="decision_strategy" autocomplete="decision_strategy-name"
+                                                                                        :item="old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy->value : '')" />
                                     <x-policy-ui-form-field-error field="decision_strategy" />
                                 </x-policy-ui-shared:input-group>
 
                                 <x-policy-ui-shared:input-group header="{{ _('Permission Splitter') }}">
-                                    <x-policy-ui-shared:input-base id="permission_splitter" name="permission_splitter" type="text" value="{{ old('permission_splitter') ?? ($item->client != null ? $item->client->permission_splitter : '') }}"  maxlength="1" />
+                                    <x-policy-ui-shared:input-base id="permission_splitter" name="permission_splitter" type="text" value="{{ old('permission_splitter') ?? ($item->client != null ? $item->client->permission_splitter : '') }}" maxlength="1" />
                                     <x-policy-ui-form-field-error field="permission_splitter" />
                                 </x-policy-ui-shared:input-group>
 
