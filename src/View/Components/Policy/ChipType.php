@@ -7,6 +7,7 @@ use Darkink\AuthorizationServer\Models\ClientPolicy;
 use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Models\RolePolicy;
+use Darkink\AuthorizationServer\Models\TimePolicy;
 use Darkink\AuthorizationServer\Models\UserPolicy;
 use Illuminate\View\Component;
 
@@ -38,6 +39,9 @@ class ChipType extends Component
                 break;
             case ClientPolicy::class:
                 return _('Client Policy');
+                break;
+            case TimePolicy::class:
+                return _('Time Policy');
                 break;
             case AggregatedPolicy::class:
                 return _('Aggregated Policy');

@@ -9,12 +9,10 @@
         $class_name == \Darkink\AuthorizationServer\Models\UserPolicy::class,
     'bg-red-100 text-red-800' =>
         $class_name == \Darkink\AuthorizationServer\Models\ClientPolicy::class,
+    'bg-orange-100 text-orange-800' =>
+        $class_name == \Darkink\AuthorizationServer\Models\TimePolicy::class,
     'bg-yellow-100 text-yellow-800' =>
-        $class_name ==
-        \Darkink\AuthorizationServer\Models\AggregatedPolicy::class,
-    // 'bg-red-100 text-red-800' =>
-    //     $class_name ==
-    //     \Darkink\AuthorizationServer\Models\ResourcePermission::class,
+        $class_name == \Darkink\AuthorizationServer\Models\AggregatedPolicy::class,
 ])>
     {{ $caption }}
 </span>

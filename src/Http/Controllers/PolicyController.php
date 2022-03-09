@@ -6,23 +6,27 @@ use Darkink\AuthorizationServer\Http\Requests\Policy\StoreAggregatedPolicyReques
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreClientPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreRolePolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\StoreTimePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreUserPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateAggregatedPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateClientPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateGroupPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateRolePolicyRequest;
+use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateTimePolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\UpdateUserPolicyRequest;
 use Darkink\AuthorizationServer\Models\AggregatedPolicy;
 use Darkink\AuthorizationServer\Models\ClientPolicy;
 use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Models\RolePolicy;
+use Darkink\AuthorizationServer\Models\TimePolicy;
 use Darkink\AuthorizationServer\Models\UserPolicy;
 use Darkink\AuthorizationServer\Repositories\AggregatedPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\ClientPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\PolicyRepository;
 use Darkink\AuthorizationServer\Repositories\GroupPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\RolePolicyRepository;
+use Darkink\AuthorizationServer\Repositories\TimePolicyRepository;
 use Darkink\AuthorizationServer\Repositories\UserPolicyRepository;
 use Darkink\AuthorizationServerUI\Traits\HasSearch;
 use Darkink\AuthorizationServerUI\Traits\HasSorting;
@@ -39,6 +43,7 @@ class PolicyController
     protected RolePolicyRepository $rolePolicyRepository;
     protected UserPolicyRepository $userPolicyRepository;
     protected ClientPolicyRepository $clientPolicyRepository;
+    protected TimePolicyRepository $timePolicyRepository;
     protected AggregatedPolicyRepository $aggregatedPolicyRepository;
 
     public function __construct(
@@ -47,6 +52,7 @@ class PolicyController
         RolePolicyRepository $rolePolicyRepository,
         UserPolicyRepository $userPolicyRepository,
         ClientPolicyRepository $clientPolicyRepository,
+        TimePolicyRepository $timePolicyRepository,
         AggregatedPolicyRepository $aggregatedPolicyRepository
     ) {
         $this->policyRepository = $policyRepository;
@@ -54,6 +60,7 @@ class PolicyController
         $this->rolePolicyRepository = $rolePolicyRepository;
         $this->userPolicyRepository = $userPolicyRepository;
         $this->clientPolicyRepository = $clientPolicyRepository;
+        $this->timePolicyRepository = $timePolicyRepository;
         $this->aggregatedPolicyRepository = $aggregatedPolicyRepository;
     }
 
@@ -84,6 +91,8 @@ class PolicyController
                 return view('policy-ui::Policy.User.create');
             case "client":
                 return view('policy-ui::Policy.Client.create');
+            case "time":
+                return view('policy-ui::Policy.Time.create');
             case "aggregated":
                 return view('policy-ui::Policy.Aggregated.create');
         }
@@ -101,6 +110,8 @@ class PolicyController
                 return $this->storeUser(StoreUserPolicyRequest::createFrom($request));
             case "client":
                 return $this->storeClient(StoreClientPolicyRequest::createFrom($request));
+            case "time":
+                return $this->storeTime(StoreTimePolicyRequest::createFrom($request));
             case "aggregated":
                 return $this->storeAggregated(StoreAggregatedPolicyRequest::createFrom($request));
         }
@@ -171,6 +182,28 @@ class PolicyController
         return redirect()->route('policy-ui.policy.index');
     }
 
+    public function storeTime(StoreTimePolicyRequest $request)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->timePolicyRepository->create(
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['not_before'],
+            $validated['not_after'],
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+
+        $request->session()->flash('success_message', 'Time Policy created.');
+        return redirect()->route('policy-ui.policy.index');
+    }
+
     public function storeAggregated(StoreAggregatedPolicyRequest $request)
     {
         $validated = $request->validate($request->rules());
@@ -215,6 +248,11 @@ class PolicyController
                     'item' => $policy->policy
                 ]);
                 break;
+            case TimePolicy::class:
+                return view('policy-ui::Policy.Time.update', [
+                    'item' => $policy->policy
+                ]);
+                break;
             case AggregatedPolicy::class:
                 return view('policy-ui::Policy.Aggregated.update', [
                     'item' => $policy->policy
@@ -237,6 +275,8 @@ class PolicyController
                 return $this->updateUser(UpdateUserPolicyRequest::createFrom($request), $policy->policy);
             case "client":
                 return $this->updateClient(UpdateClientPolicyRequest::createFrom($request), $policy->policy);
+            case "time":
+                return $this->updateTime(UpdateTimePolicyRequest::createFrom($request), $policy->policy);
             case "aggregated":
                 return $this->updateAggregated(UpdateAggregatedPolicyRequest::createFrom($request), $policy->policy);
         }
@@ -308,6 +348,29 @@ class PolicyController
         );
 
         $request->session()->flash('success_message', 'Client Policy updated.');
+        return redirect()->route('policy-ui.policy.index');
+    }
+
+    public function updateTime(UpdateTimePolicyRequest $request, TimePolicy $policy)
+    {
+        $validated = $request->validate($request->rules());
+
+        $this->timePolicyRepository->update(
+            $policy,
+            $validated['name'],
+            $validated['description'],
+            $validated['logic'],
+            $validated['permissions'] ?? [],
+            $validated['not_before'],
+            $validated['not_after'],
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+
+        $request->session()->flash('success_message', 'Time Policy updated.');
         return redirect()->route('policy-ui.policy.index');
     }
 

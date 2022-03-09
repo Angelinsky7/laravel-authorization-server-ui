@@ -10,3 +10,4 @@ export * from './modal';
 export * from './tab';
 export * from './member-of-control';
 export * from './entity-list';
+export * from './date-picker';

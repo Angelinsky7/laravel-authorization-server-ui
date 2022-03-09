@@ -37,5 +37,6 @@ return [
     Progress::class,
     Tab::class,
     TabItem::class,
-    EntityList::class
+    EntityList::class,
+    DatePicker::class
 ];
