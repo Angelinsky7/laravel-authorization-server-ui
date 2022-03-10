@@ -1,3 +1,5 @@
+import { format, parse } from 'date-fns';
+
 const MONTH_NAMES = [
     "January",
     "February",
@@ -32,7 +34,9 @@ function datePicker(config) {
 
     let defaultConfig = {
         value: null,
-        dateFormat: "DD/MM/YYYY"
+        dateFormat: "dd/MM/yyyy",
+        nullByDefault: true,
+        onlySelect: false
     };
 
     let popperInstance = null;
@@ -49,24 +53,25 @@ function datePicker(config) {
         init() {
             let today;
 
+
             if (this.config.value && this.config.value != 'null') {
                 today = new Date(Date.parse(this._convertDateToIso(this.config.value, this.config.dateFormat)));
-                console.log(this.config.value, today);
             } else {
                 today = new Date();
             }
 
             this.month = today.getMonth();
             this.year = today.getFullYear();
-            this.datepickerValue = this.formatDateForDisplay(today);
+
+            if (!this.config.nullByDefault || this.config.value) {
+                this.datepickerValue = this.formatDateForDisplay(today);
+            }
 
             this.getNumberOfDays();
-
-
         },
 
-        _convertDateToIso(date, format) {
-            return date;
+        _convertDateToIso(date, dateFormat) {
+            return parse(date, dateFormat, new Date());
         },
 
         toggle() {
@@ -89,24 +94,26 @@ function datePicker(config) {
         },
 
         formatDateForDisplay(date) {
-            let formattedDay = DAYS[date.getDay()];
-            let formattedDate = ("0" + date.getDate()).slice(-2);
-            let formattedMonth = MONTH_NAMES[date.getMonth()];
-            let formattedMonthShortName = MONTH_SHORT_NAMES[date.getMonth()];
-            let formattedMonthInNumber = ("0" + (parseInt(date.getMonth()) + 1)).slice(-2);
-            let formattedYear = date.getFullYear();
+            return format(date, this.config.dateFormat);
 
-            if (this.config.dateFormat === "DD-MM-YYYY") {
-                return `${formattedDate}-${formattedMonthInNumber}-${formattedYear}`; // 02-04-2021
-            } else if (this.config.dateFormat === "YYYY-MM-DD") {
-                return `${formattedYear}-${formattedMonthInNumber}-${formattedDate}`; // 2021-04-02
-            } else if (this.config.dateFormat === "D d M, Y") {
-                return `${formattedDay} ${formattedDate} ${formattedMonthShortName} ${formattedYear}`; // Tue 02 Mar 2021
-            } else if (this.config.dateFormat === "DD/MM/YYYY") {
-                return `${formattedDate}/${formattedMonthInNumber}/${formattedYear}`; // 02/04/2021
-            }
+            // let formattedDay = DAYS[date.getDay()];
+            // let formattedDate = ("0" + date.getDate()).slice(-2);
+            // let formattedMonth = MONTH_NAMES[date.getMonth()];
+            // let formattedMonthShortName = MONTH_SHORT_NAMES[date.getMonth()];
+            // let formattedMonthInNumber = ("0" + (parseInt(date.getMonth()) + 1)).slice(-2);
+            // let formattedYear = date.getFullYear();
 
-            return `${formattedDay} ${formattedDate} ${formattedMonth} ${formattedYear}`;
+            // if (this.config.dateFormat === "dd-MM-yyyy") {
+            //     return `${formattedDate}-${formattedMonthInNumber}-${formattedYear}`; // 02-04-2021
+            // } else if (this.config.dateFormat === "yyyy-MM-dd") {
+            //     return `${formattedYear}-${formattedMonthInNumber}-${formattedDate}`; // 2021-04-02
+            // } else if (this.config.dateFormat === "D d M, Y") {
+            //     return `${formattedDay} ${formattedDate} ${formattedMonthShortName} ${formattedYear}`; // Tue 02 Mar 2021
+            // } else if (this.config.dateFormat === "dd/MM/yyyy") {
+            //     return `${formattedDate}/${formattedMonthInNumber}/${formattedYear}`; // 02/04/2021
+            // }
+
+            // return `${formattedDay} ${formattedDate} ${formattedMonth} ${formattedYear}`;
         },
 
         getMonthName(month) {

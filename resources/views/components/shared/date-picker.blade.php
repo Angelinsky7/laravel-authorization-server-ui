@@ -8,7 +8,7 @@
                 <input type="hidden" name="{{ $name }}" x-ref="date" x-bind:value="datepickerValue" />
                 <input id="{{ $id }}"
                        type="text" class="w-full pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-600 focus:ring-opacity-50"
-                       placeholder="Select date" readonly
+                       placeholder="Select date" x-bind:readonly="config.onlySelect"
                        x-ref="control"
                        x-model="datepickerValue"
                        x-on:click="toggle()"

@@ -17,6 +17,7 @@
 
                     <x-policy-ui-shared:input-group header="{{ _('Not before') }}">
                         <x-policy-ui-shared:date-picker id="not_before" name="not_before" :value="old('not_before')" />
+                        <x-policy-ui-shared:input-mask></x-policy-ui-shared:input-mask>
                         <x-policy-ui-form-field-error field="not_before" />
                     </x-policy-ui-shared:input-group>
 
