@@ -1,11 +1,11 @@
 @layer components {
   .policy-ui-listbox {
-    @apply bg-white text-black;
+    @apply bg-policy-ui-white text-policy-ui-black;
   }
   .policy-ui-listbox-item:not([disabled]) {
-    @apply text-black hover:text-white hover:bg-gray-600;
+    @apply text-policy-ui-black hover:text-policy-ui-white hover:bg-policy-ui-basic-600;
   }
   .policy-ui-item-active:not([disabled]) {
-    @apply text-white bg-gray-600;
-  }
+    @apply text-policy-ui-white bg-policy-ui-basic-600;
+}
 }

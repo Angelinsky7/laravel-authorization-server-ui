@@ -31,6 +31,8 @@ module.exports = {
                 'autocomplete': '3px 3px 2px rgba(0, 0, 0, .5)',
             },
             colors: {
+                'policy-ui-white': 'var(--policy-ui-white)',
+                'policy-ui-black': 'var(--policy-ui-black)',
                 'policy-ui-basic': {
                     DEFAULT: 'var(--policy-ui-basic-500)',
                     100: 'var(--policy-ui-basic-100)',
@@ -90,6 +92,18 @@ module.exports = {
                     700: 'var(--policy-ui-warning-700)',
                     800: 'var(--policy-ui-warning-800)',
                     900: 'var(--policy-ui-warning-900)',
+                },
+                'policy-ui-gray': {
+                    DEFAULT: 'var(--policy-ui-gray-500)',
+                    100: 'var(--policy-ui-gray-100)',
+                    200: 'var(--policy-ui-gray-200)',
+                    300: 'var(--policy-ui-gray-300)',
+                    400: 'var(--policy-ui-gray-400)',
+                    500: 'var(--policy-ui-gray-500)',
+                    600: 'var(--policy-ui-gray-600)',
+                    700: 'var(--policy-ui-gray-700)',
+                    800: 'var(--policy-ui-gray-800)',
+                    900: 'var(--policy-ui-gray-900)',
                 },
             },
         },

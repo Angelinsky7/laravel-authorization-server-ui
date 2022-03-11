@@ -19,13 +19,13 @@
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="name" header="{{ _('client') }}" />
                 </x-policy-ui-shared:default-table-header-column>
                 <x-policy-ui-shared:default-table-header-column>
-                    <x-policy-ui-shared:table-sort-header class="justify-start" column="name" header="{{ _('client name') }}" />
+                    <x-policy-ui-shared:table-sort-header class="justify-start" column="client_name" header="{{ _('client name') }}" />
                 </x-policy-ui-shared:default-table-header-column>
                 <x-policy-ui-shared:default-table-header-column>
-                    <x-policy-ui-shared:table-sort-header class="justify-start" column="name" header="{{ _('redirect') }}" />
+                    <x-policy-ui-shared:table-sort-header class="justify-start" column="redirect" header="{{ _('redirect') }}" />
                 </x-policy-ui-shared:default-table-header-column>
                 <x-policy-ui-shared:default-table-header-column>
-                    <x-policy-ui-shared:table-sort-header class="justify-start" column="name" header="{{ _('enabled') }}" />
+                    <x-policy-ui-shared:table-sort-header class="justify-start" column="enabled" header="{{ _('enabled') }}" />
                 </x-policy-ui-shared:default-table-header-column>
                 <x-policy-ui-shared:default-table-header-column>
                     <span class="sr-only">Actions</span>

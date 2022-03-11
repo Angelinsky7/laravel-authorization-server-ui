@@ -76,12 +76,12 @@ class EntityList extends SharedEntityList
         return view('policy-ui::components.group.entity-list');
     }
 
-    private function _all_groups(GroupRepository $policyRepository,)
+    private function _all_groups(GroupRepository $policyRepository)
     {
         return $policyRepository->gets()->all()->map(fn ($p) => ['value' => 'g' . $p->id, 'item' => ['caption' => $p->display_name, 'type' => 'group'], 'order' => $p->name]);
     }
 
-    private function _all_users(UserRepository $userRepository,)
+    private function _all_users(UserRepository $userRepository)
     {
         return $userRepository->gets()->all()->map(fn ($p) => ['value' => 'u' . $p->id, 'item' => ['caption' => $p->name, 'type' => 'user'], 'order' => $p->name]);
     }

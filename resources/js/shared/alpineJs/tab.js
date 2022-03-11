@@ -12,7 +12,8 @@ function tab(config) {
         },
         get tabItemsCount() { return tabItems.length; },
         init() {
-            main_zone = this.$el.querySelector('main');
+            // main_zone = this.$el.querySelector('div[data-js-main]');
+            main_zone = this.$refs.tabItemsPanel;
             this.$nextTick(() => this.changeTab(0));
         },
         register(tabItem, tabElement) {

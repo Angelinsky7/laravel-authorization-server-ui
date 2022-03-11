@@ -28,7 +28,8 @@ function memberOfListbox(config) {
             dialogRef.open(p => {
                 if (p.confirm) {
                     // console.log('send event to', `x-policy-ui-shared:listbox-${this.config.id}:add-items`);
-                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:add-items`, { items: p.items, preventDuplicates: true });
+                    // this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:add-items`, { items: p.items, preventDuplicates: true });
+                    this.onAddItems(p.items);
                 }
             });
         },
@@ -39,10 +40,19 @@ function memberOfListbox(config) {
             });
             dialogRef.open(p => {
                 if (p) {
-                    this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:remove-items`, { items: this.memberOfListboxItems });
+                    // this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:remove-items`, { items: this.memberOfListboxItems });
+                    this.onRemoveItems();
                 }
             });
         },
+
+        onAddItems(items) {
+            this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:add-items`, { items: items, preventDuplicates: true });
+        },
+        onRemoveItems() {
+            this.$dispatch(`x-policy-ui-shared:listbox-${this.config.id}:remove-items`, { items: this.memberOfListboxItems });
+        },
+
         removeIsDisabled() { return this.memberOfListboxItems.length == 0; },
         selectedItemChanged(event) { this.memberOfListboxItems = event.detail.items; },
         storeListboxItems(event) { innerListBoxItems = event.detail.items; }

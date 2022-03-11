@@ -159,10 +159,10 @@
                                 </x-policy-ui-shared:input-group>
                             </x-policy-ui-shared:tab-item>
 
-                            <x-policy-ui-shared:tab-item header="{{ _('Resources') }}" x-show="!all_resources_tab_visible" x-cloak>
+                            <x-policy-ui-shared:tab-item header="{{ _('Custom Resources') }}" x-show="!all_resources_tab_visible" x-cloak>
                             </x-policy-ui-shared:tab-item>
 
-                            <x-policy-ui-shared:tab-item header="{{ _('Scopes') }}" x-show="!all_scopes_tab_visible" x-cloak>
+                            <x-policy-ui-shared:tab-item header="{{ _('Custom Scopes') }}" x-show="!all_scopes_tab_visible" x-cloak>
                             </x-policy-ui-shared:tab-item>
 
                             {{-- <x-policy-ui-shared:tab-item header="{{ _('Roles') }}" x-show="!all_roles_tab_visible" x-cloak>
@@ -174,7 +174,7 @@
                             <x-policy-ui-shared:tab-item header="{{ _('Policies') }}" x-show="!all_policies_tab_visible" x-cloak>
                             </x-policy-ui-shared:tab-item> --}}
 
-                            <x-policy-ui-shared:tab-item header="{{ _('Permissions') }}" x-show="!all_permissions_tab_visible" x-cloak>
+                            <x-policy-ui-shared:tab-item header="{{ _('Custom Permissions') }}" x-show="!all_permissions_tab_visible" x-cloak>
                                 <x-policy-ui-shared:input-group>
                                     <x-policy-ui-permission:entity-list id="permissions" name="permissions" :values="old('permissions') ?? ($item->client != null ? $item->client->permissions->map(fn($p) => $p->id) : [])" :remapOldValues="true" />
                                     <x-policy-ui-form-field-error field="permissions" />

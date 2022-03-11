@@ -24,9 +24,9 @@ switch ($width) {
 
 <div class="relative w-fit"
      x-data="window.policy.alpineJs.tooltip()"
-     @click.outside="open = false"
-     @close.stop="open = false">
-    <div @click="toggle()" x-ref="trigger">
+     x-on:click.outside="open = false"
+     x-on:close.stop="open = false">
+    <div x-on:click="toggle()" x-ref="trigger">
         {{ $trigger }}
     </div>
 
@@ -41,7 +41,7 @@ switch ($width) {
                  x-transition:leave-start="transform opacity-100 scale-100"
                  x-transition:leave-end="transform opacity-0 scale-95"
                  class="absolute z-50 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }}"
-                 @click="open = false">
+                 x-on:click="open = false">
                 <div class="rounded-md ring-1 ring-black ring-opacity-5 {{ $contentClasses }}">
                     {{ $content }}
                 </div>

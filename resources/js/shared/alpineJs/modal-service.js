@@ -18,11 +18,11 @@ function modalService(config) {
    <div class="fixed inset-0 z-50 grid justify-center content-center">
        <div class="bg-white shadow-lg rounded-lg sm:mt-8 sm:mb-8 overflow-hidden">
            <div class="flex flex-col h-full justify-between modal">
-               <main id="content">
+               <div data-js-content>
                    <div class="p-4 pb-0">
                        __HEADER__
                    </div>
-               </main>
+               </div>
            </div>
        </div>
    </div>
@@ -82,7 +82,7 @@ function modalService(config) {
             //strWindow = replaceWindowContent(strWindow, '__CONTENT__', _getWindowContent(this.config.content, this.config.contentRef));
             // strWindow = replaceWindowContent(strWindow, '__FOOTER__', this.config.footer);
 
-            var mainAsNode = windowContainerAsNode.querySelector('main#content');
+            var mainAsNode = windowContainerAsNode.querySelector('div[data-js-content]');
             mainAsNode.appendChild(_getWindowContent(this.config.content, this.config.contentRef));
 
             this.modalRef = window.policy.unobtrusive.createModal(windowContainerAsNode.childNodes[1], modals, nextModalId, true);

@@ -6,7 +6,7 @@
     <div x-on:click="changeTab()"
          x-bind:class="{'tab-item--active': isActive(currentTabIndex)}"
          class="tabItem-header px-2 py-3 select-none hover:bg-policy-ui-primary-200 cursor-pointer">
-        {{ $header_caption ?? $slot }}
+        {{ $header_caption ?? $header }}
     </div>
     <template id="main">
         <div class="policy-ui-tab-item" x-show="visible(currentTabIndex)"

@@ -14,16 +14,28 @@ function listbox(config) {
         selected: [],
         init() {
             this.items = this._remapItems(this.config.items);
-            this._onItemsChanged();
+            this.onItemsChanged();
 
             this.$nextTick(() => {
                 let evt = { handle: false, items: this.items, values: this.config.items };
-                this.$dispatch('initialize', evt);
+                // this.$dispatch('initialize', evt);
+                this.onInitialize(evt);
+
                 if (evt.handle) {
                     this.items = this._remapItems(evt.items);
-                    this._onItemsChanged();
+                    this.onItemsChanged();
                 }
             });
+        },
+
+        onInitialize(evt) {
+            this.$dispatch('initialize', evt);
+        },
+        onSelectedItems(selected) {
+            this.$dispatch('selected-items', { items: selected });
+        },
+        onItemsChanged(items) {
+            this.$dispatch('items-changed', { items: items });
         },
 
         isItemSelected(item) {
@@ -36,13 +48,14 @@ function listbox(config) {
 
         _onSelectedItemChanged() {
             if (JSON.stringify(lastSelectedEventItemsSent) !== JSON.stringify(this.selected)) {
-                this.$dispatch('selected-items', { items: this.selected });
+                // this.$dispatch('selected-items', { items: this.selected });
+                this.onSelectedItems(this.selected);
                 lastSelectedEventItemsSent = this.selected;
             }
         },
-        _onItemsChanged() {
-            this.$dispatch('items-changed', { items: this.items });
-        },
+        // _onItemsChanged() {
+        //     // this.$dispatch('items-changed', { items: this.items });
+        // },
 
         isItemDisabled(item) { return false; },
 
@@ -57,7 +70,7 @@ function listbox(config) {
             }
             items = items.map(p => ({ value: p.value, item: p.item, index: uniqueIndex++ }));
             this.items.push(...items);
-            this._onItemsChanged();
+            this.onItemsChanged();
         },
         removeItems(itemsToRemove) {
             const items = itemsToRemove.items;
@@ -70,7 +83,7 @@ function listbox(config) {
                         this.items.splice(indexToRemove, 1);
                     }
                 }
-                this._onItemsChanged();
+                this.onItemsChanged();
             }
         },
         updateItem(index, value) {
