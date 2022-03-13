@@ -2230,6 +2230,11 @@
 
 }
 
+.text-policy-ui-alert-500 {
+  color: var(--policy-ui-alert-500);
+
+}
+
 .opacity-50 {
   opacity: 0.5;
 

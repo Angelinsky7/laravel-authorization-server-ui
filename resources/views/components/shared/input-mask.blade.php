@@ -14,6 +14,8 @@
                x-model="value"
                x-on:focusin="_focusIn()"
                x-on:beforeinput="_handleBeforeInput($event)" />
+
+               <span class="text-policy-ui-alert-500" x-show="error != null" x-text="error"></span>
     </div>
     {{-- <input class="border-none bg-none p-0 outline-none text-center"
            size="2" maxLength="2"

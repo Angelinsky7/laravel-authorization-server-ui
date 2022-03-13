@@ -8,7 +8,7 @@ function inputMask(config) {
     };
 
     let validationRegex = null;
-    let valueWithoutMask = '';
+    let maskAsArray = null;
 
     return {
         config: Object.assign({}, defaultConfig, config),
@@ -16,16 +16,21 @@ function inputMask(config) {
         value: '',
         inputValue: '',
 
+        error: null,
+
         init() {
             this.value = this.config.value;
-            validationRegex = new RegExp(this.config.validation);
+
+            if (this.config.validation) {
+                validationRegex = new RegExp(this.config.validation);
+            }
+
+            maskAsArray = [...this.config.mask];
 
             if (!this.value) {
                 this.value = this.config.mask;
                 this._setControlValue(this.value);
             }
-
-            valueWithoutMask = this.value;
         },
 
         onChange(value) {
@@ -59,32 +64,55 @@ function inputMask(config) {
             this.$refs.textCtrl.value = value;
         },
 
+        _getAvailablePositionMaskArray(mask) {
+            const result = new Array(mask.length);
+
+            for (let i = 0; i < mask.length; ++i) {
+                result[i] = mask[i] == this.config.placeholderChar;
+            }
+
+            return result;
+        },
+
+        _getNextAvailablePositionInMaskArray(availableMask, position) {
+            let i = position;
+            while (i < availableMask.length) {
+                if (availableMask[i]) { return i; }
+                ++i;
+            }
+            return null;
+        },
+
+        _isNewValueIsSameAsMaskNonPlaceholder(newValue, mask, position) {
+            return newValue != this.config.placeholderChar && newValue == mask[position];
+        },
+
         _handleBeforeInput(event) {
 
-            let newValue = [...this.value];
-            const maskAsArray = [...this.config.mask];
             const charPosition = event.target.selectionStart;
-
+            let newValue = [...this.value];
             let nextCharPosition = charPosition;
 
             if (event.data) {
                 const newChars = [...event.data];
-                let indexOfNewChars = 0;
+                const availablePositionMaskArray = this._getAvailablePositionMaskArray(maskAsArray);
 
-                while (indexOfNewChars < newChars.length) {
-                    if (nextCharPosition >= newValue.length) { break; }
+                for (let i = 0; i < newChars.length; ++i) {
+                    const maskPosition = charPosition + i;
+                    const newValueChar = newChars[i];
+                    if (this._isNewValueIsSameAsMaskNonPlaceholder(newValueChar, maskAsArray, maskPosition)) {
+                        continue;
+                    }
 
-                    if (maskAsArray[nextCharPosition] == this.config.placeholderChar) {
-                        newValue[nextCharPosition] = newChars[indexOfNewChars];
-                        ++indexOfNewChars;
+                    let correctMaskPosition = availablePositionMaskArray[maskPosition] ? maskPosition : this._getNextAvailablePositionInMaskArray(availablePositionMaskArray, maskPosition);
+                    if (correctMaskPosition != null) {
+                        newValue[correctMaskPosition] = newValueChar;
+                        nextCharPosition = correctMaskPosition + 1;
                     }
-                    if (maskAsArray[nextCharPosition] == newChars[indexOfNewChars]) {
-                        ++indexOfNewChars;
-                    }
-                    ++nextCharPosition;
                 }
             } else {
                 const modifier = event.inputType == "deleteContentForward" ? 0 : -1;
+                //TODO(demarco): i would like to have a delete that go the the next space but don't move the caret
                 const nextCharModifier = event.inputType == "deleteContentForward" ? 2 : 0;
 
                 let indexOfCharsToRemove = event.target.selectionEnd;
@@ -103,7 +131,9 @@ function inputMask(config) {
             const nextNewValue = newValue.join('');
             const partialNextNewValue = nextNewValue.replaceAll(this.config.placeholderChar, this.config.validationCharReplacement);
 
-            if (validationRegex.test(partialNextNewValue)) {
+            if (validationRegex == null || validationRegex.test(partialNextNewValue)) {
+                this.error = null;
+
                 this.value = nextNewValue;
                 event.target.value = this.value;
 
@@ -112,6 +142,8 @@ function inputMask(config) {
 
                 this._setCaretOnLastValidChar(nextCharPosition);
                 this.onChange(this.value);
+            } else {
+                this.error = 'Invalid input';
             }
 
             event.preventDefault();

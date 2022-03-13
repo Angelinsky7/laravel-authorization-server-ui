@@ -5,6 +5,9 @@ import * as unobtrusive from './shared/unobtrusive';
 // import * as components from './components';
 import { id as componentId } from './shared/component-id';
 
+// declare global {
+//     interface Window { policy: any; }
+// }
 
 window.policy = {
     // tableSelect: require('./shared/table-select'),
