@@ -51,6 +51,10 @@ function inputMask(config) {
         //     }
         // },
 
+        setInputValue(newValue) {
+            this._insertNewValue(0, newValue.length, newValue, null, null, false);
+        },
+
         get _textCtrl() {
             if (textCtrlRef) { return textCtrlRef; }
             if (this.$refs.textCtrl != null) { textCtrlRef = this.$refs.textCtrl; return textCtrlRef; }
@@ -60,6 +64,8 @@ function inputMask(config) {
         },
 
         _setCaretOnLastValidChar(position) {
+            console.log('moveCaret', position);
+
             this._textCtrl.focus();
             this._textCtrl.setSelectionRange(position, position, "none");
             // this.$refs.textCtrl.focus();
@@ -101,12 +107,75 @@ function inputMask(config) {
         },
 
         _handleBeforeInput(event) {
-            const charPosition = event.target.selectionStart;
+            // const charPosition = event.target.selectionStart;
+            // let newValue = [...this.value];
+            // let nextCharPosition = charPosition;
+
+            // if (event.data) {
+            //     const newChars = [...event.data];
+            //     const availablePositionMaskArray = this._getAvailablePositionMaskArray(maskAsArray);
+
+            //     for (let i = 0; i < newChars.length; ++i) {
+            //         const maskPosition = charPosition + i;
+            //         const newValueChar = newChars[i];
+            //         if (this._isNewValueIsSameAsMaskNonPlaceholder(newValueChar, maskAsArray, maskPosition)) {
+            //             continue;
+            //         }
+
+            //         let correctMaskPosition = availablePositionMaskArray[maskPosition] ? maskPosition : this._getNextAvailablePositionInMaskArray(availablePositionMaskArray, maskPosition);
+            //         if (correctMaskPosition != null) {
+            //             newValue[correctMaskPosition] = newValueChar;
+            //             nextCharPosition = correctMaskPosition + 1;
+            //         }
+            //     }
+            // } else {
+            //     const modifier = event.inputType == "deleteContentForward" ? 0 : -1;
+            //     //TODO(demarco): i would like to have a delete that go the the next space but don't move the caret
+            //     const nextCharModifier = event.inputType == "deleteContentForward" ? 2 : 0;
+
+            //     let indexOfCharsToRemove = event.target.selectionEnd;
+
+            //     while (indexOfCharsToRemove >= nextCharPosition) {
+            //         const positionToRemove = indexOfCharsToRemove + modifier;
+            //         if (maskAsArray[positionToRemove] == this.config.placeholderChar) {
+            //             newValue[positionToRemove] = this.config.placeholderChar;
+            //         }
+            //         --indexOfCharsToRemove;
+            //     }
+
+            //     nextCharPosition = indexOfCharsToRemove + nextCharModifier;
+            // }
+
+            // const nextNewValue = newValue.join('');
+            // const partialNextNewValue = nextNewValue.replaceAll(this.config.placeholderChar, this.config.validationCharReplacement);
+
+            // if (validationRegex == null || validationRegex.test(partialNextNewValue)) {
+            //     this.error = null;
+
+            //     this.value = nextNewValue;
+            //     event.target.value = this.value;
+
+            //     if (nextCharPosition < 0) { nextCharPosition = 0 }
+            //     if (nextCharPosition > maskAsArray.length) { nextCharPosition = maskAsArray.length; }
+
+            //     this._setCaretOnLastValidChar(nextCharPosition);
+            //     this.onChange(this.value);
+            // } else {
+            //     this.error = 'Invalid input';
+            // }
+
+            this._insertNewValue(event.target.selectionStart, event.target.selectionEnd, event.data, event.inputType, event, false);
+
+            event.preventDefault();
+        },
+
+        _insertNewValue(selectionStart, selectionEnd, data, inputType, event, moveCaret) {
+            const charPosition = selectionStart;
             let newValue = [...this.value];
             let nextCharPosition = charPosition;
 
-            if (event.data) {
-                const newChars = [...event.data];
+            if (data) {
+                const newChars = [...data];
                 const availablePositionMaskArray = this._getAvailablePositionMaskArray(maskAsArray);
 
                 for (let i = 0; i < newChars.length; ++i) {
@@ -123,11 +192,11 @@ function inputMask(config) {
                     }
                 }
             } else {
-                const modifier = event.inputType == "deleteContentForward" ? 0 : -1;
+                const modifier = inputType == "deleteContentForward" ? 0 : -1;
                 //TODO(demarco): i would like to have a delete that go the the next space but don't move the caret
-                const nextCharModifier = event.inputType == "deleteContentForward" ? 2 : 0;
+                const nextCharModifier = inputType == "deleteContentForward" ? 2 : 0;
 
-                let indexOfCharsToRemove = event.target.selectionEnd;
+                let indexOfCharsToRemove = selectionEnd;
 
                 while (indexOfCharsToRemove >= nextCharPosition) {
                     const positionToRemove = indexOfCharsToRemove + modifier;
@@ -147,19 +216,18 @@ function inputMask(config) {
                 this.error = null;
 
                 this.value = nextNewValue;
-                event.target.value = this.value;
+                if (event != null) { event.target.value = this.value; }
 
                 if (nextCharPosition < 0) { nextCharPosition = 0 }
                 if (nextCharPosition > maskAsArray.length) { nextCharPosition = maskAsArray.length; }
 
-                this._setCaretOnLastValidChar(nextCharPosition);
+                if (moveCaret) { this._setCaretOnLastValidChar(nextCharPosition); }
                 this.onChange(this.value);
             } else {
                 this.error = 'Invalid input';
             }
+        }
 
-            event.preventDefault();
-        },
     }
 }
 

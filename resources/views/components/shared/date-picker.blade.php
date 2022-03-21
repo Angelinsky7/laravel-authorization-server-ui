@@ -1,6 +1,7 @@
 <!-- x-policy-ui-shared:date-picker -->
 <div x-data="window.policy.alpineJs.datePicker({
-        value: '{{ $value }}'
+        value: '{{ $value }}',
+        dateFormat: '{{ $input_format }}'
     })">
     <div class="container mx-auto">
         <div class="w-64">

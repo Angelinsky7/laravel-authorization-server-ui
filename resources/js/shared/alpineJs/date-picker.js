@@ -39,6 +39,7 @@ function datePicker(config) {
         onlySelect: false
     };
 
+    let onlyDateFormat = "dd/MM/yyyy";
     let popperInstance = null;
     let inputControlRef = null;
     let maskControlRef = null;
@@ -135,7 +136,7 @@ function datePicker(config) {
 
                 const checkDate = Date.parse(this._convertDateToIso(newValue, this.config.dateFormat));
                 if (isNaN(checkDate) === false) {
-                    this._maskControl.value = newValue;
+                    this._maskControl.setInputValue(newValue);
                 }
 
                 isChanging = false;
@@ -175,16 +176,19 @@ function datePicker(config) {
 
         isSelectedDay(day) {
             const d = new Date(this.year, this.month, day);
-            return this.datepickerValue === this.formatDateForDisplay(d) ? true : false;
+            const datepickerValueDate = new Date(Date.parse(this._convertDateToIso(this.datepickerValue, this.config.dateFormat)));
+            datepickerValueDate.setHours(0,0,0,0);
+            return datepickerValueDate.getTime() === d.getTime() ? true : false;
         },
         isToday(date) {
             const today = new Date();
+            today.setHours(0,0,0,0);
             const d = new Date(this.year, this.month, date);
 
-            return today.toDateString() === d.toDateString() ? true : false;
+            return today.getTime() === d.getTime() ? true : false;
         },
         setDateValue(date) {
-            let selectedDate = new Date(this.year, this.month, date);
+            let selectedDate = new Date(this.year, this.month, date, 0, 0);
 
             this.datepickerValue = this.formatDateForDisplay(selectedDate);
             this.isSelectedDay(date);
