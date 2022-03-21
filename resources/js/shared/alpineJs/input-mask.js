@@ -63,9 +63,11 @@ function inputMask(config) {
             return textCtrlRef;
         },
 
-        _setCaretOnLastValidChar(position) {
-            console.log('moveCaret', position);
+        get _containsInvalidChar() {
+            return this.value.indexOf(this.config.placeholderChar) != -1;
+        },
 
+        _setCaretOnLastValidChar(position) {
             this._textCtrl.focus();
             this._textCtrl.setSelectionRange(position, position, "none");
             // this.$refs.textCtrl.focus();
@@ -73,9 +75,11 @@ function inputMask(config) {
         },
 
         _focusIn() {
-            const valueAsArray = [...this.value];
-            const firstCaretPosition = valueAsArray.indexOf(this.config.placeholderChar);
-            this._setCaretOnLastValidChar(firstCaretPosition >= 0 ? firstCaretPosition : 0);
+            if (this._containsInvalidChar) {
+                const valueAsArray = [...this.value];
+                const firstCaretPosition = valueAsArray.indexOf(this.config.placeholderChar);
+                this._setCaretOnLastValidChar(firstCaretPosition >= 0 ? firstCaretPosition : 0);
+            }
         },
 
         _setControlValue(value) {
@@ -107,65 +111,7 @@ function inputMask(config) {
         },
 
         _handleBeforeInput(event) {
-            // const charPosition = event.target.selectionStart;
-            // let newValue = [...this.value];
-            // let nextCharPosition = charPosition;
-
-            // if (event.data) {
-            //     const newChars = [...event.data];
-            //     const availablePositionMaskArray = this._getAvailablePositionMaskArray(maskAsArray);
-
-            //     for (let i = 0; i < newChars.length; ++i) {
-            //         const maskPosition = charPosition + i;
-            //         const newValueChar = newChars[i];
-            //         if (this._isNewValueIsSameAsMaskNonPlaceholder(newValueChar, maskAsArray, maskPosition)) {
-            //             continue;
-            //         }
-
-            //         let correctMaskPosition = availablePositionMaskArray[maskPosition] ? maskPosition : this._getNextAvailablePositionInMaskArray(availablePositionMaskArray, maskPosition);
-            //         if (correctMaskPosition != null) {
-            //             newValue[correctMaskPosition] = newValueChar;
-            //             nextCharPosition = correctMaskPosition + 1;
-            //         }
-            //     }
-            // } else {
-            //     const modifier = event.inputType == "deleteContentForward" ? 0 : -1;
-            //     //TODO(demarco): i would like to have a delete that go the the next space but don't move the caret
-            //     const nextCharModifier = event.inputType == "deleteContentForward" ? 2 : 0;
-
-            //     let indexOfCharsToRemove = event.target.selectionEnd;
-
-            //     while (indexOfCharsToRemove >= nextCharPosition) {
-            //         const positionToRemove = indexOfCharsToRemove + modifier;
-            //         if (maskAsArray[positionToRemove] == this.config.placeholderChar) {
-            //             newValue[positionToRemove] = this.config.placeholderChar;
-            //         }
-            //         --indexOfCharsToRemove;
-            //     }
-
-            //     nextCharPosition = indexOfCharsToRemove + nextCharModifier;
-            // }
-
-            // const nextNewValue = newValue.join('');
-            // const partialNextNewValue = nextNewValue.replaceAll(this.config.placeholderChar, this.config.validationCharReplacement);
-
-            // if (validationRegex == null || validationRegex.test(partialNextNewValue)) {
-            //     this.error = null;
-
-            //     this.value = nextNewValue;
-            //     event.target.value = this.value;
-
-            //     if (nextCharPosition < 0) { nextCharPosition = 0 }
-            //     if (nextCharPosition > maskAsArray.length) { nextCharPosition = maskAsArray.length; }
-
-            //     this._setCaretOnLastValidChar(nextCharPosition);
-            //     this.onChange(this.value);
-            // } else {
-            //     this.error = 'Invalid input';
-            // }
-
-            this._insertNewValue(event.target.selectionStart, event.target.selectionEnd, event.data, event.inputType, event, false);
-
+            this._insertNewValue(event.target.selectionStart, event.target.selectionEnd, event.data, event.inputType, event, true);
             event.preventDefault();
         },
 
@@ -218,14 +164,14 @@ function inputMask(config) {
                 this.value = nextNewValue;
                 if (event != null) { event.target.value = this.value; }
 
-                if (nextCharPosition < 0) { nextCharPosition = 0 }
-                if (nextCharPosition > maskAsArray.length) { nextCharPosition = maskAsArray.length; }
-
-                if (moveCaret) { this._setCaretOnLastValidChar(nextCharPosition); }
                 this.onChange(this.value);
             } else {
                 this.error = 'Invalid input';
             }
+
+            if (nextCharPosition < 0) { nextCharPosition = 0 }
+            if (nextCharPosition > maskAsArray.length) { nextCharPosition = maskAsArray.length; }
+            if (moveCaret) { this._setCaretOnLastValidChar(nextCharPosition); }
         }
 
     }

@@ -11,4 +11,5 @@ export * from './tab';
 export * from './member-of-control';
 export * from './entity-list';
 export * from './date-picker';
+export * from './time-picker';
 export * from './input-mask';

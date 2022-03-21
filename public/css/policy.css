@@ -1182,6 +1182,12 @@
 
 }
 
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
+}
+
 .ml-2 {
   margin-left: 0.5rem;
 
@@ -1489,8 +1495,33 @@
 
 }
 
+.max-w-\[200px\] {
+  max-width: 200px;
+
+}
+
+.max-w-\[150\] {
+  max-width: 150;
+
+}
+
+.max-w-\[150px\] {
+  max-width: 150px;
+
+}
+
+.max-w-\[100px\] {
+  max-width: 100px;
+
+}
+
 .flex-1 {
   flex: 1 1 0%;
+
+}
+
+.flex-auto {
+  flex: 1 1 auto;
 
 }
 

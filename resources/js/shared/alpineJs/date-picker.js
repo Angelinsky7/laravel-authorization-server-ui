@@ -36,13 +36,15 @@ function datePicker(config) {
         value: null,
         dateFormat: "dd/MM/yyyy",
         nullByDefault: true,
-        onlySelect: false
+        onlySelect: false,
+        timeVisible: false
     };
 
-    let onlyDateFormat = "dd/MM/yyyy";
+    // let onlyDateFormat = "dd/MM/yyyy";
     let popperInstance = null;
     let inputControlRef = null;
     let maskControlRef = null;
+    let timePickerControlRef = null;
     let isChanging = false;
 
     return {
@@ -67,14 +69,15 @@ function datePicker(config) {
             this.year = today.getFullYear();
 
             if (!this.config.nullByDefault || this.config.value) {
-                this.datepickerValue = this.formatDateForDisplay(today);
+                this.datepickerValue = this._formatDateForDisplay(today);
             }
 
-            this.getNumberOfDays();
+            this._getNumberOfDays();
 
             this.$nextTick(() => {
                 this.$watch('datepickerValue', p => this._datePickerValueChanged(p));
                 this._maskControl.onValueChanged = p => this._maskValueChanged(p);
+                if (this._timePickerControl) { this._timePickerControl.onValueChanged = p => this._timeValueChanged(p); }
             });
         },
 
@@ -94,6 +97,14 @@ function datePicker(config) {
                 maskControlRef = Alpine.$data(this._inputControl);
             }
             return maskControlRef;
+        },
+
+        get _timePickerControl() {
+            if (timePickerControlRef == null) {
+                const node = this.$refs.panel.querySelector('[data-js-timePickerControl]');
+                if (node != null) { timePickerControlRef = Alpine.$data(node); }
+            }
+            return timePickerControlRef;
         },
 
         toggle() {
@@ -152,8 +163,15 @@ function datePicker(config) {
                     const validDate = new Date(checkDate);
                     this.month = validDate.getMonth();
                     this.year = validDate.getFullYear();
-                    this.datepickerValue = format(checkDate, this.config.dateFormat);
-                    this.isSelectedDay(validDate.getDate());
+
+                    if (this._timePickerControl) {
+                        this._timePickerControl.hour = validDate.getHours();
+                        this._timePickerControl.minute = validDate.getMinutes();
+                    }
+                    this.datepickerValue = format(validDate, this.config.dateFormat);
+                    console.log(validDate, this.datepickerValue);
+                    this._isSelectedDay(validDate.getDate());
+                    this._getNumberOfDays();
                 } else {
                     this.datepickerValue = null;
                 }
@@ -162,39 +180,62 @@ function datePicker(config) {
             }
         },
 
-        formatDateForDisplay(date) {
+        _timeValueChanged(newValue) {
+            if (!isChanging) {
+                isChanging = true;
+
+                const baseDate = Date.parse(this._convertDateToIso(this.datepickerValue, this.config.dateFormat));
+                if (isNaN(baseDate) === false) {
+                    const date = new Date(baseDate);
+                    const baseTime = Date.parse(this._convertDateToIso(`01/01/1900 ${newValue}`, 'dd/MM/yyyy HH:mm'));
+                    if (isNaN(baseTime) === false) {
+                        const newTimeValue = new Date(baseTime);
+                        date.setHours(newTimeValue.getHours(), newTimeValue.getMinutes());
+                        this.datepickerValue = format(date, this.config.dateFormat);
+                    }
+                }
+
+                isChanging = false;
+            }
+        },
+
+        _formatDateForDisplay(date) {
             return format(date, this.config.dateFormat);
         },
 
-        getMonthName(month) {
+        _getMonthName(month) {
             return MONTH_NAMES[month];
         },
 
-        getDays() {
+        _getDays() {
             return DAYS;
         },
 
-        isSelectedDay(day) {
+        _isSelectedDay(day) {
             const d = new Date(this.year, this.month, day);
             const datepickerValueDate = new Date(Date.parse(this._convertDateToIso(this.datepickerValue, this.config.dateFormat)));
-            datepickerValueDate.setHours(0,0,0,0);
+            datepickerValueDate.setHours(0, 0, 0, 0);
             return datepickerValueDate.getTime() === d.getTime() ? true : false;
         },
-        isToday(date) {
+        _isToday(date) {
             const today = new Date();
-            today.setHours(0,0,0,0);
+            today.setHours(0, 0, 0, 0);
             const d = new Date(this.year, this.month, date);
 
             return today.getTime() === d.getTime() ? true : false;
         },
-        setDateValue(date) {
+        _setDateValue(date) {
             let selectedDate = new Date(this.year, this.month, date, 0, 0);
 
-            this.datepickerValue = this.formatDateForDisplay(selectedDate);
-            this.isSelectedDay(date);
-            this.showDatepicker = false;
+            if (this._timePickerControl) {
+                selectedDate.setHours(this._timePickerControl.hour, this._timePickerControl.minute);
+            }
+
+            this.datepickerValue = this._formatDateForDisplay(selectedDate);
+            this._isSelectedDay(date);
+            if (!this.config.timeVisible) { this.showDatepicker = false; }
         },
-        getNumberOfDays() {
+        _getNumberOfDays() {
             let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
             let dayOfWeek = new Date(this.year, this.month).getDay();
             let blankdaysArray = [];
@@ -212,23 +253,23 @@ function datePicker(config) {
             this.no_of_days = daysArray;
         },
 
-        previousDate() {
+        _previousDate() {
             if (this.month == 0) {
                 this.year--;
                 this.month = 12;
             }
             this.month--;
-            this.getNumberOfDays();
+            this._getNumberOfDays();
         },
 
-        nextDate() {
+        _nextDate() {
             if (this.month == 11) {
                 this.month = 0;
                 this.year++;
             } else {
                 this.month++;
             }
-            this.getNumberOfDays();
+            this._getNumberOfDays();
         }
     };
 }

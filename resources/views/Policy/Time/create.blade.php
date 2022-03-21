@@ -25,9 +25,9 @@
                         <x-policy-ui-form-field-error field="not_after" />
                     </x-policy-ui-shared:input-group>
 
-                   {{-- <x-policy-ui-shared:input-group header="test">
+                   <x-policy-ui-shared:input-group header="test">
                         <x-policy-ui-shared:input-mask mask="__/__/____ __:__" validation="([0-9◬]{2})\/(0[1-9◬]|1[0-2◬]|◬◬)\/([0-9◬]{4}) ([0-9◬]{2}):([0-9◬]{2})"></x-policy-ui-shared:input-mask>
-                    </x-policy-ui-shared:input-group> --}}
+                    </x-policy-ui-shared:input-group>
 
                      {{--  <x-policy-ui-shared:input-group header="test1">
                         <x-policy-ui-shared:input-mask mask="(+41) __ ___ __ __(suisse)" validation="\\\(\\\+41\\\) ([0-9◬]{2}) ([0-9◬]{3}) ([0-9◬]{2}) ([0-9◬]{2})\\\(suisse\\\)"></x-policy-ui-shared:input-mask>

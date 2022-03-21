@@ -39,5 +39,6 @@ return [
     TabItem::class,
     EntityList::class,
     DatePicker::class,
+    TimePicker::class,
     InputMask::class
 ];
