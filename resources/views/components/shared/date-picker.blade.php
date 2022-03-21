@@ -6,13 +6,23 @@
         <div class="w-64">
             <div class="relative">
                 <input type="hidden" name="{{ $name }}" x-ref="date" x-bind:value="datepickerValue" />
-                <input id="{{ $id }}"
+                {{-- <input id="{{ $id }}"
                        type="text" class="w-full pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-600 focus:ring-opacity-50"
                        placeholder="Select date" x-bind:readonly="config.onlySelect"
                        x-ref="control"
                        x-model="datepickerValue"
                        x-on:click="toggle()"
-                       x-on:keydown.escape="showDatepicker = false" />
+                       x-on:keydown.escape="showDatepicker = false" /> --}}
+
+                <x-policy-ui-shared:input-mask id="{{ $id }}"
+                                               class="w-full pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-600 focus:ring-opacity-50"
+                                               x-bind:readonly="config.onlySelect === true"
+                                               data-js-datePickerControl
+                                               x-on:click="toggle()"
+                                               x-on:keydown="open()"
+                                               x-on:keydown.escape="close()"
+                                               x-on:blur="close()"
+                                               mask="{{ $input_mask }}" validation="{{ $validation }}" />
 
                 <div class="absolute top-0 right-0 px-3 py-2 mt-1">
                     <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,7 +35,7 @@
                         <div class="bg-white rounded-lg shadow p-4 absolute"
                              x-cloak
                              x-show.transition="showDatepicker"
-                             x-on:click.away="showDatepicker = false">
+                             x-on:click.away="close()">
 
                             <div class="flex justify-between items-center mb-2">
                                 <div>
@@ -63,13 +73,13 @@
                                 <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
                                     <div class="px-1 mb-1 w-[14.28%] h-[14.28%]">
                                         <div class="cursor-pointer text-center text-sm leading-loose rounded-full transition ease-in-out duration-100"
-                                             x-on:click="getDateValue(date)"
+                                             x-on:click="setDateValue(date)"
                                              x-text="date"
                                              x-bind:class="{
-                                        'bg-indigo-200': isToday(date) == true,
-                                        'text-gray-600 hover:bg-indigo-200': isToday(date) == false && isSelectedDate(date) == false,
-                                        'bg-indigo-500 text-white hover:bg-opacity-75': isSelectedDate(date) == true
-                                      }">
+                                                'bg-indigo-200': isToday(date) == true,
+                                                'text-gray-600 hover:bg-indigo-200': isToday(date) == false && isSelectedDay(date) == false,
+                                                'bg-indigo-500 text-white hover:bg-opacity-75': isSelectedDay(date) == true
+                                              }">
                                         </div>
                                     </div>
                                 </template>

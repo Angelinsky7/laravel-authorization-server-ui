@@ -9,14 +9,15 @@ function inputMask(config) {
 
     let validationRegex = null;
     let maskAsArray = null;
+    let textCtrlRef = null;
 
     return {
         config: Object.assign({}, defaultConfig, config),
 
         value: '',
-        inputValue: '',
-
         error: null,
+
+        onValueChanged: (p) => { },
 
         init() {
             this.value = this.config.value;
@@ -35,6 +36,7 @@ function inputMask(config) {
 
         onChange(value) {
             this.$dispatch('change', { value: value });
+            this.onValueChanged(value);
         },
 
         // autoFocusNext(control, nextElement) {
@@ -49,9 +51,19 @@ function inputMask(config) {
         //     }
         // },
 
+        get _textCtrl() {
+            if (textCtrlRef) { return textCtrlRef; }
+            if (this.$refs.textCtrl != null) { textCtrlRef = this.$refs.textCtrl; return textCtrlRef; }
+
+            textCtrlRef = this.$el.querySelector('input[data-js-txtCtrl]')
+            return textCtrlRef;
+        },
+
         _setCaretOnLastValidChar(position) {
-            this.$refs.textCtrl.focus();
-            this.$refs.textCtrl.setSelectionRange(position, position, "none");
+            this._textCtrl.focus();
+            this._textCtrl.setSelectionRange(position, position, "none");
+            // this.$refs.textCtrl.focus();
+            // this.$refs.textCtrl.setSelectionRange(position, position, "none");
         },
 
         _focusIn() {
@@ -61,7 +73,8 @@ function inputMask(config) {
         },
 
         _setControlValue(value) {
-            this.$refs.textCtrl.value = value;
+            this._textCtrl.value = value;
+            // this.$refs.textCtrl.value = value;
         },
 
         _getAvailablePositionMaskArray(mask) {
@@ -88,7 +101,6 @@ function inputMask(config) {
         },
 
         _handleBeforeInput(event) {
-
             const charPosition = event.target.selectionStart;
             let newValue = [...this.value];
             let nextCharPosition = charPosition;

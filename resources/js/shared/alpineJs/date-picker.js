@@ -40,6 +40,9 @@ function datePicker(config) {
     };
 
     let popperInstance = null;
+    let inputControlRef = null;
+    let maskControlRef = null;
+    let isChanging = false;
 
     return {
         config: Object.assign({}, defaultConfig, config),
@@ -52,7 +55,6 @@ function datePicker(config) {
 
         init() {
             let today;
-
 
             if (this.config.value && this.config.value != 'null') {
                 today = new Date(Date.parse(this._convertDateToIso(this.config.value, this.config.dateFormat)));
@@ -68,16 +70,50 @@ function datePicker(config) {
             }
 
             this.getNumberOfDays();
+
+            this.$nextTick(() => {
+                this.$watch('datepickerValue', p => this._datePickerValueChanged(p));
+                this._maskControl.onValueChanged = p => this._maskValueChanged(p);
+            });
         },
 
         _convertDateToIso(date, dateFormat) {
             return parse(date, dateFormat, new Date());
         },
 
+        get _inputControl() {
+            if (inputControlRef == null) {
+                inputControlRef = this.$root.querySelector('[data-js-datePickerControl]');
+            }
+            return inputControlRef;
+        },
+
+        get _maskControl() {
+            if (maskControlRef == null) {
+                maskControlRef = Alpine.$data(this._inputControl);
+            }
+            return maskControlRef;
+        },
+
         toggle() {
             this.showDatepicker = !this.showDatepicker;
+            this._ensurePopperInstance();
+        },
+
+        open() {
+            this.showDatepicker = true;
+            this._ensurePopperInstance();
+        },
+
+        close() {
+            setTimeout(() => {
+                this.showDatepicker = false;
+            }, 150);
+        },
+
+        _ensurePopperInstance() {
             if (!popperInstance) {
-                popperInstance = window.policy.popperJs.createPopper(this.$refs.control, this.$refs.panel, {
+                popperInstance = window.policy.popperJs.createPopper(this._inputControl, this.$refs.panel, {
                     placement: 'bottom-start',
                     modifiers: [window.policy.popperJsModifiers.sameWidth]
                 });
@@ -93,27 +129,40 @@ function datePicker(config) {
             }
         },
 
+        _datePickerValueChanged(newValue) {
+            if (!isChanging) {
+                isChanging = true;
+
+                const checkDate = Date.parse(this._convertDateToIso(newValue, this.config.dateFormat));
+                if (isNaN(checkDate) === false) {
+                    this._maskControl.value = newValue;
+                }
+
+                isChanging = false;
+            }
+        },
+
+        _maskValueChanged(newValue) {
+            if (!isChanging) {
+                isChanging = true;
+
+                const checkDate = Date.parse(this._convertDateToIso(newValue, this.config.dateFormat));
+                if (isNaN(checkDate) === false) {
+                    const validDate = new Date(checkDate);
+                    this.month = validDate.getMonth();
+                    this.year = validDate.getFullYear();
+                    this.datepickerValue = format(checkDate, this.config.dateFormat);
+                    this.isSelectedDay(validDate.getDate());
+                } else {
+                    this.datepickerValue = null;
+                }
+
+                isChanging = false;
+            }
+        },
+
         formatDateForDisplay(date) {
             return format(date, this.config.dateFormat);
-
-            // let formattedDay = DAYS[date.getDay()];
-            // let formattedDate = ("0" + date.getDate()).slice(-2);
-            // let formattedMonth = MONTH_NAMES[date.getMonth()];
-            // let formattedMonthShortName = MONTH_SHORT_NAMES[date.getMonth()];
-            // let formattedMonthInNumber = ("0" + (parseInt(date.getMonth()) + 1)).slice(-2);
-            // let formattedYear = date.getFullYear();
-
-            // if (this.config.dateFormat === "dd-MM-yyyy") {
-            //     return `${formattedDate}-${formattedMonthInNumber}-${formattedYear}`; // 02-04-2021
-            // } else if (this.config.dateFormat === "yyyy-MM-dd") {
-            //     return `${formattedYear}-${formattedMonthInNumber}-${formattedDate}`; // 2021-04-02
-            // } else if (this.config.dateFormat === "D d M, Y") {
-            //     return `${formattedDay} ${formattedDate} ${formattedMonthShortName} ${formattedYear}`; // Tue 02 Mar 2021
-            // } else if (this.config.dateFormat === "dd/MM/yyyy") {
-            //     return `${formattedDate}/${formattedMonthInNumber}/${formattedYear}`; // 02/04/2021
-            // }
-
-            // return `${formattedDay} ${formattedDate} ${formattedMonth} ${formattedYear}`;
         },
 
         getMonthName(month) {
@@ -124,9 +173,8 @@ function datePicker(config) {
             return DAYS;
         },
 
-        isSelectedDate(date) {
-            const d = new Date(this.year, this.month, date);
-
+        isSelectedDay(day) {
+            const d = new Date(this.year, this.month, day);
             return this.datepickerValue === this.formatDateForDisplay(d) ? true : false;
         },
         isToday(date) {
@@ -135,11 +183,11 @@ function datePicker(config) {
 
             return today.toDateString() === d.toDateString() ? true : false;
         },
-        getDateValue(date) {
+        setDateValue(date) {
             let selectedDate = new Date(this.year, this.month, date);
 
             this.datepickerValue = this.formatDateForDisplay(selectedDate);
-            this.isSelectedDate(date);
+            this.isSelectedDay(date);
             this.showDatepicker = false;
         },
         getNumberOfDays() {
