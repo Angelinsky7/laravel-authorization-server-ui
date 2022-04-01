@@ -70,6 +70,9 @@ function datePicker(config) {
 
             if (!this.config.nullByDefault || this.config.value) {
                 this.datepickerValue = this._formatDateForDisplay(today);
+                this.$nextTick(() => {
+                    this._datePickerValueChanged(this.datepickerValue);
+                });
             }
 
             this._getNumberOfDays();
