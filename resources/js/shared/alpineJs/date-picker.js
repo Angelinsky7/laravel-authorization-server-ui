@@ -1,4 +1,4 @@
-import { format, parse } from 'date-fns';
+import { format, parse, formatISO } from 'date-fns';
 
 const MONTH_NAMES = [
     "January",
@@ -92,7 +92,8 @@ function datePicker(config) {
             if (!this.datepickerValue) { return ''; }
 
             const currentDateAsDate = new Date(Date.parse(this._convertDateToIso(this.datepickerValue, this.config.dateFormat)));
-            return currentDateAsDate.toISOString();
+            // console.log(currentDateAsDate, currentDateAsDate.toISOString(), formatISO(currentDateAsDate));
+            return formatISO(currentDateAsDate);
         },
 
         get _inputControl() {

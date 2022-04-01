@@ -18,6 +18,16 @@
 
                     @include('policy-ui::Policy.Policy.update', ['item' => $item->parent])
 
+                    <x-policy-ui-shared:input-group header="{{ _('Not before') }}">
+                        <x-policy-ui-shared:date-picker id="not_before" name="not_before"  :value="old('not_before') ?? $item->not_before" time-visible />
+                        <x-policy-ui-form-field-error field="not_before" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Not after') }}">
+                        <x-policy-ui-shared:date-picker id="not_after" name="not_after" :value="old('not_after') ?? $item->not_after" time-visible />
+                        <x-policy-ui-form-field-error field="not_after" />
+                    </x-policy-ui-shared:input-group>
+
                     <x-policy-ui-shared:input-group header="{{ _('Times') }}">
 
                     </x-policy-ui-shared:input-group>
