@@ -21,6 +21,7 @@ use Darkink\AuthorizationServer\Models\Policy;
 use Darkink\AuthorizationServer\Models\GroupPolicy;
 use Darkink\AuthorizationServer\Models\RolePolicy;
 use Darkink\AuthorizationServer\Models\TimePolicy;
+use Darkink\AuthorizationServer\Models\TimeRange;
 use Darkink\AuthorizationServer\Models\UserPolicy;
 use Darkink\AuthorizationServer\Repositories\AggregatedPolicyRepository;
 use Darkink\AuthorizationServer\Repositories\ClientPolicyRepository;
@@ -366,8 +367,8 @@ class PolicyController
             $validated['permissions'] ?? [],
             Carbon::parse($validated['not_before']),
             Carbon::parse($validated['not_after']),
-            null,
-            null,
+            (new TimeRange())->forceFill($validated['day_of_month']),
+            (new TimeRange())->forceFill($validated['month']),
             null,
             null,
             null
@@ -407,7 +408,29 @@ class PolicyController
     public function destroy($id)
     {
         $policy = Policy::findOrFail($id);
-        $this->policyRepository->delete($policy);
+
+        switch (get_class($policy->policy)) {
+            case GroupPolicy::class:
+                $this->groupPolicyRepository->delete($policy->policy);
+                break;
+            case RolePolicy::class:
+                $this->rolePolicyRepository->delete($policy->policy);
+                break;
+            case UserPolicy::class:
+                $this->userPolicyRepository->delete($policy->policy);
+                break;
+            case ClientPolicy::class:
+                $this->clientPolicyRepository->delete($policy->policy);
+                break;
+            case TimePolicy::class:
+                $this->timePolicyRepository->delete($policy->policy);
+                break;
+            case AggregatedPolicy::class:
+                $this->aggregatedPolicyRepository->delete($policy->policy);
+            default:
+                $this->policyRepository->delete($policy);
+                break;
+        }
 
         request()->session()->flash('success_message', 'Permission deleted.');
         return redirect()->route('policy-ui.policy.index');

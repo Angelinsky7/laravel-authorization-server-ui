@@ -40,5 +40,6 @@ return [
     EntityList::class,
     DatePicker::class,
     TimePicker::class,
-    InputMask::class
+    InputMask::class,
+    Timerange::class
 ];

@@ -16,7 +16,7 @@
                     @include('policy-ui::Policy.Policy.create')
 
                     <x-policy-ui-shared:input-group header="{{ _('Not before') }}">
-                        <x-policy-ui-shared:date-picker id="not_before" name="not_before"  :value="old('not_before')" time-visible />
+                        <x-policy-ui-shared:date-picker id="not_before" name="not_before" :value="old('not_before')" time-visible />
                         <x-policy-ui-form-field-error field="not_before" />
                     </x-policy-ui-shared:input-group>
 
@@ -25,11 +25,36 @@
                         <x-policy-ui-form-field-error field="not_after" />
                     </x-policy-ui-shared:input-group>
 
-                   <x-policy-ui-shared:input-group header="test">
-                        <x-policy-ui-shared:input-mask mask="__/__/____ __:__" validation="([0-9◬]{2})\/(0[1-9◬]|1[0-2◬]|◬◬)\/([0-9◬]{4}) ([0-9◬]{2}):([0-9◬]{2})"></x-policy-ui-shared:input-mask>
+                    <x-policy-ui-shared:input-group header="{{ _('Year') }}">
+                        <x-policy-ui-shared:timerange id="year" name="year" :value="old('year')" />
+                        <x-policy-ui-form-field-error field="year" />
                     </x-policy-ui-shared:input-group>
 
-                     {{--  <x-policy-ui-shared:input-group header="test1">
+                    <x-policy-ui-shared:input-group header="{{ _('Day of Month') }}">
+                        <x-policy-ui-shared:timerange id="day_of_month" name="day_of_month" :value="old('day_of_month')" />
+                        <x-policy-ui-form-field-error field="day_of_month" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Month') }}">
+                        <x-policy-ui-shared:timerange id="month" name="month" :value="old('month')" />
+                        <x-policy-ui-form-field-error field="month" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Hour') }}">
+                        <x-policy-ui-shared:timerange id="hours" name="hours" :value="old('hours')" />
+                        <x-policy-ui-form-field-error field="hours" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Minute') }}">
+                        <x-policy-ui-shared:timerange id="minute" name="minute" :value="old('minute')" />
+                        <x-policy-ui-form-field-error field="minute" />
+                    </x-policy-ui-shared:input-group>
+
+                    {{-- <x-policy-ui-shared:input-group header="test">
+                        <x-policy-ui-shared:input-mask mask="__/__/____ __:__" validation="([0-9◬]{2})\/(0[1-9◬]|1[0-2◬]|◬◬)\/([0-9◬]{4}) ([0-9◬]{2}):([0-9◬]{2})"></x-policy-ui-shared:input-mask>
+                    </x-policy-ui-shared:input-group> --}}
+
+                    {{-- <x-policy-ui-shared:input-group header="test1">
                         <x-policy-ui-shared:input-mask mask="(+41) __ ___ __ __(suisse)" validation="\\\(\\\+41\\\) ([0-9◬]{2}) ([0-9◬]{3}) ([0-9◬]{2}) ([0-9◬]{2})\\\(suisse\\\)"></x-policy-ui-shared:input-mask>
                     </x-policy-ui-shared:input-group> --}}
 

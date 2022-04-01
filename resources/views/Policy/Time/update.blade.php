@@ -28,8 +28,29 @@
                         <x-policy-ui-form-field-error field="not_after" />
                     </x-policy-ui-shared:input-group>
 
-                    <x-policy-ui-shared:input-group header="{{ _('Times') }}">
+                    <x-policy-ui-shared:input-group header="{{ _('Year') }}">
+                        <x-policy-ui-shared:timerange id="year" name="year" :value="old('year') ?? json_decode(json_encode($item->year), true)" />
+                        <x-policy-ui-form-field-error field="year" />
+                    </x-policy-ui-shared:input-group>
 
+                    <x-policy-ui-shared:input-group header="{{ _('Day of Month') }}">
+                        <x-policy-ui-shared:timerange id="day_of_month" name="day_of_month" :value="old('day_of_month') ?? json_decode(json_encode($item->day_of_month), true)" />
+                        <x-policy-ui-form-field-error field="day_of_month" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Month') }}">
+                        <x-policy-ui-shared:timerange id="month" name="month" :value="old('month') ?? json_decode(json_encode($item->month), true)" />
+                        <x-policy-ui-form-field-error field="month" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Hour') }}">
+                        <x-policy-ui-shared:timerange id="hours" name="hours" :value="old('hours') ?? json_decode(json_encode($item->hours), true)" />
+                        <x-policy-ui-form-field-error field="hours" />
+                    </x-policy-ui-shared:input-group>
+
+                    <x-policy-ui-shared:input-group header="{{ _('Minute') }}">
+                        <x-policy-ui-shared:timerange id="minute" name="minute" :value="old('minute') ?? json_decode(json_encode($item->minute), true)" />
+                        <x-policy-ui-form-field-error field="minute" />
                     </x-policy-ui-shared:input-group>
 
                 </x-policy-ui-shared:inner-form-layout>
