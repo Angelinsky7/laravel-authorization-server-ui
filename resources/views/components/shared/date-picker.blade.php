@@ -7,7 +7,7 @@
     <div class="container mx-auto">
         <div class="w-64">
             <div class="relative">
-                <input id="{{ $id }}" type="hidden" name="{{ $name }}" x-ref="date" x-bind:value="datepickerValue" />
+                <input id="{{ $id }}" type="hidden" name="{{ $name }}" x-ref="date" x-bind:value="datepickerValueAsIsoFormat" />
                 {{-- <input id="{{ $id }}"
                        type="text" class="w-full pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-600 focus:ring-opacity-50"
                        placeholder="Select date" x-bind:readonly="config.onlySelect"

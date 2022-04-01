@@ -60,7 +60,7 @@ function datePicker(config) {
             let today;
 
             if (this.config.value && this.config.value != 'null') {
-                today = new Date(Date.parse(this._convertDateToIso(this.config.value, this.config.dateFormat)));
+                today = new Date(Date.parse(this.config.value));
             } else {
                 today = new Date();
             }
@@ -86,6 +86,13 @@ function datePicker(config) {
 
         _convertDateToIso(date, dateFormat) {
             return parse(date, dateFormat, new Date());
+        },
+
+        get datepickerValueAsIsoFormat() {
+            if (!this.datepickerValue) { return ''; }
+
+            const currentDateAsDate = new Date(Date.parse(this._convertDateToIso(this.datepickerValue, this.config.dateFormat)));
+            return currentDateAsDate.toISOString();
         },
 
         get _inputControl() {

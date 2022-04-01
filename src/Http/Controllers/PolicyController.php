@@ -2,6 +2,7 @@
 
 namespace Darkink\AuthorizationServerUI\Http\Controllers;
 
+use Carbon\Carbon;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreAggregatedPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreClientPolicyRequest;
 use Darkink\AuthorizationServer\Http\Requests\Policy\StoreGroupPolicyRequest;
@@ -186,13 +187,15 @@ class PolicyController
     {
         $validated = $request->validate($request->rules());
 
+
+
         $this->timePolicyRepository->create(
             $validated['name'],
             $validated['description'],
             $validated['logic'],
             $validated['permissions'] ?? [],
-            $validated['not_before'],
-            $validated['not_after'],
+            Carbon::parse($validated['not_before']),
+            Carbon::parse($validated['not_after']),
             null,
             null,
             null,
