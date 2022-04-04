@@ -26,27 +26,27 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Year') }}">
-                        <x-policy-ui-shared:timerange id="year" name="year" :value="old('year')" />
+                        <x-policy-ui-shared:timerange id="year" name="year" :value="old('year')" min="1900" max="2100" />
                         <x-policy-ui-form-field-error field="year" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Day of Month') }}">
-                        <x-policy-ui-shared:timerange id="day_of_month" name="day_of_month" :value="old('day_of_month')" />
+                        <x-policy-ui-shared:timerange id="day_of_month" name="day_of_month" :value="old('day_of_month')" min="1" max="31" />
                         <x-policy-ui-form-field-error field="day_of_month" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Month') }}">
-                        <x-policy-ui-shared:timerange id="month" name="month" :value="old('month')" />
+                        <x-policy-ui-shared:timerange id="month" name="month" :value="old('month')" min="1" max="12" />
                         <x-policy-ui-form-field-error field="month" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Hour') }}">
-                        <x-policy-ui-shared:timerange id="hour" name="hour" :value="old('hour')" />
+                        <x-policy-ui-shared:timerange id="hour" name="hour" :value="old('hour')" min="0" max="23" />
                         <x-policy-ui-form-field-error field="hour" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Minute') }}">
-                        <x-policy-ui-shared:timerange id="minute" name="minute" :value="old('minute')" />
+                        <x-policy-ui-shared:timerange id="minute" name="minute" :value="old('minute')" min="0" max="59" />
                         <x-policy-ui-form-field-error field="minute" />
                     </x-policy-ui-shared:input-group>
 
