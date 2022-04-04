@@ -44,8 +44,8 @@
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Hour') }}">
-                        <x-policy-ui-shared:timerange id="hours" name="hours" :value="old('hours') ?? json_decode(json_encode($item->hours), true)" />
-                        <x-policy-ui-form-field-error field="hours" />
+                        <x-policy-ui-shared:timerange id="hour" name="hour" :value="old('hour') ?? json_decode(json_encode($item->hour), true)" />
+                        <x-policy-ui-form-field-error field="hour" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Minute') }}">

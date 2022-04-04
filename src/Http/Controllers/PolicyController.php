@@ -195,13 +195,13 @@ class PolicyController
             $validated['description'],
             $validated['logic'],
             $validated['permissions'] ?? [],
-            Carbon::parse($validated['not_before']),
-            Carbon::parse($validated['not_after']),
-            null,
-            null,
-            null,
-            null,
-            null
+            $validated['not_before'] != null ? Carbon::parse($validated['not_before']) : null,
+            $validated['not_after'] != null ? Carbon::parse($validated['not_after']) : null,
+            (new TimeRange())->forceFill($validated['day_of_month']),
+            (new TimeRange())->forceFill($validated['month']),
+            (new TimeRange())->forceFill($validated['year']),
+            (new TimeRange())->forceFill($validated['hour']),
+            (new TimeRange())->forceFill($validated['minute'])
         );
 
         $request->session()->flash('success_message', 'Time Policy created.');
@@ -365,13 +365,13 @@ class PolicyController
             $validated['description'],
             $validated['logic'],
             $validated['permissions'] ?? [],
-            Carbon::parse($validated['not_before']),
-            Carbon::parse($validated['not_after']),
+            $validated['not_before'] != null ? Carbon::parse($validated['not_before']) : null,
+            $validated['not_after'] != null ? Carbon::parse($validated['not_after']) : null,
             (new TimeRange())->forceFill($validated['day_of_month']),
             (new TimeRange())->forceFill($validated['month']),
-            null,
-            null,
-            null
+            (new TimeRange())->forceFill($validated['year']),
+            (new TimeRange())->forceFill($validated['hour']),
+            (new TimeRange())->forceFill($validated['minute'])
         );
 
         $request->session()->flash('success_message', 'Time Policy updated.');
