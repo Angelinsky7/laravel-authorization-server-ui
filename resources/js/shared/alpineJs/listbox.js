@@ -34,8 +34,8 @@ function listbox(config) {
         onSelectedItems(selected) {
             this.$dispatch('selected-items', { items: selected });
         },
-        onItemsChanged(items) {
-            this.$dispatch('items-changed', { items: items });
+        onItemsChanged() {
+            this.$dispatch('items-changed', { items: this.items });
         },
 
         isItemSelected(item) {

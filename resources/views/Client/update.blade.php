@@ -97,13 +97,13 @@
 
                                 <x-policy-ui-shared:input-group header="{{ _('Policy Enforcement') }}">
                                     <x-policy-ui-common:select-policy-enforcement id="policy_enforcement" autocomplete="policy_enforcement-name"
-                                                                                  :item="old('policy_enforcement') ?? ($item->client != null ? $item->client->policy_enforcement->value : '')" />
+                                                                                  :item="old('policy_enforcement') ?? ($item->client != null ? $item->client->policy_enforcement->value : 0)" />
                                     <x-policy-ui-form-field-error field="policy_enforcement" />
                                 </x-policy-ui-shared:input-group>
 
                                 <x-policy-ui-shared:input-group header="{{ _('Decision Strategy') }}">
                                     <x-policy-ui-common:select-decision-strategy-client id="decision_strategy" autocomplete="decision_strategy-name"
-                                                                                        :item="old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy->value : '')" />
+                                                                                        :item="old('decision_strategy') ?? ($item->client != null ? $item->client->decision_strategy->value : 0)" />
                                     <x-policy-ui-form-field-error field="decision_strategy" />
                                 </x-policy-ui-shared:input-group>
 

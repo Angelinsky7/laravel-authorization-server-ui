@@ -55,7 +55,7 @@ function memberOfListbox(config) {
 
         removeIsDisabled() { return this.memberOfListboxItems.length == 0; },
         selectedItemChanged(event) { this.memberOfListboxItems = event.detail.items; },
-        storeListboxItems(event) { innerListBoxItems = event.detail.items; }
+        storeListboxItems(event) { innerListBoxItems = event.detail.items ?? []; }
     };
 }
 
