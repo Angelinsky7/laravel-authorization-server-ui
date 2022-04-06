@@ -62,6 +62,7 @@ class ClientController
             $validated['decision_strategy'],
             $validated['permission_splitter'] ?? '#',
             $validated['analyse_mode_enabled'] ?? false,
+            $validated['json_mode_enabled'] ?? false,
             $validated['all_resources'] ?? false,
             $validated['all_scopes'] ?? false,
             $validated['all_roles'] ?? false,
@@ -102,7 +103,8 @@ class ClientController
                 'client_uri' => $validated['client_uri'],
                 'policy_enforcement' => $validated['policy_enforcement'],
                 'decision_strategy' => $validated['decision_strategy'],
-                'analyse_mode_enabled' => $validated['analyse_mode_enabled'] ?? false
+                'analyse_mode_enabled' => $validated['analyse_mode_enabled'] ?? false,
+                'json_mode_enabled' => $validated['json_mode_enabled'] ?? false
             ]);
             $client->save();
             $oauth->client()->save($client);
@@ -129,6 +131,7 @@ class ClientController
             $validated['decision_strategy'],
             $validated['permission_splitter'] ?? '#',
             $validated['analyse_mode_enabled'] ?? false,
+            $validated['json_mode_enabled'] ?? false,
             $validated['all_resources'] ?? false,
             $validated['all_scopes'] ?? false,
             $validated['all_roles'] ?? false,

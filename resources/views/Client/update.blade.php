@@ -56,7 +56,7 @@
                                     <x-policy-ui-shared:input-base id="password_client" name="password_client" type="password" value="{{ old('password_client') ?? $item->password_client }}" />
                                     <x-policy-ui-form-field-error field="password_client" />
                                 </x-policy-ui-shared:input-group>
-                                <x-policy-ui-shared:input-group header="{{ _('Revoked') }}" inline="true" reverse="true" reverse="true">
+                                <x-policy-ui-shared:input-group header="{{ _('Revoked') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base id="revoked" name="revoked" type="checkbox" value="{{ old('revoked') ?? $item->revoked }}" />
                                     </div>
@@ -65,7 +65,7 @@
                             </x-policy-ui-shared:tab-item>
 
                             <x-policy-ui-shared:tab-item header="{{ _('Properties') }}">
-                                <x-policy-ui-shared:input-group header="{{ _('Enabled') }}" inline="true" reverse="true" reverse="true">
+                                <x-policy-ui-shared:input-group header="{{ _('Enabled') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base id="enabled" name="enabled" type="checkbox" value="{{ old('enabled') ?? ($item->client != null ? $item->client->enabled : '') }}" />
                                     </div>
@@ -75,7 +75,7 @@
                                     <x-policy-ui-shared:input-base id="client_id" name="client_id" type="text" value="{{ old('client_id') ?? ($item->client != null ? $item->client->client_id : '') }}" />
                                     <x-policy-ui-form-field-error field="client_id" />
                                 </x-policy-ui-shared:input-group>
-                                <x-policy-ui-shared:input-group header="{{ _('Require Client Secret') }}" inline="true" reverse="true" reverse="true">
+                                <x-policy-ui-shared:input-group header="{{ _('Require Client Secret') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base id="require_client_secret" name="require_client_secret" type="checkbox" value="{{ old('require_client_secret') ?? ($item->client != null ? $item->client->require_client_secret : '') }}" />
                                     </div>
@@ -112,16 +112,24 @@
                                     <x-policy-ui-form-field-error field="permission_splitter" />
                                 </x-policy-ui-shared:input-group>
 
-                                <x-policy-ui-shared:input-group header="{{ _('Anaylyse mode enabled') }}" inline="true" reverse="true" reverse="true">
+                                <x-policy-ui-shared:input-group header="{{ _('Anaylyse mode enabled') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base id="analyse_mode_enabled" name="analyse_mode_enabled" type="checkbox" value="{{ old('analyse_mode_enabled') ?? ($item->client != null ? $item->client->analyse_mode_enabled : '') }}" />
                                     </div>
                                     <x-policy-ui-form-field-error field="analyse_mode_enabled" />
                                 </x-policy-ui-shared:input-group>
+
+                                <x-policy-ui-shared:input-group header="{{ _('Json mode enabled') }}" inline="true" reverse="true">
+                                    <div class="w-4">
+                                        <x-policy-ui-shared:input-base id="json_mode_enabled" name="json_mode_enabled" type="checkbox" value="{{ old('json_mode_enabled') ?? ($item->client != null ? $item->client->json_mode_enabled : '') }}" />
+                                    </div>
+                                    <x-policy-ui-form-field-error field="json_mode_enabled" />
+                                </x-policy-ui-shared:input-group>
+
                             </x-policy-ui-shared:tab-item>
 
                             <x-policy-ui-shared:tab-item header="{{ _('Options') }}">
-                                <x-policy-ui-shared:input-group header="{{ _('All resources') }}" inline="true" reverse="true" reverse="true">
+                                <x-policy-ui-shared:input-group header="{{ _('All resources') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base x-model="all_resources_tab_visible" id="all_resources" name="all_resources" type="checkbox" value="{{ old('all_resources') ?? ($item->client != null ? $item->client->all_resources : '') }}" />
                                     </div>

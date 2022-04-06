@@ -79,25 +79,34 @@
                                 <x-policy-ui-form-field-error field="client_uri" />
                             </x-policy-ui-shared:input-group>
                             <x-policy-ui-shared:input-group header="{{ _('Policy Enforcement') }}">
-                                <x-policy-ui-shared:input-base id="policy_enforcement" name="policy_enforcement" type="text" value="{{ old('policy_enforcement') }}" />
+                                <x-policy-ui-common:select-policy-enforcement id="policy_enforcement" autocomplete="policy_enforcement-name"
+                                                                              :item="old('policy_enforcement')" />
                                 <x-policy-ui-form-field-error field="policy_enforcement" />
                             </x-policy-ui-shared:input-group>
                             <x-policy-ui-shared:input-group header="{{ _('Decision Strategy') }}">
-                                <x-policy-ui-shared:input-base id="decision_strategy" name="decision_strategy" type="text" value="{{ old('decision_strategy') }}" />
+                                <x-policy-ui-common:select-decision-strategy-client id="decision_strategy" autocomplete="decision_strategy-name"
+                                                                                    :item="old('decision_strategy')" />
                                 <x-policy-ui-form-field-error field="decision_strategy" />
                             </x-policy-ui-shared:input-group>
-
                             <x-policy-ui-shared:input-group header="{{ _('Permission Splitter') }}">
                                 <x-policy-ui-shared:input-base id="permission_splitter" name="permission_splitter" type="text" value="{{ old('permission_splitter') }}" maxlength="1" />
                                 <x-policy-ui-form-field-error field="permission_splitter" />
                             </x-policy-ui-shared:input-group>
 
-                            <x-policy-ui-shared:input-group header="{{ _('Anaylyse mode enabled') }}">
+                            <x-policy-ui-shared:input-group header="{{ _('Anaylyse mode enabled') }}" inline="true" reverse="true">
                                 <div class="w-4">
                                     <x-policy-ui-shared:input-base id="analyse_mode_enabled" name="analyse_mode_enabled" type="checkbox" value="{{ old('analyse_mode_enabled') }}" />
                                 </div>
                                 <x-policy-ui-form-field-error field="analyse_mode_enabled" />
                             </x-policy-ui-shared:input-group>
+
+                            <x-policy-ui-shared:input-group header="{{ _('Json mode enabled') }}" inline="true" reverse="true">
+                                <div class="w-4">
+                                    <x-policy-ui-shared:input-base id="json_mode_enabled" name="json_mode_enabled" type="checkbox" value="{{ old('json_mode_enabled') }}" />
+                                </div>
+                                <x-policy-ui-form-field-error field="json_mode_enabled" />
+                            </x-policy-ui-shared:input-group>
+
                         </x-policy-ui-shared:tab-item>
                     </x-policy-ui-shared:tab>
 
