@@ -56,10 +56,10 @@
                                 </div>
                                 <x-policy-ui-form-field-error field="enabled" />
                             </x-policy-ui-shared:input-group>
-                            <x-policy-ui-shared:input-group header="{{ _('Client Id') }}">
+                            {{-- <x-policy-ui-shared:input-group header="{{ _('Client Id') }}">
                                 <x-policy-ui-shared:input-base id="client_id" name="client_id" type="text" value="{{ old('client_id') }}" />
                                 <x-policy-ui-form-field-error field="client_id" />
-                            </x-policy-ui-shared:input-group>
+                            </x-policy-ui-shared:input-group> --}}
                             <x-policy-ui-shared:input-group header="{{ _('Require Client Secret') }}">
                                 <div class="w-4">
                                     <x-policy-ui-shared:input-base id="require_client_secret" name="require_client_secret" type="checkbox" value="{{ old('require_client_secret') }}" />
