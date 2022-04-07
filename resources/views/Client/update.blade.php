@@ -22,12 +22,12 @@
                     all_permissions_tab_visible: {!! json_encode($item->client != null && $item->client->all_permissions ? true : false) !!},
                 }">
 
-                    <span x-text="all_resources_tab_visible"></span>
-                    <span x-text="all_permissions_tab_visible"></span>
-
                     <x-policy-ui-shared:inner-form-layout>
                         <x-policy-ui-shared:tab class="col-span-6 sm:col-span-6">
                             <x-policy-ui-shared:tab-item header="{{ _('Oauth') }}">
+                                <x-policy-ui-shared:input-group header="{{ _('Id') }}">
+                                    <x-policy-ui-shared:input-base type="text" readonly value="{{ $item->id }}" />
+                                </x-policy-ui-shared:input-group>
                                 <x-policy-ui-shared:input-group header="{{ _('Name') }}">
                                     <x-policy-ui-shared:input-base id="name" name="name" type="text" value="{{ old('name') ?? $item->name }}" />
                                     <x-policy-ui-form-field-error field="name" />
@@ -71,10 +71,10 @@
                                     </div>
                                     <x-policy-ui-form-field-error field="enabled" />
                                 </x-policy-ui-shared:input-group>
-                                <x-policy-ui-shared:input-group header="{{ _('Client Id') }}">
+                                {{-- <x-policy-ui-shared:input-group header="{{ _('Client Id') }}">
                                     <x-policy-ui-shared:input-base id="client_id" name="client_id" type="text" value="{{ old('client_id') ?? ($item->client != null ? $item->client->client_id : '') }}" />
                                     <x-policy-ui-form-field-error field="client_id" />
-                                </x-policy-ui-shared:input-group>
+                                </x-policy-ui-shared:input-group> --}}
                                 <x-policy-ui-shared:input-group header="{{ _('Require Client Secret') }}" inline="true" reverse="true">
                                     <div class="w-4">
                                         <x-policy-ui-shared:input-base id="require_client_secret" name="require_client_secret" type="checkbox" value="{{ old('require_client_secret') ?? ($item->client != null ? $item->client->require_client_secret : '') }}" />
