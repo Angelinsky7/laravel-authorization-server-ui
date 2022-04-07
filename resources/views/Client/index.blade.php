@@ -52,9 +52,13 @@
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-content>
                                 @if ($item->client)
-                                    <div class="text-sm text-gray-900">{{ $item->client->enabled }}</div>
+                                    @if ($item->client->enabled)
+                                        <x-policy-ui-shared:icon size="normal" color="primary">check</x-policy-ui-shared:icon>
+                                    @else
+                                        <x-policy-ui-shared:icon size="small" color="alert">x</x-policy-ui-shared:icon>
+                                    @endif
                                 @else
-                                    <div class="text-sm text-gray-900">FALSE (CHANGE WITH ICONS)</div>
+                                    <x-policy-ui-shared:icon size="small" color="warning">exclamation-circle</x-policy-ui-shared:icon>
                                 @endif
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-actions>

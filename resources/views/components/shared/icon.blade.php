@@ -4,6 +4,18 @@
 $include_path_icon = 'policy-ui::components.shared.icons.' . $slot;
 $ICONSIZE = \Darkink\AuthorizationServerUI\View\Components\Shared\IconSize::class;
 $BUTTONCOLOR = \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonColor::class;
+
+switch ($stroke) {
+    case $ICONSIZE::Small:
+        $stroke_width = 1;
+        break;
+    case $ICONSIZE::Normal:
+        $stroke_width = 2;
+        break;
+    case $ICONSIZE::Big:
+        $stroke_width = 4;
+        break;
+}
 @endphp
 
 @include($include_path_icon, [
@@ -18,5 +30,6 @@ $BUTTONCOLOR = \Darkink\AuthorizationServerUI\View\Components\Shared\ButtonColor
         'policy-ui-color-alert' => $color == $BUTTONCOLOR::Alert,
         'policy-ui-color-warning' => $color == $BUTTONCOLOR::Warning,
     ]),
-    'size' => $size
+    'size' => $size,
+    'stroke' => $stroke_width
 ])

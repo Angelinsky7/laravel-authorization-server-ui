@@ -1881,6 +1881,12 @@
 
 }
 
+.bg-yellow-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(161 98 7 / var(--tw-bg-opacity));
+
+}
+
 .p-4 {
   padding: 1rem;
 
