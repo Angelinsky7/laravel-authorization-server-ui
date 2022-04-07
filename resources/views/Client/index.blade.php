@@ -18,9 +18,9 @@
                 <x-policy-ui-shared:default-table-header-column>
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="name" header="{{ _('client') }}" />
                 </x-policy-ui-shared:default-table-header-column>
-                <x-policy-ui-shared:default-table-header-column>
+                {{-- <x-policy-ui-shared:default-table-header-column>
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="client_name" header="{{ _('client name') }}" />
-                </x-policy-ui-shared:default-table-header-column>
+                </x-policy-ui-shared:default-table-header-column> --}}
                 <x-policy-ui-shared:default-table-header-column>
                     <x-policy-ui-shared:table-sort-header class="justify-start" column="redirect" header="{{ _('redirect') }}" />
                 </x-policy-ui-shared:default-table-header-column>
@@ -38,15 +38,12 @@
                             <x-policy-ui-shared:default-table-row-content>
                                 <div class="text-sm text-gray-900">{{ $item->name }}</div>
                                 <div class="text-sm text-gray-500">{{ $item->id }}</div>
-                                @if ($item->client)
-                                    <div class="text-sm text-gray-500">{{ $item->client->client_id }}</div>
-                                @endif
                             </x-policy-ui-shared:default-table-row-content>
-                            <x-policy-ui-shared:default-table-row-content>
+                            {{-- <x-policy-ui-shared:default-table-row-content>
                                 @if ($item->client)
                                     <div class="text-sm text-gray-900">{{ $item->client->client_name }}</div>
                                 @endif
-                            </x-policy-ui-shared:default-table-row-content>
+                            </x-policy-ui-shared:default-table-row-content> --}}
                             <x-policy-ui-shared:default-table-row-content>
                                 <div class="text-sm text-gray-900">{{ $item->redirect }}</div>
                             </x-policy-ui-shared:default-table-row-content>

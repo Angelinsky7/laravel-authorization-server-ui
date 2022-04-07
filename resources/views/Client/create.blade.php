@@ -66,10 +66,10 @@
                                 </div>
                                 <x-policy-ui-form-field-error field="require_client_secret" />
                             </x-policy-ui-shared:input-group>
-                            <x-policy-ui-shared:input-group header="{{ _('Client Name') }}">
+                            {{-- <x-policy-ui-shared:input-group header="{{ _('Client Name') }}">
                                 <x-policy-ui-shared:input-base id="client_name" name="client_name" type="text" value="{{ old('client_name') }}" />
                                 <x-policy-ui-form-field-error field="client_name" />
-                            </x-policy-ui-shared:input-group>
+                            </x-policy-ui-shared:input-group> --}}
                             <x-policy-ui-shared:input-group header="{{ _('Description') }}">
                                 <x-policy-ui-shared:input-textarea id="description" name="description" rows="3" placeholder="a simple description" value="{{ old('description') }}" />
                                 <x-policy-ui-form-field-error field="description" />
