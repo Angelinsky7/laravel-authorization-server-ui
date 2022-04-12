@@ -111,6 +111,7 @@ class PolicyUI
 
             Route::group(['prefix' => 'test'], function() {
                 Route::get('/', [TestController::class, 'index'])->middleware('can:test.see')->name('policy-ui.test.index');
+                Route::post('/', [TestController::class, 'evaluate'])->middleware('can:test.see')->name('policy-ui.test.evaluate');
             });
 
         });

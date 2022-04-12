@@ -13,18 +13,18 @@
             <div class="overflow-hidden">
                 <x-policy-ui-shared:inner-form-layout>
                     <x-policy-ui-shared:input-group header="{{ _('Client') }}">
-                        <x-policy-ui-client:select id="client" name="client" :values="old('client')" :remapOldValues="old('client') != null"  />
+                        <x-policy-ui-client:select id="client" name="client" :value="old('client') ?? $item->client" />
                         <x-policy-ui-form-field-error field="client" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('User') }}">
-                        <x-policy-ui-user:select id="user" name="user" :values="old('users')" :remapOldValues="old('user') != null"  />
+                        <x-policy-ui-user:select id="user" name="user" :value="old('user') ?? $item->user" />
                         <x-policy-ui-form-field-error field="user" />
                     </x-policy-ui-shared:input-group>
 
                     <x-policy-ui-shared:input-group header="{{ _('Mode') }}">
-                        <x-policy-ui-common:select-evaluation-mode id="evaluation_mode" autocomplete="evaluation_mode-name" :item="old('evaluation_mode')"/>
-                        <x-policy-ui-form-field-error field="mode" />
+                        <x-policy-ui-common:select-evaluation-mode id="evaluation_mode" autocomplete="evaluation_mode-name" :item="old('evaluation_mode') ?? $item->evaluation_mode" />
+                        <x-policy-ui-form-field-error field="evaluation_mode" />
                     </x-policy-ui-shared:input-group>
 
                 </x-policy-ui-shared:inner-form-layout>
@@ -35,6 +35,16 @@
 
             </div>
         </form>
+
+        @if ($result != null)
+            <hr />
+
+            <label>Results</label>
+
+            <p>
+                {{ json_encode($result) }}
+            </p>
+        @endif
 
     </x-policy-ui-shared:outer-list-layout>
 
