@@ -9,6 +9,7 @@ use Darkink\AuthorizationServerUI\Http\Controllers\PermissionController;
 use Darkink\AuthorizationServerUI\Http\Controllers\PolicyController;
 use Darkink\AuthorizationServerUI\Http\Controllers\ResourceController;
 use Darkink\AuthorizationServerUI\Http\Controllers\ScopeController;
+use Darkink\AuthorizationServerUI\Http\Controllers\TestController;
 use Darkink\AuthorizationServerUI\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +108,11 @@ class PolicyUI
                 Route::get('/{client}/delete', [ClientController::class, 'delete'])->middleware('can:client.delete')->name('policy-ui.client.delete');
                 Route::delete('/{client}', [ClientController::class, 'destroy'])->middleware('can:client.delete')->name('policy-ui.client.destroy');
             });
+
+            Route::group(['prefix' => 'test'], function() {
+                Route::get('/', [TestController::class, 'index'])->middleware('can:test.see')->name('policy-ui.test.index');
+            });
+
         });
     }
 

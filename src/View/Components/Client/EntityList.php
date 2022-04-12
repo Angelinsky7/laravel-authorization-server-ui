@@ -49,7 +49,7 @@ class EntityList extends SharedEntityList
         );
 
         if (count($this->items) == 0) {
-            $this->items = $clientRepository->gets()->get()->map(fn (Client $p) => ['value' => $p->client->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
+            $this->items = $clientRepository->gets()->get()->map(fn (Client $p) => ['value' => $p->id, 'item' => ['caption' => $p->name], 'order' => $p->name]);
         }
     }
 

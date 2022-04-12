@@ -6,5 +6,6 @@ return [
     SelectPolicyLogic::class,
     SelectDecisionStrategy::class,
     SelectDecisionStrategyClient::class,
-    SelectPolicyEnforcement::class
+    SelectPolicyEnforcement::class,
+    SelectEvaluationMode::class
 ];

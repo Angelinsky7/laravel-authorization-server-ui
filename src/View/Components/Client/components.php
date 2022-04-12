@@ -3,5 +3,6 @@
 namespace Darkink\AuthorizationServerUI\View\Components\Client;
 
 return [
-    EntityList::class
+    EntityList::class,
+    Select::class
 ];
