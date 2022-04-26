@@ -30,6 +30,9 @@ class PolicyUI
                 Route::get('/{role}/delete', [RoleController::class, 'delete'])->middleware('can:role.delete')->name('policy-ui.role.delete');
                 // Route::delete('/destroy-multiple', [RoleController::class, 'destroyMultiple'])->middleware('can:role.delete')->name('policy-ui.role.destroy-multiple');
                 Route::delete('/{role}', [RoleController::class, 'destroy'])->middleware('can:role.delete')->name('policy-ui.role.destroy');
+
+                Route::get('/{role}/rights', [RoleController::class, 'rights'])->middleware('can:role.rights')->name('policy-ui.role.rights');
+                Route::post('/{role}/rights', [RoleController::class, 'updateRights'])->middleware('can:role.rights')->name('policy-ui.role.rights');
             });
 
             Route::group(['prefix' => 'resource'], function () {

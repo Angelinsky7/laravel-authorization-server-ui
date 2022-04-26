@@ -92,6 +92,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            false,
             $validated['policies'] ?? [],
             $validated['resource'],
             $validated['scopes']
@@ -109,6 +110,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            false,
             $validated['policies'] ?? [],
             $validated['resource_type'],
             $validated['resource'],
@@ -157,6 +159,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            false,
             $validated['policies'] ?? [],
             $validated['resource'],
             $validated['scopes']
@@ -175,6 +178,7 @@ class PermissionController
             $validated['name'],
             $validated['description'],
             $validated['decision_strategy'],
+            false,
             $validated['policies'] ?? [],
             $validated['resource_type'],
             $validated['resource'],

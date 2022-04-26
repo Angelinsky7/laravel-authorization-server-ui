@@ -51,6 +51,8 @@
                                         </x-slot>
                                         <x-slot name="content">
                                             <x-policy-ui-shared:dropdown-link :href="route('policy-ui.role.edit', ['role' => $item->id])" content="{{ __('Edit') }}" />
+                                            <x-policy-ui-shared:dropdown-link :href="route('policy-ui.role.rights', ['role' => $item->id])" content="{{ __('Rights') }}" />
+                                            <hr />
                                             <x-policy-ui-shared:dropdown-link :href="route('policy-ui.role.delete', ['role' => $item->id])" data-remote data-modal content="{{ __('Delete') }}" />
                                         </x-slot>
                                     </x-policy-ui-shared:dropdown>
