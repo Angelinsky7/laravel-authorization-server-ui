@@ -38,9 +38,14 @@ class PermissionController
         $this->resourcePermissionRepository = $resourcePermissionRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $show_is_system = (bool)$request->query('system', false);
+
         $items = $this->permissionRepository->gets();
+        if (!$show_is_system) {
+            $items = $items->where('is_system', '=', 0);
+        }
         $items = $this->addSearchToQueryModel($items);
         $items = $this->addOrderByToQueryModel($items);
         $items = $items->paginate(25)->withQueryString();

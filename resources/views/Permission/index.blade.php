@@ -7,6 +7,13 @@
 
     <x-policy-ui-shared:outer-list-layout>
         <x-policy-ui-shared:default-list-actions>
+            <x-policy-ui-shared:input-group header="{{ _('Show System Permission') }}" inline="true" reverse="true" class="mr-2">
+                <div class="w-4" x-data="{show_system: false}">
+                    <form action="{{ route('policy-ui.permission.index', ['show_system' => true]) }}">
+                        <x-policy-ui-shared:input-base id="show_system" name="show_system" type="checkbox" value="{{ old('show_system') }}" x-model="show_system" />
+                    </form>
+                </div>
+            </x-policy-ui-shared:input-group>
             <x-policy-ui-table-search action="{{ route('policy-ui.permission.index') }}" />
             <x-policy-ui-shared:link genre="raised" color="primary" href="{{ route('policy-ui.permission.create') }}" class="ml-2">Create new Permission</x-policy-ui-shared:link>
         </x-policy-ui-shared:default-list-actions>

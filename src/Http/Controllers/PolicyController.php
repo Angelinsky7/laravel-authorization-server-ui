@@ -66,9 +66,14 @@ class PolicyController
         $this->aggregatedPolicyRepository = $aggregatedPolicyRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $show_is_system = (bool)$request->query('system', false);
+
         $items = $this->policyRepository->gets();
+        if (!$show_is_system) {
+            $items = $items->where('is_system', '=', 0);
+        }
         $items = $this->addSearchToQueryModel($items);
         $items = $this->addOrderByToQueryModel($items);
         $items = $items->paginate(25)->withQueryString();
@@ -128,6 +133,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['groups'],
         );
@@ -144,6 +150,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['roles'],
         );
@@ -160,6 +167,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['users'],
         );
@@ -176,6 +184,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['clients'],
         );
@@ -194,6 +203,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['not_before'] != null ? Carbon::parse($validated['not_before']) : null,
             $validated['not_after'] != null ? Carbon::parse($validated['not_after']) : null,
@@ -216,6 +226,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['decision_strategy'],
             $validated['policies'],
@@ -296,6 +307,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['groups'],
         );
@@ -313,6 +325,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['roles'],
         );
@@ -330,6 +343,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['users'],
         );
@@ -347,6 +361,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['clients'],
         );
@@ -364,6 +379,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['not_before'] != null ? Carbon::parse($validated['not_before']) : null,
             $validated['not_after'] != null ? Carbon::parse($validated['not_after']) : null,
@@ -387,6 +403,7 @@ class PolicyController
             $validated['name'],
             $validated['description'],
             $validated['logic'],
+            false,
             $validated['permissions'] ?? [],
             $validated['decision_strategy'],
             $validated['policies'],
