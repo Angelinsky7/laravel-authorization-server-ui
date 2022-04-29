@@ -1209,6 +1209,11 @@
 
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 
@@ -1216,11 +1221,6 @@
 
 .ml-\[18px\] {
   margin-left: 18px;
-
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
 
 }
 

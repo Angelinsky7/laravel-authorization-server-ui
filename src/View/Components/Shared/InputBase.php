@@ -27,10 +27,10 @@ class InputBase extends Component
 
         $this->is_checkbox = $type == "checkbox";
 
-        if($this->is_checkbox){
+        if ($this->is_checkbox) {
             $this->value = '1';
             $this->checked = $value;
-        }else{
+        } else {
             $this->value = $value;
         }
     }

@@ -41,7 +41,6 @@ class PermissionController
     public function index(Request $request)
     {
         $show_is_system = (bool)$request->query('system', false);
-
         $items = $this->permissionRepository->gets();
         if (!$show_is_system) {
             $items = $items->where('is_system', '=', 0);

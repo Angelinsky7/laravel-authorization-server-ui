@@ -8,10 +8,42 @@
     <x-policy-ui-shared:outer-list-layout>
         <x-policy-ui-shared:default-list-actions>
             <x-policy-ui-shared:input-group header="{{ _('Show System Permission') }}" inline="true" reverse="true" class="mr-2">
-                <div class="w-4" x-data="{show_system: false}">
-                    <form action="{{ route('policy-ui.permission.index', ['show_system' => true]) }}">
-                        <x-policy-ui-shared:input-base id="show_system" name="show_system" type="checkbox" value="{{ old('show_system') }}" x-model="show_system" />
-                    </form>
+                <div class="w-4" x-data="{
+                    options: [],
+                    init() {
+                        let queryParams = new URLSearchParams(window.location.search);
+                        if(queryParams.get('system') == '1'){
+                            this.options.push('system');
+                        }
+
+                        console.log(this.options);
+
+                        this.$watch('options', p => {
+                            this._insertParam('system', p.includes('system') ? '1' : '0');
+                        });
+                    },
+                    _insertParam(key, value) {
+                        key = encodeURIComponent(key);
+                        value = encodeURIComponent(value);
+                        let kvp = document.location.search.substr(1).split('&');
+                        let i = 0;
+                        for (; i < kvp.length; i++) {
+                            if (kvp[i].startsWith(key + '=')) {
+                                let pair = kvp[i].split('=');
+                                pair[1] = value;
+                                kvp[i] = pair.join('=');
+                                break;
+                            }
+                        }
+
+                        if (i >= kvp.length) {
+                            kvp[kvp.length] = [key, value].join('=');
+                        }
+                        let params = kvp.join('&');
+                        document.location.search = params;
+                    }
+                }">
+                    <input type="checkbox" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md','border-gray-300" value="system" x-model="options">
                 </div>
             </x-policy-ui-shared:input-group>
             <x-policy-ui-table-search action="{{ route('policy-ui.permission.index') }}" />
