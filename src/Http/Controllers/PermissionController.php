@@ -145,6 +145,10 @@ class PermissionController
 
     public function update(Request $request, Permission $permission)
     {
+        if ($permission->is_system) {
+            throw new Exception('Cannot update a system permission');
+        }
+
         switch ($request->query('type')) {
             case "scope":
                 return $this->updateScope(UpdateScopePermissionRequest::createFrom($request), $permission->permission);
@@ -203,6 +207,9 @@ class PermissionController
     public function destroy($id)
     {
         $permission = Permission::findOrFail($id);
+        if ($permission->is_system) {
+            throw new Exception('Cannot delete a system permission');
+        }
         $this->permissionRepository->delete($permission);
 
         request()->session()->flash('success_message', 'Permission deleted.');

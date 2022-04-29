@@ -197,8 +197,6 @@ class PolicyController
     {
         $validated = $request->validate($request->rules());
 
-
-
         $this->timePolicyRepository->create(
             $validated['name'],
             $validated['description'],
@@ -281,6 +279,10 @@ class PolicyController
 
     public function update(Request $request, Policy $policy)
     {
+        if ($policy->is_system) {
+            throw new Exception('Cannot update a system policy');
+        }
+
         switch ($request->query('type')) {
             case "group":
                 return $this->updateGroup(UpdateGroupPolicyRequest::createFrom($request), $policy->policy);
@@ -426,6 +428,10 @@ class PolicyController
     {
         $policy = Policy::findOrFail($id);
 
+        if ($policy->is_system) {
+            throw new Exception('Cannot delete a system policy');
+        }
+
         switch (get_class($policy->policy)) {
             case GroupPolicy::class:
                 $this->groupPolicyRepository->delete($policy->policy);
@@ -449,7 +455,7 @@ class PolicyController
                 break;
         }
 
-        request()->session()->flash('success_message', 'Permission deleted.');
+        request()->session()->flash('success_message', 'Policy deleted.');
         return redirect()->route('policy-ui.policy.index');
     }
 }

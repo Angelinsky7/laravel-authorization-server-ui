@@ -12,7 +12,7 @@
                     options: [],
                     init() {
                         let queryParams = new URLSearchParams(window.location.search);
-                        if(queryParams.get('system') == '1'){
+                        if (queryParams.get('system') == '1') {
                             this.options.push('system');
                         }
 
@@ -83,17 +83,19 @@
                                 <x-policy-ui-permission:chip-type :item="$item" />
                             </x-policy-ui-shared:default-table-row-content>
                             <x-policy-ui-shared:default-table-row-actions>
-                                <x-policy-ui-shared:dropdown>
-                                    <x-slot name="trigger">
-                                        <x-policy-ui-shared:button genre="icon">
-                                            <x-policy-ui-shared:icon size="small">dots-vertical</x-policy-ui-shared:icon>
-                                        </x-policy-ui-shared:button>
-                                    </x-slot>
-                                    <x-slot name="content">
-                                        <x-policy-ui-shared:dropdown-link :href="route('policy-ui.permission.edit', ['permission' => $item->id])" content="{{ __('Edit') }}" />
-                                        <x-policy-ui-shared:dropdown-link :href="route('policy-ui.permission.delete', ['permission' => $item->id])" data-remote data-modal content="{{ __('Delete') }}" />
-                                    </x-slot>
-                                </x-policy-ui-shared:dropdown>
+                                @if (!$item->is_system)
+                                    <x-policy-ui-shared:dropdown>
+                                        <x-slot name="trigger">
+                                            <x-policy-ui-shared:button genre="icon">
+                                                <x-policy-ui-shared:icon size="small">dots-vertical</x-policy-ui-shared:icon>
+                                            </x-policy-ui-shared:button>
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <x-policy-ui-shared:dropdown-link :href="route('policy-ui.permission.edit', ['permission' => $item->id])" content="{{ __('Edit') }}" />
+                                            <x-policy-ui-shared:dropdown-link :href="route('policy-ui.permission.delete', ['permission' => $item->id])" data-remote data-modal content="{{ __('Delete') }}" />
+                                        </x-slot>
+                                    </x-policy-ui-shared:dropdown>
+                                @endif
                             </x-policy-ui-shared:default-table-row-actions>
                         </x-policy-ui-shared:default-table-row>
                     @endforeach

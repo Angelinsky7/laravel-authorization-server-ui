@@ -77,6 +77,9 @@ class PolicyUI
                 Route::put('/{group}', [GroupController::class, 'update'])->middleware('can:group.update')->name('policy-ui.group.update');
                 Route::get('/{group}/delete', [GroupController::class, 'delete'])->middleware('can:group.delete')->name('policy-ui.group.delete');
                 Route::delete('/{group}', [GroupController::class, 'destroy'])->middleware('can:group.delete')->name('policy-ui.group.destroy');
+
+                Route::get('/{group}/rights', [GroupController::class, 'rights'])->middleware('can:group.rights')->name('policy-ui.group.rights');
+                Route::post('/{group}/rights', [GroupController::class, 'updateRights'])->middleware('can:group.rights')->name('policy-ui.group.rights');
             });
 
             Route::group(['prefix' => 'user'], function () {

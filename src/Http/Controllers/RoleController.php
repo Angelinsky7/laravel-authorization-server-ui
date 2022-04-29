@@ -170,7 +170,7 @@ class RoleController
 
     private function getRolePolicyName(Role $role): string
     {
-        return "System.Policy.{$role->name}";
+        return "System.Policy.Role.{$role->name}";
     }
 
     private function getDefaultSystemPermissionNamespace()
