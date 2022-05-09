@@ -96,7 +96,7 @@ class ClientController
             $client =  Policy::client()->forceFill([
                 'oauth_id' => $clientId,
                 'enabled' => $validated['enabled'] ?? false,
-                'client_id' => $validated['client_id'],
+                // 'client_id' => $validated['client_id'],
                 'require_client_secret' => $validated['require_client_secret'] ?? false,
                 // 'client_name' => $validated['client_name'],
                 'description' => $validated['description'],

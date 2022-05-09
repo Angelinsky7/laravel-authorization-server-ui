@@ -44,9 +44,13 @@ class TestController
         $evaluatorRequest = new EvaluatorRequest($client, $user, []);
 
         $result =  $this->evaluationService->hanlde($evaluatorRequest, $response_mode);
-        $resultAsArray = $result->toArray($request);
+        $resultAsArray = is_array($result) ? $result : $result->toArray($request);
 
-        $res = $resultAsArray['payload']['permissions'];
+        if($response_mode == EvaluatorRequestResponseMode::PERMISSIONS){
+            $res = $resultAsArray['payload']['permissions'];
+        }else{
+            $res = $resultAsArray;
+        }
 
         return view('policy-ui::Test.index', [
             'item' => $request,
